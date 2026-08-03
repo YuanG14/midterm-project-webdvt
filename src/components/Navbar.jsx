@@ -1,12 +1,43 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
-import { LayoutDashboard, PlusCircle, PieChart, Wallet, Menu, X } from "lucide-react";
+import { LayoutDashboard, PlusCircle, PieChart, Wallet, Menu, X, Sun, Moon } from "lucide-react";
+import { useTheme } from "../context/ThemeContext";
 
 const links = [
   { to: "/", label: "Dashboard", icon: LayoutDashboard, end: true },
   { to: "/add", label: "Add Transaction", icon: PlusCircle },
   { to: "/summary", label: "Summary", icon: PieChart },
 ];
+
+function ThemeToggle() {
+  const { theme, toggleTheme } = useTheme();
+  const isDark = theme === "dark";
+
+  return (
+    <button
+      type="button"
+      onClick={toggleTheme}
+      role="switch"
+      aria-checked={isDark}
+      aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
+      title={isDark ? "Switch to light mode" : "Switch to dark mode"}
+      className="group relative flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-full border border-[var(--color-border-soft)] bg-[var(--color-canvas)] text-[var(--color-ink-soft)] transition-colors duration-200 hover:text-[var(--color-ink)] hover:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-surface)]"
+    >
+      <Sun
+        className={`absolute h-4 w-4 transition-all duration-300 ease-out ${
+          isDark ? "translate-y-6 rotate-90 opacity-0" : "translate-y-0 rotate-0 opacity-100"
+        }`}
+        strokeWidth={2}
+      />
+      <Moon
+        className={`absolute h-4 w-4 transition-all duration-300 ease-out ${
+          isDark ? "translate-y-0 rotate-0 opacity-100" : "-translate-y-6 -rotate-90 opacity-0"
+        }`}
+        strokeWidth={2}
+      />
+    </button>
+  );
+}
 
 function Navbar() {
   const [open, setOpen] = useState(false);
@@ -32,7 +63,7 @@ function Navbar() {
               className={({ isActive }) =>
                 `flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-[13px] font-medium transition-all duration-200 ${
                   isActive
-                    ? "bg-[var(--color-ink)] text-white shadow-sm"
+                    ? "bg-[var(--color-ink)] text-[var(--color-canvas)] shadow-sm"
                     : "text-[var(--color-ink-soft)] hover:bg-[var(--color-canvas)] hover:text-[var(--color-ink)]"
                 }`
               }
@@ -43,14 +74,18 @@ function Navbar() {
           ))}
         </nav>
 
-        <button
-          type="button"
-          onClick={() => setOpen((v) => !v)}
-          className="flex h-9 w-9 items-center justify-center rounded-lg text-[var(--color-ink-soft)] hover:bg-[var(--color-canvas)] sm:hidden"
-          aria-label="Toggle menu"
-        >
-          {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-        </button>
+        <div className="flex items-center gap-2">
+          <ThemeToggle />
+
+          <button
+            type="button"
+            onClick={() => setOpen((v) => !v)}
+            className="flex h-9 w-9 items-center justify-center rounded-lg text-[var(--color-ink-soft)] hover:bg-[var(--color-canvas)] sm:hidden"
+            aria-label="Toggle menu"
+          >
+            {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </button>
+        </div>
       </div>
 
       {open && (
@@ -64,7 +99,7 @@ function Navbar() {
               className={({ isActive }) =>
                 `flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
                   isActive
-                    ? "bg-[var(--color-ink)] text-white"
+                    ? "bg-[var(--color-ink)] text-[var(--color-canvas)]"
                     : "text-[var(--color-ink-soft)] hover:bg-[var(--color-canvas)]"
                 }`
               }

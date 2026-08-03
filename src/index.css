@@ -21,10 +21,38 @@ html {
   font-family: var(--font-sans);
 }
 
+/*
+  Dark theme overrides.
+  The rest of the app (Navbar, cards, buttons, borders, etc.) already reads
+  colors from these same CSS variables via var(--color-...), so flipping
+  their values here is all that's needed to re-theme the entire app —
+  no component markup changes required.
+*/
+html.dark {
+  --color-canvas: #0b0f14;
+  --color-surface: #131922;
+  --color-border-soft: #232b36;
+  --color-ink: #eef1f5;
+  --color-ink-soft: #8a96a3;
+  --color-primary: #17c78e;
+  --color-primary-dark: #12a877;
+  --color-accent: #7c7ff0;
+  --color-danger: #e2593c;
+}
+
+html,
+body {
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
 body {
   margin: 0;
   background-color: var(--color-canvas);
   color: var(--color-ink);
+}
+
+* {
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }
 
 .font-display {
