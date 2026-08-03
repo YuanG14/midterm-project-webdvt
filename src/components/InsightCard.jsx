@@ -1,9 +1,21 @@
 import { memo } from "react";
-function InsightCard({ icon: Icon, label, value, hint }) {
+
+const TONES = {
+  neutral: "bg-[var(--color-canvas)] text-[var(--color-ink-soft)]",
+  primary: "bg-[var(--color-primary)]/10 text-[var(--color-primary-dark)]",
+  danger: "bg-[var(--color-danger)]/10 text-[var(--color-danger)]",
+  accent: "bg-[var(--color-accent)]/10 text-[var(--color-accent)]",
+};
+
+function InsightCard({ icon: Icon, label, value, hint, tone = "neutral" }) {
+  const toneClass = TONES[tone] ?? TONES.neutral;
+
   return (
-    <div className="flex items-start gap-3 rounded-xl border border-[var(--color-border-soft)] bg-[var(--color-surface)] p-4 transition-colors duration-200 hover:border-[var(--color-primary)]/30">
-      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[var(--color-canvas)]">
-        <Icon className="h-4 w-4 text-[var(--color-ink-soft)]" strokeWidth={2} />
+    <div className="group flex items-start gap-3 rounded-xl border border-[var(--color-border-soft)] bg-[var(--color-surface)] p-4 transition-all duration-200 hover:-translate-y-0.5 hover:border-[var(--color-primary)]/30 hover:shadow-[var(--shadow-card)]">
+      <div
+        className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-lg transition-transform duration-300 group-hover:scale-105 ${toneClass}`}
+      >
+        <Icon className="h-4 w-4" strokeWidth={2} />
       </div>
       <div className="min-w-0">
         <p className="text-[12px] font-medium uppercase tracking-[0.06em] text-[var(--color-ink-soft)]">

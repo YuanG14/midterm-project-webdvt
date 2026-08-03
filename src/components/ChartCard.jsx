@@ -1,0 +1,15 @@
+/**
+ * Shared card frame for the Summary page's analytics panels (chart,
+ * category breakdown). Purely a styling container — no data handling.
+ */
+function ChartCard({ children, className = "" }) {
+  return (
+    <div
+      className={`rounded-2xl border border-[var(--color-border-soft)] bg-[var(--color-surface)] p-6 shadow-[var(--shadow-card)] transition-shadow duration-300 hover:shadow-[var(--shadow-card-hover)] ${className}`}
+    >
+      {children}
+    </div>
+  );
+}
+
+export default ChartCard;
