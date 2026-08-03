@@ -12,7 +12,7 @@ function TransactionDetailCard({ transaction }) {
   });
 
   return (
-    <div className="rounded-2xl border border-[var(--color-border-soft)] bg-[var(--color-surface)] p-6 shadow-[0_1px_2px_rgba(16,21,28,0.04),0_8px_24px_-12px_rgba(16,21,28,0.08)] sm:p-8">
+    <div className="rounded-2xl border border-[var(--color-border-soft)] bg-[var(--color-surface)] p-6 shadow-[var(--shadow-card)] sm:p-8">
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
           <h2 className="font-display text-xl font-bold tracking-tight text-[var(--color-ink)] sm:text-2xl">

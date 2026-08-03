@@ -26,7 +26,7 @@ function SummaryCard({ icon: Icon, label, value, hint, accent = "balance" }) {
   const styles = ACCENTS[accent] ?? ACCENTS.balance;
 
   return (
-    <div className="group relative overflow-hidden rounded-2xl border border-[var(--color-border-soft)] bg-[var(--color-surface)] p-6 shadow-[0_1px_2px_rgba(16,21,28,0.04),0_8px_24px_-12px_rgba(16,21,28,0.08)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_1px_2px_rgba(16,21,28,0.06),0_16px_32px_-14px_rgba(16,21,28,0.16)]">
+    <div className="group relative overflow-hidden rounded-2xl border border-[var(--color-border-soft)] bg-[var(--color-surface)] p-6 shadow-[var(--shadow-card)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[var(--shadow-card-hover)]">
       <div
         className={`pointer-events-none absolute -right-6 -top-10 h-32 w-32 rounded-full bg-gradient-to-br ${styles.glow} to-transparent blur-2xl transition-opacity duration-300 group-hover:opacity-80`}
         aria-hidden="true"

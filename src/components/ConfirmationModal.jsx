@@ -34,7 +34,7 @@ function ConfirmationModal({
         aria-modal="true"
         aria-labelledby="confirmation-modal-title"
         onClick={(event) => event.stopPropagation()}
-        className="w-full max-w-sm rounded-2xl border border-[var(--color-border-soft)] bg-[var(--color-surface)] p-6 shadow-[0_8px_24px_-6px_rgba(16,21,28,0.25)] animate-[fadeIn_0.15s_ease-out]"
+        className="w-full max-w-sm rounded-2xl border border-[var(--color-border-soft)] bg-[var(--color-surface)] p-6 shadow-[var(--shadow-float)] animate-[fadeIn_0.15s_ease-out]"
       >
         <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-full bg-[var(--color-danger)]/10">
           <AlertTriangle className="h-5 w-5 text-[var(--color-danger)]" strokeWidth={2} />

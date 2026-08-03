@@ -133,7 +133,7 @@ function Summary() {
 
           {/* Spending Breakdown + Chart */}
           <div className="grid grid-cols-1 gap-4 lg:grid-cols-5">
-            <div className="rounded-2xl border border-[var(--color-border-soft)] bg-[var(--color-surface)] p-6 shadow-[0_1px_2px_rgba(16,21,28,0.04),0_8px_24px_-12px_rgba(16,21,28,0.08)] lg:col-span-2">
+            <div className="rounded-2xl border border-[var(--color-border-soft)] bg-[var(--color-surface)] p-6 shadow-[var(--shadow-card)] lg:col-span-2">
               <p className="mb-4 font-display text-sm font-semibold text-[var(--color-ink)]">
                 Expense Distribution
               </p>
@@ -146,7 +146,7 @@ function Summary() {
               )}
             </div>
 
-            <div className="rounded-2xl border border-[var(--color-border-soft)] bg-[var(--color-surface)] p-6 shadow-[0_1px_2px_rgba(16,21,28,0.04),0_8px_24px_-12px_rgba(16,21,28,0.08)] lg:col-span-3">
+            <div className="rounded-2xl border border-[var(--color-border-soft)] bg-[var(--color-surface)] p-6 shadow-[var(--shadow-card)] lg:col-span-3">
               <p className="mb-4 font-display text-sm font-semibold text-[var(--color-ink)]">
                 Top Spending Categories
               </p>

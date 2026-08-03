@@ -15,7 +15,7 @@ function TransactionCard({ transaction }) {
   return (
     <Link
       to={`/transaction/${transaction.id}`}
-      className="group flex items-center gap-4 rounded-xl border border-[var(--color-border-soft)] bg-[var(--color-surface)] p-4 shadow-[0_1px_2px_rgba(16,21,28,0.03)] transition-all duration-200 hover:-translate-y-0.5 hover:border-transparent hover:shadow-[0_8px_20px_-10px_rgba(16,21,28,0.18)]"
+      className="group flex items-center gap-4 rounded-xl border border-[var(--color-border-soft)] bg-[var(--color-surface)] p-4 shadow-[var(--shadow-xs)] transition-all duration-200 hover:-translate-y-0.5 hover:border-transparent hover:shadow-[var(--shadow-raised)]"
     >
       <div
         className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full ${

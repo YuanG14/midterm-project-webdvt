@@ -15,6 +15,23 @@
   --color-primary-dark: #0b7f5e;
   --color-accent: #4338ca;
   --color-danger: #c2482f;
+  --color-warning: #b4790e;
+
+  --ease-premium: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/*
+  Elevation tokens. Defined outside @theme (not exposed as Tailwind
+  utilities) since they're consumed via arbitrary values, e.g.
+  shadow-[var(--shadow-card)], and need per-theme overrides below —
+  a plain shadow-sm/shadow-md utility can't be re-themed per html.dark.
+*/
+:root {
+  --shadow-xs: 0 1px 2px rgba(16, 21, 28, 0.04);
+  --shadow-card: 0 1px 2px rgba(16, 21, 28, 0.04), 0 8px 24px -12px rgba(16, 21, 28, 0.08);
+  --shadow-card-hover: 0 1px 2px rgba(16, 21, 28, 0.06), 0 16px 32px -14px rgba(16, 21, 28, 0.16);
+  --shadow-raised: 0 8px 20px -10px rgba(16, 21, 28, 0.18);
+  --shadow-float: 0 8px 24px -6px rgba(16, 21, 28, 0.25);
 }
 
 html {
@@ -38,11 +55,18 @@ html.dark {
   --color-primary-dark: #12a877;
   --color-accent: #7c7ff0;
   --color-danger: #e2593c;
+  --color-warning: #e0a530;
+
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 24px -12px rgba(0, 0, 0, 0.55);
+  --shadow-card-hover: 0 1px 2px rgba(0, 0, 0, 0.35), 0 16px 32px -14px rgba(0, 0, 0, 0.65);
+  --shadow-raised: 0 8px 20px -10px rgba(0, 0, 0, 0.6);
+  --shadow-float: 0 8px 24px -6px rgba(0, 0, 0, 0.65);
 }
 
 html,
 body {
-  transition: background-color 0.25s ease, color 0.25s ease;
+  transition: background-color 0.25s var(--ease-premium), color 0.25s var(--ease-premium);
 }
 
 body {
@@ -52,7 +76,52 @@ body {
 }
 
 * {
-  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+  transition: background-color 0.2s var(--ease-premium), border-color 0.2s var(--ease-premium),
+    color 0.2s var(--ease-premium), box-shadow 0.2s var(--ease-premium);
+}
+
+/* Consistent, accessible focus state for every interactive element,
+   applied globally so individual buttons/links don't need repeating it. */
+a,
+button,
+input,
+select,
+textarea {
+  outline: none;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  box-shadow: 0 0 0 2px var(--color-surface), 0 0 0 4px var(--color-primary);
+}
+
+::selection {
+  background-color: var(--color-primary);
+  color: white;
+}
+
+/* Slim, theme-aware scrollbar so the premium feel holds up outside cards too. */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--color-border-soft);
+  border-radius: 999px;
+  border: 2px solid var(--color-canvas);
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border-soft) transparent;
 }
 
 .font-display {

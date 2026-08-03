@@ -9,7 +9,7 @@ function EmptyState({
   actionLabel = "Add Transaction",
 }) {
   return (
-    <div className="rounded-2xl border border-dashed border-[var(--color-border-soft)] bg-[var(--color-surface)] px-6 py-16 text-center shadow-[0_1px_2px_rgba(16,21,28,0.04)]">
+    <div className="rounded-2xl border border-dashed border-[var(--color-border-soft)] bg-[var(--color-surface)] px-6 py-16 text-center shadow-[var(--shadow-xs)]">
       <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-[var(--color-primary)]/10">
         <Icon className="h-6 w-6 text-[var(--color-primary-dark)]" strokeWidth={1.75} />
       </div>

@@ -7,7 +7,7 @@ function ChartTooltip({ active, payload }) {
   const { name, value } = payload[0];
 
   return (
-    <div className="rounded-lg border border-[var(--color-border-soft)] bg-[var(--color-surface)] px-3 py-2 text-[12.5px] shadow-[0_8px_20px_-8px_rgba(16,21,28,0.25)]">
+    <div className="rounded-lg border border-[var(--color-border-soft)] bg-[var(--color-surface)] px-3 py-2 text-[12.5px] shadow-[var(--shadow-float)]">
       <p className="font-semibold text-[var(--color-ink)]">{name}</p>
       <p className="text-[var(--color-ink-soft)]">{formatCurrency(value)}</p>
     </div>

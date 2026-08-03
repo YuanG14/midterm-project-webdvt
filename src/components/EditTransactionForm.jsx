@@ -52,7 +52,7 @@ function EditTransactionForm({ transaction, onSave, onCancel, onDeleteRequest })
     <form
       onSubmit={handleSubmit}
       noValidate
-      className="mt-6 rounded-2xl border border-[var(--color-border-soft)] bg-[var(--color-surface)] p-6 shadow-[0_1px_2px_rgba(16,21,28,0.04),0_8px_24px_-12px_rgba(16,21,28,0.08)] sm:p-8"
+      className="mt-6 rounded-2xl border border-[var(--color-border-soft)] bg-[var(--color-surface)] p-6 shadow-[var(--shadow-card)] sm:p-8"
     >
       <h3 className="mb-6 font-display text-sm font-semibold uppercase tracking-[0.08em] text-[var(--color-ink-soft)]">
         Edit Transaction

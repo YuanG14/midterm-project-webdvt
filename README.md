@@ -36,3 +36,35 @@ Two sources of unnecessary re-renders were found:
 - `React.memo` — `TransactionCard`, `SummaryCard`, `InsightCard`, `CategoryBreakdown`, `SpendingChart`
 - `useMemo` — memoized theme context value
 - `useCallback` — memoized `toggleTheme`
+
+## UI Enhancement Phase 1 — Design System & Global Polish
+
+Global visual polish pass across the whole app. No routing, business logic, ThemeContext logic, useTransactions logic, or page structure was touched.
+
+### Color System
+
+- Added a `--color-warning` (amber) semantic token, in both light and dark themes, rounding out the existing income (green)/expense (red-rose)/accent (indigo) semantic palette for future use.
+- All existing colors (canvas, surface, border, ink, primary, accent, danger) were left as-is — they already implement the emerald/indigo finance palette with light/dark variants.
+
+### Elevation / Shadows
+
+- Replaced ~11 repeated hardcoded `shadow-[...]` rgba strings across components with five shared elevation tokens: `--shadow-xs`, `--shadow-card`, `--shadow-card-hover`, `--shadow-raised`, `--shadow-float`.
+- Gave dark mode its own shadow values (deeper, more diffuse black-based shadows) instead of reusing the light-mode rgba values, since a light-derived shadow barely reads against a dark canvas — cards now have real, visible depth in both themes.
+
+### Global Interaction Polish
+
+- Added a consistent, accessible `:focus-visible` ring (via `box-shadow`) to every link, button, and form control app-wide, applied once globally instead of per-component.
+- Added a themed text-selection color and a slim, theme-aware scrollbar (Webkit + Firefox) so the polish holds up outside of cards.
+- Introduced a shared `--ease-premium` cubic-bezier easing curve and applied it to the existing global color/border/shadow transitions for a snappier, more intentional feel.
+
+### Typography / Layout / Cards / Buttons / Inputs
+
+- Reviewed against the brief: type hierarchy (Manrope display font for headings, Inter for body, IBM Plex Mono for figures), card styling (rounded-2xl, soft elevation, hover lift), button styling (pill-shaped, hover translate, disabled states), and input styling (rounded, focus rings, placeholder color) were already in place from earlier phases and consistent across light/dark — no changes were needed there beyond the shared shadow tokens and global focus states above.
+
+### Files Modified
+
+- `src/index.css` — color/shadow/easing tokens, global focus/selection/scrollbar styles
+- `src/components/SummaryCard.jsx`, `TransactionCard.jsx`, `TransactionDetailCard.jsx`, `EmptyState.jsx`, `PlaceholderPanel.jsx`, `ConfirmationModal.jsx`, `SpendingChart.jsx`, `TransactionForm.jsx`, `EditTransactionForm.jsx` — swapped hardcoded shadow strings for the new elevation tokens
+- `src/pages/Summary.jsx` — same shadow-token swap on its two inline panel wrappers
+
+No changes to `App.jsx`, `ThemeContext.jsx`, `useTransactions.js`, transaction schema, localStorage logic, CRUD functions, validation, or filtering logic.
