@@ -14,6 +14,11 @@ const ACCENTS = {
     iconColor: "text-[var(--color-danger)]",
     glow: "from-[var(--color-danger)]/15",
   },
+  count: {
+    iconWrap: "bg-[var(--color-ink)]/10",
+    iconColor: "text-[var(--color-ink)]",
+    glow: "from-[var(--color-ink)]/10",
+  },
 };
 
 function SummaryCard({ icon: Icon, label, value, hint, accent = "balance" }) {
