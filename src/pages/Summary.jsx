@@ -1,7 +1,20 @@
+import { ChartSpline } from "lucide-react";
+import PageHeader from "../components/PageHeader";
+import PlaceholderPanel from "../components/PlaceholderPanel";
+
 function Summary() {
   return (
     <div>
-      <h1 className="text-2xl font-semibold text-gray-800">Summary</h1>
+      <PageHeader
+        eyebrow="Insights"
+        title="Summary"
+        description="Category breakdowns and spending charts, calculated from your transaction history, will appear here."
+      />
+      <PlaceholderPanel
+        icon={ChartSpline}
+        label="Charts and totals arrive in a later phase"
+        hint="Once summary calculations are implemented, this space will hold category and trend visualizations."
+      />
     </div>
   );
 }

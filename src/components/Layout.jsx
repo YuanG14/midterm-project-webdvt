@@ -3,9 +3,9 @@ import Navbar from "./Navbar";
 
 function Layout() {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-[var(--color-canvas)]">
       <Navbar />
-      <main className="max-w-5xl mx-auto px-4 sm:px-6 py-6 sm:py-10">
+      <main className="mx-auto max-w-6xl px-5 py-10 sm:px-8 sm:py-14">
         <Outlet />
       </main>
     </div>
