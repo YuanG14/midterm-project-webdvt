@@ -1,3 +1,4 @@
+import { memo } from "react";
 function InsightCard({ icon: Icon, label, value, hint }) {
   return (
     <div className="flex items-start gap-3 rounded-xl border border-[var(--color-border-soft)] bg-[var(--color-surface)] p-4 transition-colors duration-200 hover:border-[var(--color-primary)]/30">
@@ -17,4 +18,6 @@ function InsightCard({ icon: Icon, label, value, hint }) {
   );
 }
 
-export default InsightCard;
+// Memoized: multiple InsightCard instances render per Summary render; their
+// props are stable across unrelated Summary re-renders (e.g. theme toggle).
+export default memo(InsightCard);

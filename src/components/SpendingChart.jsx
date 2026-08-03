@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
 import { formatCurrency } from "../utils/formatCurrency";
 
@@ -39,4 +40,7 @@ function SpendingChart({ data }) {
   );
 }
 
-export default SpendingChart;
+// Memoized: the recharts PieChart is the most expensive render on the
+// Summary page. Without memo it re-renders on every Summary re-render
+// (e.g. a theme toggle) even though `data` hasn't changed.
+export default memo(SpendingChart);

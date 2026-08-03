@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { Link } from "react-router-dom";
 import { ArrowDownRight, ArrowUpRight, ChevronRight } from "lucide-react";
 import { formatCurrency } from "../utils/formatCurrency";
@@ -60,4 +61,8 @@ function TransactionCard({ transaction }) {
   );
 }
 
-export default TransactionCard;
+// Memoized: Dashboard re-renders every TransactionCard whenever its filter
+// state changes, even though most individual transaction objects haven't
+// changed. Since `transaction` keeps the same object reference for entries
+// that are unaffected by the filter, memo lets those skip re-rendering.
+export default memo(TransactionCard);

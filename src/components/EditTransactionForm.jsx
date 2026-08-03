@@ -79,7 +79,7 @@ function EditTransactionForm({ transaction, onSave, onCancel, onDeleteRequest })
           <FormField label="Amount" htmlFor="edit-amount" error={errors.amount}>
             <div className="relative">
               <span className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-[14px] text-[var(--color-ink-soft)]">
-                $
+                ₱
               </span>
               <input
                 id="edit-amount"

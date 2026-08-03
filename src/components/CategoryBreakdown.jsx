@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { formatCurrency } from "../utils/formatCurrency";
 
 function CategoryBreakdown({ data }) {
@@ -33,4 +34,5 @@ function CategoryBreakdown({ data }) {
   );
 }
 
-export default CategoryBreakdown;
+// Memoized: Summary re-renders on theme toggle; category data itself is stable.
+export default memo(CategoryBreakdown);

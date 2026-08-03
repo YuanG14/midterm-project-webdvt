@@ -1,12 +1,12 @@
-const currencyFormatter = new Intl.NumberFormat("en-US", {
+const currencyFormatter = new Intl.NumberFormat("en-PH", {
   style: "currency",
-  currency: "USD",
+  currency: "PHP",
   minimumFractionDigits: 2,
   maximumFractionDigits: 2,
 });
 
 /**
- * Formats a number as currency, e.g. formatCurrency(12500) -> "$12,500.00".
+ * Formats a number as currency, e.g. formatCurrency(12500) -> "₱12,500.00".
  * Used everywhere an amount is displayed so formatting stays consistent
  * across the whole app.
  */
