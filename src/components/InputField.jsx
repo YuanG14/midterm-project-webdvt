@@ -17,7 +17,7 @@ function InputField({ label, icon: Icon, htmlFor, error, hint, children }) {
       {children}
 
       {error ? (
-        <p className="flex items-center gap-1.5 text-[12.5px] font-medium text-[var(--color-danger)]">
+        <p className="flex animate-[fadeIn_0.2s_ease-out] items-center gap-1.5 text-[12.5px] font-medium text-[var(--color-danger)]">
           <AlertCircle className="h-3.5 w-3.5 shrink-0" strokeWidth={2} />
           {error}
         </p>

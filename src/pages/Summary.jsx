@@ -175,56 +175,70 @@ function Summary() {
           <AnalyticsSection icon={Sparkles} title="Recent Insights">
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
               {insights.largestExpenseCategory && (
-                <InsightCard
-                  icon={Flame}
-                  label="Largest Expense Category"
-                  value={insights.largestExpenseCategory.category}
-                  hint={formatCurrency(insights.largestExpenseCategory.amount)}
-                  tone="danger"
-                />
+                <div className="animate-[fadeIn_0.4s_var(--ease-premium)_backwards]" style={{ animationDelay: "0ms" }}>
+                  <InsightCard
+                    icon={Flame}
+                    label="Largest Expense Category"
+                    value={insights.largestExpenseCategory.category}
+                    hint={formatCurrency(insights.largestExpenseCategory.amount)}
+                    tone="danger"
+                  />
+                </div>
               )}
               {insights.highestExpense && (
-                <InsightCard
-                  icon={Receipt}
-                  label="Highest Individual Expense"
-                  value={insights.highestExpense.title || "Untitled transaction"}
-                  hint={formatCurrency(insights.highestExpense.amount)}
-                  tone="danger"
-                />
+                <div className="animate-[fadeIn_0.4s_var(--ease-premium)_backwards]" style={{ animationDelay: "50ms" }}>
+                  <InsightCard
+                    icon={Receipt}
+                    label="Highest Individual Expense"
+                    value={insights.highestExpense.title || "Untitled transaction"}
+                    hint={formatCurrency(insights.highestExpense.amount)}
+                    tone="danger"
+                  />
+                </div>
               )}
               {insights.largestIncomeSource && (
+                <div className="animate-[fadeIn_0.4s_var(--ease-premium)_backwards]" style={{ animationDelay: "100ms" }}>
+                  <InsightCard
+                    icon={Briefcase}
+                    label="Largest Income Source"
+                    value={insights.largestIncomeSource[0]}
+                    hint={formatCurrency(insights.largestIncomeSource[1])}
+                    tone="primary"
+                  />
+                </div>
+              )}
+              <div className="animate-[fadeIn_0.4s_var(--ease-premium)_backwards]" style={{ animationDelay: "150ms" }}>
                 <InsightCard
-                  icon={Briefcase}
-                  label="Largest Income Source"
-                  value={insights.largestIncomeSource[0]}
-                  hint={formatCurrency(insights.largestIncomeSource[1])}
+                  icon={ArrowUpRight}
+                  label="Income Transactions"
+                  value={String(insights.incomeCount)}
                   tone="primary"
                 />
-              )}
-              <InsightCard
-                icon={ArrowUpRight}
-                label="Income Transactions"
-                value={String(insights.incomeCount)}
-                tone="primary"
-              />
-              <InsightCard
-                icon={ArrowDownRight}
-                label="Expense Transactions"
-                value={String(insights.expenseCount)}
-                tone="danger"
-              />
-              <InsightCard
-                icon={Calculator}
-                label="Average Expense"
-                value={formatCurrency(insights.averageExpense)}
-                tone="accent"
-              />
-              <InsightCard
-                icon={Calculator}
-                label="Average Income"
-                value={formatCurrency(insights.averageIncome)}
-                tone="accent"
-              />
+              </div>
+              <div className="animate-[fadeIn_0.4s_var(--ease-premium)_backwards]" style={{ animationDelay: "200ms" }}>
+                <InsightCard
+                  icon={ArrowDownRight}
+                  label="Expense Transactions"
+                  value={String(insights.expenseCount)}
+                  tone="danger"
+                />
+              </div>
+              <div className="animate-[fadeIn_0.4s_var(--ease-premium)_backwards]" style={{ animationDelay: "250ms" }}>
+                <InsightCard
+                  icon={Calculator}
+                  label="Average Expense"
+                  value={formatCurrency(insights.averageExpense)}
+                  tone="accent"
+                />
+              </div>
+              <div className="animate-[fadeIn_0.4s_var(--ease-premium)_backwards]" style={{ animationDelay: "300ms" }}>
+                <InsightCard
+                  icon={Calculator}
+                  label="Average Income"
+                  value={formatCurrency(insights.averageIncome)}
+                  tone="accent"
+                />
+              </div>
             </div>
           </AnalyticsSection>
 

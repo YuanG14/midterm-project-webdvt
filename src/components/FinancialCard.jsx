@@ -26,11 +26,14 @@ const ACCENTS = {
  * shared SummaryCard (used on the Summary page) — kept as its own
  * component so this redesign doesn't change Summary's look.
  */
-function FinancialCard({ icon: Icon, label, value, hint, accent = "balance" }) {
+function FinancialCard({ icon: Icon, label, value, hint, accent = "balance", style }) {
   const styles = ACCENTS[accent] ?? ACCENTS.balance;
 
   return (
-    <div className="group relative overflow-hidden rounded-2xl border border-[var(--color-border-soft)] bg-[var(--color-surface)] p-6 shadow-[var(--shadow-card)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[var(--shadow-card-hover)]">
+    <div
+      style={style}
+      className="group relative animate-[fadeIn_0.5s_var(--ease-premium)_backwards] overflow-hidden rounded-2xl border border-[var(--color-border-soft)] bg-[var(--color-surface)] p-6 shadow-[var(--shadow-card)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[var(--shadow-card-hover)]"
+    >
       <div
         className={`pointer-events-none absolute -right-8 -top-12 h-36 w-36 rounded-full bg-gradient-to-br ${styles.glow} to-transparent blur-2xl transition-opacity duration-300 group-hover:opacity-90`}
         aria-hidden="true"

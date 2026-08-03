@@ -46,7 +46,7 @@ function TransactionNotFound() {
         </p>
         <Link
           to="/"
-          className="mt-6 inline-flex items-center gap-1.5 rounded-full bg-[var(--color-ink)] px-4 py-2 text-[13px] font-semibold text-[var(--color-canvas)] shadow-sm transition-transform duration-200 hover:-translate-y-0.5"
+          className="mt-6 inline-flex items-center gap-1.5 rounded-full bg-[var(--color-ink)] px-4 py-2 text-[13px] font-semibold text-[var(--color-canvas)] shadow-sm transition-transform duration-200 hover:-translate-y-0.5 active:scale-[0.97] active:translate-y-0"
         >
           <ArrowLeft className="h-3.5 w-3.5" strokeWidth={2} />
           Return to Dashboard

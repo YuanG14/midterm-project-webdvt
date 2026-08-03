@@ -15,7 +15,7 @@ function NavItem({ to, label, icon: Icon, end, onClick, variant = "pill" }) {
         end={end}
         onClick={onClick}
         className={({ isActive }) =>
-          `group relative flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-[14px] font-medium transition-all duration-200 ${
+          `group relative flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-[14px] font-medium transition-all duration-200 active:scale-[0.98] ${
             isActive
               ? "bg-[var(--color-canvas)] text-[var(--color-ink)] ring-1 ring-[var(--color-border-soft)]"
               : "text-[var(--color-ink-soft)] hover:bg-[var(--color-canvas)] hover:text-[var(--color-ink)]"
@@ -47,7 +47,7 @@ function NavItem({ to, label, icon: Icon, end, onClick, variant = "pill" }) {
       end={end}
       onClick={onClick}
       className={({ isActive }) =>
-        `flex items-center gap-2 rounded-full px-3.5 py-2 text-[13.5px] font-medium transition-all duration-200 ${
+        `flex items-center gap-2 rounded-full px-3.5 py-2 text-[13.5px] font-medium transition-all duration-200 active:scale-[0.97] ${
           isActive
             ? "bg-[var(--color-canvas)] text-[var(--color-ink)] shadow-[var(--shadow-xs)] ring-1 ring-[var(--color-border-soft)]"
             : "text-[var(--color-ink-soft)] hover:bg-[var(--color-canvas)] hover:text-[var(--color-ink)]"

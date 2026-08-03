@@ -41,6 +41,7 @@ function Dashboard() {
           value={formatCurrency(balance)}
           hint="Income minus expenses, updated in real time."
           accent="balance"
+          style={{ animationDelay: "0ms" }}
         />
         <FinancialCard
           icon={TrendingUp}
@@ -48,6 +49,7 @@ function Dashboard() {
           value={formatCurrency(incomeTotal)}
           hint="All money coming in."
           accent="income"
+          style={{ animationDelay: "70ms" }}
         />
         <FinancialCard
           icon={TrendingDown}
@@ -55,6 +57,7 @@ function Dashboard() {
           value={formatCurrency(expenseTotal)}
           hint="All money going out."
           accent="expense"
+          style={{ animationDelay: "140ms" }}
         />
       </div>
 

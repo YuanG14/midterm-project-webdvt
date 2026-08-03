@@ -25,7 +25,7 @@ function TransactionTypeSelector({ value, onChange }) {
             role="radio"
             aria-checked={isSelected}
             onClick={() => onChange(optionValue)}
-            className={`group relative flex items-center gap-3 rounded-xl border p-3.5 text-left transition-all duration-200 ${
+            className={`group relative flex items-center gap-3 rounded-xl border p-3.5 text-left transition-all duration-200 active:scale-[0.98] ${
               isSelected
                 ? isIncome
                   ? "border-[var(--color-primary)] bg-[var(--color-primary)]/10 shadow-[var(--shadow-xs)]"

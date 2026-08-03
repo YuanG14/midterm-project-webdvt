@@ -143,3 +143,20 @@ textarea:focus-visible {
     transform: translateY(0) scale(1);
   }
 }
+
+/*
+  Accessibility: users who have requested reduced motion (system setting)
+  get near-instant, non-moving transitions instead of the app's usual
+  fades/slides/hovers. Covers every CSS transition/animation in the app
+  (Framer Motion components handle this separately via useReducedMotion).
+*/
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

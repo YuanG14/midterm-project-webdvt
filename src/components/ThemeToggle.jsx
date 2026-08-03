@@ -19,7 +19,7 @@ function ThemeToggle({ compact = false }) {
         aria-checked={isDark}
         aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
         title={isDark ? "Switch to light mode" : "Switch to dark mode"}
-        className="group relative flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-full border border-[var(--color-border-soft)] bg-[var(--color-canvas)] text-[var(--color-ink-soft)] transition-colors duration-200 hover:text-[var(--color-ink)] hover:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-surface)]"
+        className="group relative flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-full border border-[var(--color-border-soft)] bg-[var(--color-canvas)] text-[var(--color-ink-soft)] transition-colors duration-200 hover:text-[var(--color-ink)] hover:shadow-sm active:scale-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-surface)]"
       >
         <Sun
           className={`absolute h-4 w-4 transition-all duration-300 ease-out ${
@@ -45,7 +45,7 @@ function ThemeToggle({ compact = false }) {
       aria-checked={isDark}
       aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
       title={isDark ? "Switch to light mode" : "Switch to dark mode"}
-      className="flex w-full items-center justify-between gap-3 rounded-xl border border-[var(--color-border-soft)] bg-[var(--color-canvas)] px-3 py-2.5 text-left transition-colors duration-200 hover:border-[var(--color-ink-soft)]/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-surface)]"
+      className="flex w-full items-center justify-between gap-3 rounded-xl border border-[var(--color-border-soft)] bg-[var(--color-canvas)] px-3 py-2.5 text-left transition-colors duration-200 hover:border-[var(--color-ink-soft)]/40 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-surface)]"
     >
       <span className="flex items-center gap-2.5 text-[13px] font-medium text-[var(--color-ink-soft)]">
         <span className="relative flex h-6 w-6 shrink-0 items-center justify-center">

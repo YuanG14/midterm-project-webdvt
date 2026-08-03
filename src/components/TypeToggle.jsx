@@ -23,7 +23,7 @@ function TypeToggle({ value, onChange }) {
             role="radio"
             aria-checked={isSelected}
             onClick={() => onChange(optionValue)}
-            className={`flex items-center justify-center gap-1.5 rounded-lg px-3 py-2.5 text-[13px] font-semibold transition-all duration-200 ${
+            className={`flex items-center justify-center gap-1.5 rounded-lg px-3 py-2.5 text-[13px] font-semibold transition-all duration-200 active:scale-[0.97] ${
               isSelected
                 ? isIncome
                   ? "bg-[var(--color-primary)] text-white shadow-sm"
