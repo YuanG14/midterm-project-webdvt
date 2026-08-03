@@ -25,7 +25,7 @@ function ConfirmationModal({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-[var(--color-ink)]/40 px-4 backdrop-blur-sm"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-[var(--color-ink)]/50 px-4 backdrop-blur-sm"
       role="presentation"
       onClick={onCancel}
     >
@@ -34,29 +34,31 @@ function ConfirmationModal({
         aria-modal="true"
         aria-labelledby="confirmation-modal-title"
         onClick={(event) => event.stopPropagation()}
-        className="w-full max-w-sm rounded-2xl border border-[var(--color-border-soft)] bg-[var(--color-surface)] p-6 shadow-[var(--shadow-float)] animate-[fadeIn_0.15s_ease-out]"
+        className="w-full max-w-sm rounded-2xl border border-[var(--color-border-soft)] bg-[var(--color-surface)] p-7 text-center shadow-[var(--shadow-float)] animate-[fadeIn_0.2s_var(--ease-premium)]"
       >
-        <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-full bg-[var(--color-danger)]/10">
-          <AlertTriangle className="h-5 w-5 text-[var(--color-danger)]" strokeWidth={2} />
+        <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-[var(--color-danger)]/10">
+          <AlertTriangle className="h-6 w-6 text-[var(--color-danger)]" strokeWidth={2} />
         </div>
 
-        <h2 id="confirmation-modal-title" className="font-display text-base font-semibold text-[var(--color-ink)]">
+        <h2 id="confirmation-modal-title" className="font-display text-lg font-bold text-[var(--color-ink)]">
           {title}
         </h2>
-        <p className="mt-2 text-[13.5px] leading-relaxed text-[var(--color-ink-soft)]">{message}</p>
+        <p className="mx-auto mt-2 max-w-xs text-[13.5px] leading-relaxed text-[var(--color-ink-soft)]">
+          {message}
+        </p>
 
-        <div className="mt-6 flex flex-col-reverse gap-2.5 sm:flex-row sm:justify-end">
+        <div className="mt-7 flex flex-col-reverse gap-2.5 sm:flex-row sm:justify-center">
           <button
             type="button"
             onClick={onCancel}
-            className="inline-flex items-center justify-center rounded-full border border-[var(--color-border-soft)] bg-[var(--color-canvas)] px-4 py-2 text-[13px] font-semibold text-[var(--color-ink)] transition-colors duration-200 hover:bg-[var(--color-border-soft)]/60"
+            className="inline-flex flex-1 items-center justify-center rounded-full border border-[var(--color-border-soft)] bg-[var(--color-canvas)] px-4 py-2.5 text-[13px] font-semibold text-[var(--color-ink)] transition-colors duration-200 hover:bg-[var(--color-border-soft)]/60 sm:flex-none"
           >
             {cancelLabel}
           </button>
           <button
             type="button"
             onClick={onConfirm}
-            className="inline-flex items-center justify-center rounded-full bg-[var(--color-danger)] px-4 py-2 text-[13px] font-semibold text-white transition-transform duration-200 hover:-translate-y-0.5"
+            className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-full bg-[var(--color-danger)] px-4 py-2.5 text-[13px] font-semibold text-white shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[var(--shadow-raised)] sm:flex-none"
           >
             {confirmLabel}
           </button>
