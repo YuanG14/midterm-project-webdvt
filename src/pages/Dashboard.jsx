@@ -1,11 +1,10 @@
 import { useMemo, useState } from "react";
-import { Link } from "react-router-dom";
-import { Wallet, TrendingUp, TrendingDown, PlusCircle } from "lucide-react";
-import PageHeader from "../components/PageHeader";
-import SummaryCard from "../components/SummaryCard";
+import { Wallet, TrendingUp, TrendingDown, SearchX } from "lucide-react";
+import DashboardHeader from "../components/DashboardHeader";
+import FinancialCard from "../components/FinancialCard";
 import FilterBar from "../components/FilterBar";
 import TransactionCard from "../components/TransactionCard";
-import EmptyState from "../components/EmptyState";
+import DashboardEmptyState from "../components/DashboardEmptyState";
 import { useTransactions } from "../hooks/useTransactions";
 import { formatCurrency } from "../utils/formatCurrency";
 
@@ -33,37 +32,24 @@ function Dashboard() {
 
   return (
     <div>
-      <PageHeader
-        eyebrow="Overview"
-        title="Dashboard"
-        description="A quick snapshot of your balances, recent activity, and spending trends."
-        action={
-          <Link
-            to="/add"
-            className="inline-flex items-center gap-1.5 rounded-full bg-[var(--color-ink)] px-4 py-2.5 text-[13px] font-semibold text-[var(--color-canvas)] shadow-sm transition-transform duration-200 hover:-translate-y-0.5"
-          >
-            <PlusCircle className="h-4 w-4" strokeWidth={2} />
-            Add Transaction
-          </Link>
-        }
-      />
+      <DashboardHeader />
 
       <div className="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        <SummaryCard
+        <FinancialCard
           icon={Wallet}
           label="Current Balance"
           value={formatCurrency(balance)}
           hint="Income minus expenses, updated in real time."
           accent="balance"
         />
-        <SummaryCard
+        <FinancialCard
           icon={TrendingUp}
           label="Total Income"
           value={formatCurrency(incomeTotal)}
           hint="All money coming in."
           accent="income"
         />
-        <SummaryCard
+        <FinancialCard
           icon={TrendingDown}
           label="Total Expenses"
           value={formatCurrency(expenseTotal)}
@@ -82,16 +68,13 @@ function Dashboard() {
         />
       )}
 
-      {!hasTransactions && (
-        <EmptyState
-          icon={Wallet}
-          title="No transactions yet"
-          message="No transactions yet. Start tracking your finances by adding your first transaction."
-        />
-      )}
+      {!hasTransactions && <DashboardEmptyState />}
 
       {hasTransactions && !hasFilteredResults && (
         <div className="rounded-2xl border border-dashed border-[var(--color-border-soft)] bg-[var(--color-surface)] px-6 py-12 text-center">
+          <div className="mx-auto mb-3 flex h-11 w-11 items-center justify-center rounded-full bg-[var(--color-ink)]/5">
+            <SearchX className="h-5 w-5 text-[var(--color-ink-soft)]" strokeWidth={1.75} />
+          </div>
           <p className="text-sm font-medium text-[var(--color-ink)]">No matching transactions</p>
           <p className="mt-1 text-[13px] text-[var(--color-ink-soft)]">
             Try a different category or type filter.
@@ -101,8 +84,14 @@ function Dashboard() {
 
       {hasTransactions && hasFilteredResults && (
         <div className="flex flex-col gap-3">
-          {filteredTransactions.map((transaction) => (
-            <TransactionCard key={transaction.id} transaction={transaction} />
+          {filteredTransactions.map((transaction, index) => (
+            <div
+              key={transaction.id}
+              className="animate-[fadeIn_0.25s_ease-out_backwards]"
+              style={{ animationDelay: `${Math.min(index, 8) * 30}ms` }}
+            >
+              <TransactionCard transaction={transaction} />
+            </div>
           ))}
         </div>
       )}

@@ -2,15 +2,30 @@ import { memo } from "react";
 import { Link } from "react-router-dom";
 import { ArrowDownRight, ArrowUpRight, ChevronRight } from "lucide-react";
 import { formatCurrency } from "../utils/formatCurrency";
+import { getCategoryIcon } from "../utils/categoryIcons";
+
+/**
+ * Formats a date as "Today", "Yesterday", or a short absolute date —
+ * purely a display concern, the underlying transaction.date is untouched.
+ */
+function formatRelativeDate(dateString) {
+  const date = new Date(dateString);
+  const today = new Date();
+  const startOfToday = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+  const startOfDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+  const dayDiff = Math.round((startOfToday - startOfDate) / 86_400_000);
+
+  if (dayDiff === 0) return "Today";
+  if (dayDiff === 1) return "Yesterday";
+
+  return date.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+}
 
 function TransactionCard({ transaction }) {
   const isIncome = transaction.type === "income";
-
-  const formattedDate = new Date(transaction.date).toLocaleDateString("en-US", {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-  });
+  const CategoryIcon = getCategoryIcon(transaction.category);
+  const Icon = CategoryIcon ?? (isIncome ? ArrowUpRight : ArrowDownRight);
+  const formattedDate = formatRelativeDate(transaction.date);
 
   return (
     <Link
@@ -18,22 +33,30 @@ function TransactionCard({ transaction }) {
       className="group flex items-center gap-4 rounded-xl border border-[var(--color-border-soft)] bg-[var(--color-surface)] p-4 shadow-[var(--shadow-xs)] transition-all duration-200 hover:-translate-y-0.5 hover:border-transparent hover:shadow-[var(--shadow-raised)]"
     >
       <div
-        className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full ${
+        className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-full transition-transform duration-200 group-hover:scale-105 ${
           isIncome ? "bg-[var(--color-primary)]/10" : "bg-[var(--color-danger)]/10"
         }`}
       >
-        {isIncome ? (
-          <ArrowUpRight className="h-5 w-5 text-[var(--color-primary-dark)]" strokeWidth={2} />
-        ) : (
-          <ArrowDownRight className="h-5 w-5 text-[var(--color-danger)]" strokeWidth={2} />
-        )}
+        <Icon
+          className={`h-5 w-5 ${isIncome ? "text-[var(--color-primary-dark)]" : "text-[var(--color-danger)]"}`}
+          strokeWidth={2}
+        />
       </div>
 
       <div className="min-w-0 flex-1">
         <p className="truncate font-display text-sm font-semibold text-[var(--color-ink)]">
           {transaction.title || "Untitled transaction"}
         </p>
-        <div className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-[12.5px] text-[var(--color-ink-soft)]">
+        <div className="mt-1.5 flex flex-wrap items-center gap-1.5 text-[12.5px] text-[var(--color-ink-soft)]">
+          <span
+            className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[11px] font-semibold ${
+              isIncome
+                ? "bg-[var(--color-primary)]/10 text-[var(--color-primary-dark)]"
+                : "bg-[var(--color-danger)]/10 text-[var(--color-danger)]"
+            }`}
+          >
+            {isIncome ? "Income" : "Expense"}
+          </span>
           <span className="inline-flex items-center rounded-full bg-[var(--color-canvas)] px-2 py-0.5 font-medium">
             {transaction.category || "Uncategorized"}
           </span>
@@ -54,7 +77,7 @@ function TransactionCard({ transaction }) {
       </div>
 
       <ChevronRight
-        className="h-4 w-4 shrink-0 text-[var(--color-ink-soft)] opacity-0 transition-opacity duration-200 group-hover:opacity-100"
+        className="h-4 w-4 shrink-0 text-[var(--color-ink-soft)] opacity-0 transition-all duration-200 group-hover:translate-x-0.5 group-hover:opacity-100"
         strokeWidth={2}
       />
     </Link>
