@@ -18,11 +18,19 @@
   --color-warning: #b4790e;
 
   /*
-    Design-system additions (Phase 1). These are new tokens layered on top
-    of the existing palette above — nothing above this line has changed,
-    so no page currently rendering with --color-canvas/--color-ink/etc.
-    is affected. Later phases will draw on the tokens below as components
-    are individually redesigned.
+    Design system (Phase 1). Tokens layered on top of the base palette
+    above — nothing above this line has changed, so no currently-rendering
+    page is affected by this file alone.
+
+    Direction: restrained "editorial luxury" fintech — Stripe / Linear /
+    Copilot Money / Apple Wallet as reference points. Depth and hierarchy
+    come from type, spacing and layout, not decorative gradients, glow
+    blobs, or glass/blur surfaces. The current markup (GradientMesh page
+    headers, gradient hero-card glows, backdrop-blur navbar/modals) still
+    uses the old approach and will be replaced component-by-component in
+    upcoming phases — the flat/typographic primitives below (trend text,
+    accent-rule, data-row) exist so those phases have a restrained
+    alternative to build with instead of reaching for gradients again.
   */
 
   /* Secondary surface + border steps, for subtle layering (e.g. a card
@@ -466,7 +474,7 @@ textarea:focus-visible {
   }
 
   .card-interactive:hover {
-    transform: translateY(-2px);
+    transform: translateY(-1px);
     box-shadow: var(--shadow-card-hover);
   }
 
@@ -562,6 +570,66 @@ textarea:focus-visible {
   .badge-neutral {
     background-color: var(--color-surface-sunken);
     color: var(--color-ink-soft);
+  }
+
+  /* --- Trend text ---------------------------------------------------------
+     Plain colored text + icon for inline deltas (e.g. "+12.4% vs last
+     month"), the Stripe/Copilot convention — no pill background, unlike
+     .badge-success/.badge-danger above which are for status chips. */
+  .trend {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.78125rem;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .trend-positive {
+    color: var(--color-success-dark);
+  }
+
+  .trend-negative {
+    color: var(--color-danger);
+  }
+
+  .trend-neutral {
+    color: var(--color-ink-soft);
+  }
+
+  /* --- Accent rule ----------------------------------------------------
+     A restrained, single-color 2px underline for page/section headers —
+     the flat replacement for decorative gradient-mesh header backgrounds.
+     Width is intentionally short; it reads as a typographic accent, not
+     a banner. */
+  .accent-rule {
+    display: block;
+    height: 2px;
+    width: 2.5rem;
+    border-radius: var(--radius-pill);
+    background-color: var(--color-primary);
+  }
+
+  /* --- Data rows --------------------------------------------------------
+     Dense list/table rows (transaction lists, category breakdowns) in the
+     Linear/Stripe convention: hairline dividers between rows, a quiet
+     background tint on hover, no per-row card chrome. Pair with
+     .card/.card-padded as the containing surface. */
+  .data-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding-block: 0.875rem;
+    border-top: 1px solid var(--color-border-soft);
+    transition: background-color var(--duration-base) var(--ease-premium);
+  }
+
+  .data-row:first-child {
+    border-top: none;
+  }
+
+  .data-row:hover {
+    background-color: var(--color-surface-hover);
   }
 }
 
