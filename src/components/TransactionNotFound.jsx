@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import { ArrowLeft, SearchX } from "lucide-react";
-import GradientMesh from "./GradientMesh";
 
 /**
  * Premium "Transaction Not Found" state, shown when the :id in the route
@@ -11,8 +10,8 @@ import GradientMesh from "./GradientMesh";
 function TransactionNotFound() {
   return (
     <div>
-      <div className="relative mb-8">
-        <GradientMesh />
+      <div className="mb-8">
+        <span className="accent-rule mb-3" />
         <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <p className="mb-2 text-xs font-semibold uppercase tracking-[0.14em] text-[var(--color-primary-dark)]">

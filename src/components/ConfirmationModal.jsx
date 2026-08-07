@@ -29,7 +29,7 @@ function ConfirmationModal({
     <AnimatePresence>
       {open && (
         <motion.div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-[var(--color-ink)]/50 px-4 backdrop-blur-sm"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-[var(--color-ink)]/60 px-4"
           role="presentation"
           onClick={onCancel}
           initial="initial"
