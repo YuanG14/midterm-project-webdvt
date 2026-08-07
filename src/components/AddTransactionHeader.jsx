@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import { ArrowLeft, ReceiptText } from "lucide-react";
-import GradientMesh from "./GradientMesh";
 
 /**
  * Premium Add-Transaction-only header. Kept separate from the shared
@@ -9,14 +8,14 @@ import GradientMesh from "./GradientMesh";
  */
 function AddTransactionHeader() {
   return (
-    <div className="relative mb-10">
-      <GradientMesh />
+    <div className="mb-10">
       <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
         <div className="flex items-start gap-4">
-          <div className="hidden h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-accent)] shadow-[var(--shadow-xs)] sm:flex">
+          <div className="hidden h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[var(--color-primary)] sm:flex">
             <ReceiptText className="h-5.5 w-5.5 text-white" strokeWidth={2} />
           </div>
           <div>
+            <span className="accent-rule mb-3" />
             <p className="mb-2 text-xs font-semibold uppercase tracking-[0.14em] text-[var(--color-primary-dark)]">
               New Entry
             </p>
