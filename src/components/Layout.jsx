@@ -9,7 +9,7 @@ function Layout() {
   return (
     <div className="min-h-screen bg-[var(--color-canvas)]">
       <Navbar />
-      <main className="mx-auto max-w-6xl px-5 py-10 sm:px-8 sm:py-14 lg:px-10">
+      <main className="page-shell py-10 sm:py-14">
         <AnimatePresence mode="wait">
           <PageTransition key={location.pathname}>
             <Outlet />
