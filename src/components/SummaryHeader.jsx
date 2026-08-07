@@ -1,5 +1,4 @@
 import { ChartSpline } from "lucide-react";
-import GradientMesh from "./GradientMesh";
 
 /**
  * Premium Summary-only header. Kept separate from the shared PageHeader
@@ -7,13 +6,13 @@ import GradientMesh from "./GradientMesh";
  */
 function SummaryHeader() {
   return (
-    <div className="relative mb-10">
-      <GradientMesh />
+    <div className="mb-10">
       <div className="flex items-start gap-4">
-        <div className="hidden h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-[var(--color-accent)] to-[var(--color-primary)] shadow-[var(--shadow-xs)] sm:flex">
+        <div className="hidden h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[var(--color-accent)] sm:flex">
           <ChartSpline className="h-5.5 w-5.5 text-white" strokeWidth={2} />
         </div>
         <div>
+          <span className="accent-rule mb-3" />
           <p className="mb-2 text-xs font-semibold uppercase tracking-[0.14em] text-[var(--color-primary-dark)]">
             Insights
           </p>

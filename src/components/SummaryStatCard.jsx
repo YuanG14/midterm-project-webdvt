@@ -2,28 +2,24 @@ import { memo } from "react";
 
 const ACCENTS = {
   balance: {
-    gradient: "from-[var(--color-accent)] to-[var(--color-accent)]/60",
+    bar: "bg-[var(--color-accent)]",
     iconWrap: "bg-[var(--color-accent)]/10",
     iconColor: "text-[var(--color-accent)]",
-    glow: "from-[var(--color-accent)]/15",
   },
   income: {
-    gradient: "from-[var(--color-primary)] to-[var(--color-primary-dark)]",
+    bar: "bg-[var(--color-primary)]",
     iconWrap: "bg-[var(--color-primary)]/10",
     iconColor: "text-[var(--color-primary-dark)]",
-    glow: "from-[var(--color-primary)]/15",
   },
   expense: {
-    gradient: "from-[var(--color-danger)] to-[var(--color-danger)]/70",
+    bar: "bg-[var(--color-danger)]",
     iconWrap: "bg-[var(--color-danger)]/10",
     iconColor: "text-[var(--color-danger)]",
-    glow: "from-[var(--color-danger)]/15",
   },
   count: {
-    gradient: "from-[var(--color-ink)] to-[var(--color-ink)]/50",
+    bar: "bg-[var(--color-ink)]",
     iconWrap: "bg-[var(--color-ink)]/10",
     iconColor: "text-[var(--color-ink)]",
-    glow: "from-[var(--color-ink)]/10",
   },
 };
 
@@ -38,16 +34,9 @@ function SummaryStatCard({ icon: Icon, label, value, hint, accent = "balance", s
   return (
     <div
       style={style}
-      className="group relative animate-[fadeIn_0.5s_var(--ease-premium)_backwards] overflow-hidden rounded-2xl border border-[var(--color-border-soft)] bg-[var(--color-surface)] p-6 shadow-[var(--shadow-card)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[var(--shadow-card-hover)]"
+      className="group relative animate-[fadeIn_0.5s_var(--ease-premium)_backwards] overflow-hidden rounded-2xl border border-[var(--color-border-soft)] bg-[var(--color-surface)] p-6 shadow-[var(--shadow-card)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[var(--shadow-card-hover)]"
     >
-      <div
-        className={`pointer-events-none absolute -right-8 -top-12 h-36 w-36 rounded-full bg-gradient-to-br ${styles.glow} to-transparent blur-2xl transition-opacity duration-300 group-hover:opacity-90`}
-        aria-hidden="true"
-      />
-      <div
-        className={`absolute inset-x-0 top-0 h-1 bg-gradient-to-r ${styles.gradient} opacity-80`}
-        aria-hidden="true"
-      />
+      <div className={`absolute inset-x-0 top-0 h-1 ${styles.bar}`} aria-hidden="true" />
 
       <div className="relative flex items-start justify-between">
         <div className="min-w-0">
@@ -59,7 +48,7 @@ function SummaryStatCard({ icon: Icon, label, value, hint, accent = "balance", s
           </p>
         </div>
         <div
-          className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${styles.iconWrap} transition-transform duration-300 group-hover:scale-110`}
+          className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${styles.iconWrap} transition-transform duration-300 group-hover:scale-105`}
         >
           <Icon className={`h-5 w-5 ${styles.iconColor}`} strokeWidth={2} />
         </div>
