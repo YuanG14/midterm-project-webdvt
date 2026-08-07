@@ -15,9 +15,9 @@ function DashboardHeader() {
 
   return (
     <div className="mb-10">
-      <span className="accent-rule mb-4" />
       <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
         <div>
+          <span className="accent-rule mb-3" />
           <p className="mb-2 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.14em] text-[var(--color-primary-dark)]">
             {today}
           </p>

@@ -11,9 +11,9 @@ function TransactionNotFound() {
   return (
     <div>
       <div className="mb-8">
-        <span className="accent-rule mb-3" />
         <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
           <div>
+            <span className="accent-rule mb-3" />
             <p className="mb-2 text-xs font-semibold uppercase tracking-[0.14em] text-[var(--color-primary-dark)]">
               Record
             </p>
