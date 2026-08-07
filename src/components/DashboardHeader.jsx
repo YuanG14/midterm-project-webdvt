@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import { PlusCircle } from "lucide-react";
-import GradientMesh from "./GradientMesh";
 
 /**
  * Premium Dashboard-only header. Kept separate from the shared PageHeader
@@ -15,8 +14,8 @@ function DashboardHeader() {
   });
 
   return (
-    <div className="relative mb-10">
-      <GradientMesh />
+    <div className="mb-10">
+      <span className="accent-rule mb-4" />
       <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <p className="mb-2 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.14em] text-[var(--color-primary-dark)]">
