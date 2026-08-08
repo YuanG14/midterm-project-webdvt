@@ -7,9 +7,9 @@ const ACCENTS = {
     iconColor: "text-[var(--color-accent)]",
   },
   income: {
-    bar: "bg-[var(--color-primary)]",
-    iconWrap: "bg-[var(--color-primary)]/10",
-    iconColor: "text-[var(--color-primary-dark)]",
+    bar: "bg-[var(--color-income)]",
+    iconWrap: "bg-[var(--color-income)]/10",
+    iconColor: "text-[var(--color-income-dark)]",
   },
   expense: {
     bar: "bg-[var(--color-danger)]",

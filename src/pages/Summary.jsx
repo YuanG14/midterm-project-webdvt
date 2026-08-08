@@ -140,35 +140,49 @@ function Summary() {
             />
           </div>
 
-          {/* Spending Breakdown + Chart */}
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-5">
-            <ChartCard className="md:col-span-2">
-              <AnalyticsSection icon={PieChart} title="Expense Distribution">
-                {categoryBreakdown.length > 0 ? (
-                  <SpendingChart data={categoryBreakdown} total={expenseTotal} />
-                ) : (
-                  <p className="py-10 text-center text-[13px] text-[var(--color-ink-soft)]">
-                    No expenses recorded yet.
-                  </p>
-                )}
-              </AnalyticsSection>
-            </ChartCard>
+          {/* Spending Breakdown — the visual centerpiece: a category donut
+              paired with the full ranked category list, using real
+              transaction data only. */}
+          <div>
+            <div className="mb-4 flex items-center gap-2.5">
+              <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-[var(--color-ink)]/[0.06]">
+                <PieChart className="h-3.5 w-3.5 text-[var(--color-ink-soft)]" strokeWidth={2.25} />
+              </span>
+              <div>
+                <p className="font-display text-sm font-semibold text-[var(--color-ink)]">Spending Breakdown</p>
+                <p className="text-[12px] text-[var(--color-ink-soft)]">Where your money is going, by category.</p>
+              </div>
+            </div>
 
-            <ChartCard className="md:col-span-3">
-              <AnalyticsSection
-                icon={ListOrdered}
-                title="Top Spending Categories"
-                hint={categoryBreakdown.length > 0 ? `${categoryBreakdown.length} categories` : undefined}
-              >
-                {categoryBreakdown.length > 0 ? (
-                  <CategoryBreakdown data={categoryBreakdown} />
-                ) : (
-                  <p className="py-10 text-center text-[13px] text-[var(--color-ink-soft)]">
-                    No expenses recorded yet.
-                  </p>
-                )}
-              </AnalyticsSection>
-            </ChartCard>
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-5">
+              <ChartCard className="md:col-span-2">
+                <AnalyticsSection icon={PieChart} title="Expense Distribution">
+                  {categoryBreakdown.length > 0 ? (
+                    <SpendingChart data={categoryBreakdown} total={expenseTotal} />
+                  ) : (
+                    <p className="py-10 text-center text-[13px] text-[var(--color-ink-soft)]">
+                      No expenses recorded yet.
+                    </p>
+                  )}
+                </AnalyticsSection>
+              </ChartCard>
+
+              <ChartCard className="md:col-span-3">
+                <AnalyticsSection
+                  icon={ListOrdered}
+                  title="Top Spending Categories"
+                  hint={categoryBreakdown.length > 0 ? `${categoryBreakdown.length} categories` : undefined}
+                >
+                  {categoryBreakdown.length > 0 ? (
+                    <CategoryBreakdown data={categoryBreakdown} />
+                  ) : (
+                    <p className="py-10 text-center text-[13px] text-[var(--color-ink-soft)]">
+                      No expenses recorded yet.
+                    </p>
+                  )}
+                </AnalyticsSection>
+              </ChartCard>
+            </div>
           </div>
 
           {/* Recent Insights */}
@@ -203,7 +217,7 @@ function Summary() {
                     label="Largest Income Source"
                     value={insights.largestIncomeSource[0]}
                     hint={formatCurrency(insights.largestIncomeSource[1])}
-                    tone="primary"
+                    tone="success"
                   />
                 </div>
               )}
@@ -212,7 +226,7 @@ function Summary() {
                   icon={ArrowUpRight}
                   label="Income Transactions"
                   value={String(insights.incomeCount)}
-                  tone="primary"
+                  tone="success"
                 />
               </div>
               <div className="animate-[fadeIn_0.4s_var(--ease-premium)_backwards]" style={{ animationDelay: "200ms" }}>
@@ -228,7 +242,7 @@ function Summary() {
                   icon={Calculator}
                   label="Average Expense"
                   value={formatCurrency(insights.averageExpense)}
-                  tone="accent"
+                  tone="danger"
                 />
               </div>
               <div className="animate-[fadeIn_0.4s_var(--ease-premium)_backwards]" style={{ animationDelay: "300ms" }}>
@@ -236,7 +250,7 @@ function Summary() {
                   icon={Calculator}
                   label="Average Income"
                   value={formatCurrency(insights.averageIncome)}
-                  tone="accent"
+                  tone="success"
                 />
               </div>
             </div>

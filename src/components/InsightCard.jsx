@@ -3,6 +3,7 @@ import { memo } from "react";
 const TONES = {
   neutral: "bg-[var(--color-canvas)] text-[var(--color-ink-soft)]",
   primary: "bg-[var(--color-primary)]/10 text-[var(--color-primary-dark)]",
+  success: "bg-[var(--color-income)]/10 text-[var(--color-income-dark)]",
   danger: "bg-[var(--color-danger)]/10 text-[var(--color-danger)]",
   accent: "bg-[var(--color-accent)]/10 text-[var(--color-accent)]",
 };
