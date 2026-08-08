@@ -22,10 +22,10 @@ function DashboardHeader() {
             {today}
           </p>
           <h1 className="font-display text-3xl font-bold tracking-tight text-[var(--color-ink)] sm:text-4xl">
-            Welcome back
+            Financial Overview
           </h1>
           <p className="mt-3 max-w-xl text-[15px] leading-relaxed text-[var(--color-ink-soft)]">
-            Here's your financial overview — balances, recent activity, and spending trends, all in one place.
+            Real-time insights into your balance, income, and spending — all in one place.
           </p>
         </div>
         <div className="shrink-0">
