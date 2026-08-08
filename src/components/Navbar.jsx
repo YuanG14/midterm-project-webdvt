@@ -13,10 +13,10 @@ const links = [
 function BrandMark() {
   return (
     <div className="flex items-center gap-2.5">
-      <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[var(--color-primary)]">
-        <Wallet className="h-4 w-4 text-white" strokeWidth={2} />
+      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[var(--color-primary)]">
+        <Wallet className="h-4.5 w-4.5 text-white" strokeWidth={2} />
       </div>
-      <span className="font-display text-[15px] font-bold tracking-tight text-[var(--color-ink)]">
+      <span className="font-display text-base font-bold tracking-tight text-[var(--color-ink)]">
         Ledger
       </span>
     </div>
@@ -33,8 +33,8 @@ function Navbar() {
   }, [location.pathname]);
 
   return (
-    <header className="sticky top-0 z-20 border-b border-[var(--color-border-soft)] bg-[var(--color-surface)] shadow-[var(--shadow-xs)]">
-      <div className="page-shell flex items-center justify-between py-3.5">
+    <header className="border-b border-[var(--color-border-soft)]">
+      <div className="page-shell flex items-center justify-between py-4 sm:py-5">
         <BrandMark />
 
         {/* Desktop / tablet: inline links, housed in a segmented pill bar */}

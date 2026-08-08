@@ -61,6 +61,7 @@
   --radius-control: 0.875rem;
   --radius-card: 1.25rem;
   --radius-card-lg: 1.75rem;
+  --radius-shell: 2rem;
   --radius-pill: 999px;
 
   /* Easing library. --ease-premium (unchanged) remains the default for
@@ -89,6 +90,11 @@
   --shadow-raised: 0 8px 20px -10px rgba(16, 21, 28, 0.18);
   --shadow-float: 0 8px 24px -6px rgba(16, 21, 28, 0.25);
   --shadow-inset: inset 0 1px 2px rgba(16, 21, 28, 0.06);
+  /* Outer "app surface" shadow — the large rounded panel that now houses
+     the navbar + page content on a light gray canvas, per the Raxon-style
+     reference. Deliberately soft/diffuse rather than the tighter card
+     shadows above, since it's lifting a much larger surface. */
+  --shadow-shell: 0 1px 2px rgba(16, 21, 28, 0.03), 0 32px 64px -28px rgba(16, 21, 28, 0.16);
 }
 
 html {
@@ -127,6 +133,7 @@ html.dark {
   --shadow-raised: 0 8px 20px -10px rgba(0, 0, 0, 0.6);
   --shadow-float: 0 8px 24px -6px rgba(0, 0, 0, 0.65);
   --shadow-inset: inset 0 1px 2px rgba(0, 0, 0, 0.35);
+  --shadow-shell: 0 1px 2px rgba(0, 0, 0, 0.3), 0 32px 64px -28px rgba(0, 0, 0, 0.7);
 }
 
 html,

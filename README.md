@@ -111,3 +111,18 @@ Visual polish pass on the Summary page's existing analytics presentation (stat c
 ### Confirmation
 
 No changes to `useTransactions.js`, category totals/percentage math, `categoryColors.js`, insight calculations, React Router, Theme Context, or any other page (Dashboard, Add Transaction, Transaction Detail). All Summary figures, the donut chart's underlying data, and category ranking are computed exactly as before — only their presentation changed. Light/dark theme switching continues to work globally via the existing `ThemeContext`.
+
+## UI Revamp — Phase 1 — Reference-Based Design System & App Shell
+
+Starting a fresh, reference-driven visual pass (per the uploaded "Raxon" fintech dashboard reference). This phase only touches the global app shell and navigation — no page content was redesigned yet.
+
+### Changes
+
+- **`Layout.jsx`** — introduced the reference's signature "canvas + large rounded white surface" composition: the app now sits on the light gray `--color-canvas` background inside outer gutters, with the navbar and all page content living inside one large rounded (`--radius-shell`), soft-shadowed (`--shadow-shell`) white panel — instead of a full-bleed sticky navbar directly on the gray background.
+- **`Navbar.jsx`** — restyled to sit as the top row *inside* that panel: dropped the sticky positioning and its own border/shadow (which are no longer needed now that it's part of the panel), and gave it slightly taller vertical padding and a marginally larger brand mark to match the reference's nav proportions. No links, routes, or the mobile menu's behavior changed.
+- **`NavItem.jsx`** — the active desktop nav pill now fills with the dark ink color (matching the reference's dark active tab) instead of orange, so orange stays reserved for primary actions and financial accents only — the same color-hierarchy principle the reference uses.
+- **`index.css`** — added two new design tokens (`--radius-shell`, `--shadow-shell` with a dark-mode variant) to support the panel above. No existing tokens changed value.
+
+### Confirmation
+
+No changes to any page component (Dashboard, Add Transaction, Transaction Detail, Summary), `useTransactions.js`, Theme Context, React Router, calculations, filtering, or CRUD. This phase is a global shell/chrome change only — later phases will restyle each page's content to match the reference more closely.

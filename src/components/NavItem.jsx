@@ -49,7 +49,7 @@ function NavItem({ to, label, icon: Icon, end, onClick, variant = "pill" }) {
       className={({ isActive }) =>
         `flex items-center gap-2 rounded-full px-3.5 py-2 text-[13.5px] font-medium transition-all duration-200 active:scale-[0.97] ${
           isActive
-            ? "bg-[var(--color-primary)] text-white shadow-[var(--shadow-xs)]"
+            ? "bg-[var(--color-ink)] text-[var(--color-canvas)] shadow-[var(--shadow-xs)]"
             : "text-[var(--color-ink-soft)] hover:bg-[var(--color-surface)] hover:text-[var(--color-ink)]"
         }`
       }
