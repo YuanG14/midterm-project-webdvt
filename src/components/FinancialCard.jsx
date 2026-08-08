@@ -19,12 +19,13 @@ const ACCENTS = {
 };
 
 /**
- * Dashboard-only financial stat card. A richer, more "hero" take on the
- * shared SummaryCard (used on the Summary page) — kept as its own
- * component so this redesign doesn't change Summary's look.
+ * Dashboard-only financial stat card. A richer take on the shared
+ * SummaryCard (used on the Summary page) — kept as its own component so
+ * this redesign doesn't change Summary's look.
  *
- * `hero` is used for the large Current Balance tile in the bento grid:
- * bigger padding/type, otherwise identical structure to the compact cards.
+ * `hero` is used for the wider Current Balance tile in the bento grid —
+ * it only affects width via `className`; padding/type match the compact
+ * cards so all three tiles stay aligned on the same grid lines.
  */
 function FinancialCard({ icon: Icon, label, value, hint, accent = "balance", hero = false, style, className = "" }) {
   const styles = ACCENTS[accent] ?? ACCENTS.balance;
@@ -32,9 +33,7 @@ function FinancialCard({ icon: Icon, label, value, hint, accent = "balance", her
   return (
     <div
       style={style}
-      className={`group relative flex h-full animate-[fadeIn_0.5s_var(--ease-premium)_backwards] flex-col overflow-hidden rounded-[var(--radius-card-lg)] border border-[var(--color-border-soft)] bg-[var(--color-surface)] shadow-[var(--shadow-card)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[var(--shadow-card-hover)] ${
-        hero ? "justify-between p-7 sm:p-8" : "p-6"
-      } ${className}`}
+      className={`group relative flex h-full animate-[fadeIn_0.5s_var(--ease-premium)_backwards] flex-col overflow-hidden rounded-[var(--radius-card-lg)] border border-[var(--color-border-soft)] bg-[var(--color-surface)] p-6 shadow-[var(--shadow-card)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[var(--shadow-card-hover)] ${className}`}
     >
       <div className={`absolute inset-x-0 top-0 h-1 ${styles.bar}`} aria-hidden="true" />
 
@@ -47,12 +46,8 @@ function FinancialCard({ icon: Icon, label, value, hint, accent = "balance", her
         </div>
       </div>
 
-      <div className={hero ? "relative mt-6 min-w-0" : "relative mt-3 min-w-0"}>
-        <p
-          className={`truncate font-display font-mono-tabular font-bold tracking-tight text-[var(--color-ink)] ${
-            hero ? "text-[30px] sm:text-[38px] lg:text-[46px]" : "text-[24px] sm:text-[26px] lg:text-[30px]"
-          }`}
-        >
+      <div className="relative mt-3 min-w-0">
+        <p className="truncate font-display font-mono-tabular font-bold tracking-tight text-[var(--color-ink)] text-[24px] sm:text-[26px] lg:text-[30px]">
           {value}
         </p>
         {hint && <p className="mt-3 text-[13px] leading-relaxed text-[var(--color-ink-soft)]">{hint}</p>}
