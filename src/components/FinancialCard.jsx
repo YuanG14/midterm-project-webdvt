@@ -47,10 +47,10 @@ function FinancialCard({ icon: Icon, label, value, hint, accent = "balance", her
         </div>
       </div>
 
-      <div className={hero ? "relative mt-6" : "relative mt-3"}>
+      <div className={hero ? "relative mt-6 min-w-0" : "relative mt-3 min-w-0"}>
         <p
-          className={`font-display font-mono-tabular font-bold tracking-tight text-[var(--color-ink)] ${
-            hero ? "text-[38px] sm:text-[46px]" : "text-[26px] sm:text-[30px]"
+          className={`truncate font-display font-mono-tabular font-bold tracking-tight text-[var(--color-ink)] ${
+            hero ? "text-[30px] sm:text-[38px] lg:text-[46px]" : "text-[24px] sm:text-[26px] lg:text-[30px]"
           }`}
         >
           {value}

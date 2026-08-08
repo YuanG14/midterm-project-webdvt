@@ -8,7 +8,7 @@ import { ArrowLeft, ReceiptText } from "lucide-react";
  */
 function AddTransactionHeader() {
   return (
-    <div className="mb-10">
+    <div className="mb-8 sm:mb-10">
       <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
         <div className="flex items-start gap-4">
           <div className="hidden h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[var(--color-primary)] sm:flex">

@@ -71,7 +71,7 @@ function TransactionForm() {
       <form
         onSubmit={handleSubmit}
         noValidate
-        className="flex flex-col gap-8 rounded-[var(--radius-card-lg)] border border-[var(--color-border-soft)] bg-[var(--color-surface)] p-6 shadow-[var(--shadow-card)] sm:p-8"
+        className="flex flex-col gap-6 rounded-[var(--radius-card-lg)] border border-[var(--color-border-soft)] bg-[var(--color-surface)] p-5 shadow-[var(--shadow-card)] sm:gap-8 sm:p-8"
       >
         {/* 1. Transaction type — sets the tone (and available categories)
             for everything below it, so it comes first. */}

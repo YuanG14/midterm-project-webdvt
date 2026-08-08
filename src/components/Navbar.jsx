@@ -53,7 +53,7 @@ function Navbar() {
           <button
             type="button"
             onClick={() => setOpen((prev) => !prev)}
-            className="flex h-9 w-9 items-center justify-center rounded-lg text-[var(--color-ink-soft)] transition-colors hover:bg-[var(--color-canvas)] hover:text-[var(--color-ink)] md:hidden"
+            className="flex h-11 w-11 items-center justify-center rounded-lg text-[var(--color-ink-soft)] transition-colors hover:bg-[var(--color-canvas)] hover:text-[var(--color-ink)] md:hidden"
             aria-label={open ? "Close navigation menu" : "Open navigation menu"}
             aria-expanded={open}
           >

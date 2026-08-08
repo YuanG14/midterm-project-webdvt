@@ -12,12 +12,12 @@ function TransactionDetailHeader({ transaction }) {
   const CategoryIcon = getCategoryIcon(transaction.category) ?? Tag;
 
   return (
-    <div className="mb-8">
+    <div className="mb-6 sm:mb-8">
       <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
         <div className="flex items-start gap-4">
           <div
             className={`hidden h-12 w-12 shrink-0 items-center justify-center rounded-2xl sm:flex ${
-              isIncome ? "bg-[var(--color-income)]" : "bg-[var(--color-danger)]"
+              isIncome ? "bg-[var(--color-primary)]" : "bg-[var(--color-danger)]"
             }`}
           >
             <CategoryIcon className="h-5.5 w-5.5 text-white" strokeWidth={2} />

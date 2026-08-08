@@ -14,7 +14,7 @@ function DashboardHeader() {
   });
 
   return (
-    <div className="mb-10">
+    <div className="mb-8 sm:mb-10">
       <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <span className="accent-rule mb-3" />

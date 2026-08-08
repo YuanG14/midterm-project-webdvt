@@ -96,3 +96,18 @@ Since `PageHeader`, `SummaryCard`, and `EmptyState` are shared with other pages 
 ### Confirmation
 
 No changes to `useTransactions.js`, transaction data structure, localStorage logic, Dashboard's balance/income/expense calculations, filter logic, React Router, Theme Context, or CRUD functions. Balance, income, and expense figures, filtering behavior, and transaction navigation all work exactly as before.
+
+## UI Enhancement Phase 5 — Summary / Analytics Redesign
+
+Visual polish pass on the Summary page's existing analytics presentation (stat cards, donut chart, category breakdown, insight cards). No calculations, category logic, data sources, routing, or Theme Context logic were touched.
+
+### Changes
+
+- **`SpendingChart`** — added a compact color-key legend below the donut (category + share %) so the chart carries its own labels instead of relying only on the adjacent breakdown card; shortened the chart height slightly to make room for it and kept the center "Total Spent" label truncating safely on narrow screens.
+- **`CategoryBreakdown`** — capped the list at a max height with a themed scrollbar so a large number of categories can't stretch the card taller than the chart card beside it, keeping the bento row visually aligned.
+- **`ChartCard`** — slightly tighter padding on mobile (`p-5`, `sm:p-6`) so chart content has more room on narrow viewports without looking cramped.
+- **`Summary.jsx`** — the Expense Distribution / Top Spending Categories pair now goes to a two-column bento layout starting at the `md` breakpoint (tablet) instead of jumping straight from one column to `lg`, so tablet users see the intended side-by-side layout instead of both cards stacked full-width.
+
+### Confirmation
+
+No changes to `useTransactions.js`, category totals/percentage math, `categoryColors.js`, insight calculations, React Router, Theme Context, or any other page (Dashboard, Add Transaction, Transaction Detail). All Summary figures, the donut chart's underlying data, and category ranking are computed exactly as before — only their presentation changed. Light/dark theme switching continues to work globally via the existing `ThemeContext`.

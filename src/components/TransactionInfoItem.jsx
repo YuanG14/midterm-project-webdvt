@@ -4,7 +4,7 @@
  */
 function TransactionInfoItem({ icon: Icon, label, value }) {
   return (
-    <div className="flex items-start gap-3 rounded-[var(--radius-control)] border border-[var(--color-border-soft)] bg-[var(--color-canvas)] p-4">
+    <div className="flex items-start gap-3 rounded-xl border border-[var(--color-border-soft)] bg-[var(--color-canvas)] p-4">
       <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[var(--color-surface)] text-[var(--color-ink-soft)] shadow-[var(--shadow-xs)]">
         {Icon && <Icon className="h-4 w-4" strokeWidth={2} />}
       </span>

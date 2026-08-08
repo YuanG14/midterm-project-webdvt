@@ -141,8 +141,8 @@ function Summary() {
           </div>
 
           {/* Spending Breakdown + Chart */}
-          <div className="grid grid-cols-1 gap-4 lg:grid-cols-5">
-            <ChartCard className="lg:col-span-2">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-5">
+            <ChartCard className="md:col-span-2">
               <AnalyticsSection icon={PieChart} title="Expense Distribution">
                 {categoryBreakdown.length > 0 ? (
                   <SpendingChart data={categoryBreakdown} total={expenseTotal} />
@@ -154,7 +154,7 @@ function Summary() {
               </AnalyticsSection>
             </ChartCard>
 
-            <ChartCard className="lg:col-span-3">
+            <ChartCard className="md:col-span-3">
               <AnalyticsSection
                 icon={ListOrdered}
                 title="Top Spending Categories"
