@@ -17,7 +17,7 @@ function BrandMark() {
         <Wallet className="h-4.5 w-4.5 text-white" strokeWidth={2} />
       </div>
       <span className="font-display text-base font-bold tracking-tight text-[var(--color-ink)]">
-        Ledger
+        Cashflow
       </span>
     </div>
   );

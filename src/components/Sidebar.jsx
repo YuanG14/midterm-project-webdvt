@@ -18,7 +18,7 @@ function BrandMark() {
       </div>
       <div className="min-w-0 leading-tight">
         <p className="font-display truncate text-[15px] font-bold tracking-tight text-[var(--color-ink)]">
-          Ledger
+          Cashflow
         </p>
         <p className="truncate text-[11px] font-medium text-[var(--color-ink-soft)]">
           Personal Finance
