@@ -30,15 +30,15 @@ function TransactionCard({ transaction }) {
   return (
     <Link
       to={`/transaction/${transaction.id}`}
-      className="group flex items-center gap-4 rounded-xl border border-[var(--color-border-soft)] bg-[var(--color-surface)] p-4 shadow-[var(--shadow-xs)] transition-all duration-200 hover:-translate-y-0.5 hover:border-transparent hover:shadow-[var(--shadow-raised)] active:scale-[0.995] active:translate-y-0"
+      className="group flex items-center gap-4 rounded-[var(--radius-card)] border border-[var(--color-border-soft)] bg-[var(--color-surface)] p-4 shadow-[var(--shadow-xs)] transition-all duration-200 hover:-translate-y-0.5 hover:border-transparent hover:shadow-[var(--shadow-raised)] active:scale-[0.995] active:translate-y-0"
     >
       <div
         className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-full transition-transform duration-200 group-hover:scale-105 ${
-          isIncome ? "bg-[var(--color-primary)]/10" : "bg-[var(--color-danger)]/10"
+          isIncome ? "bg-[var(--color-income)]/10" : "bg-[var(--color-danger)]/10"
         }`}
       >
         <Icon
-          className={`h-5 w-5 ${isIncome ? "text-[var(--color-primary-dark)]" : "text-[var(--color-danger)]"}`}
+          className={`h-5 w-5 ${isIncome ? "text-[var(--color-income-dark)]" : "text-[var(--color-danger)]"}`}
           strokeWidth={2}
         />
       </div>
@@ -51,7 +51,7 @@ function TransactionCard({ transaction }) {
           <span
             className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[11px] font-semibold ${
               isIncome
-                ? "bg-[var(--color-primary)]/10 text-[var(--color-primary-dark)]"
+                ? "bg-[var(--color-income)]/10 text-[var(--color-income-dark)]"
                 : "bg-[var(--color-danger)]/10 text-[var(--color-danger)]"
             }`}
           >
@@ -68,7 +68,7 @@ function TransactionCard({ transaction }) {
       <div className="shrink-0 text-right">
         <p
           className={`font-mono-tabular text-[15px] font-bold ${
-            isIncome ? "text-[var(--color-primary-dark)]" : "text-[var(--color-danger)]"
+            isIncome ? "text-[var(--color-income-dark)]" : "text-[var(--color-danger)]"
           }`}
         >
           {isIncome ? "+" : "-"}

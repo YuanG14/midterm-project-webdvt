@@ -34,13 +34,15 @@ function Dashboard() {
     <div>
       <DashboardHeader />
 
-      <div className="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:grid-rows-2">
         <FinancialCard
           icon={Wallet}
           label="Current Balance"
           value={formatCurrency(balance)}
           hint="Income minus expenses, updated in real time."
           accent="balance"
+          hero
+          className="sm:col-span-2 lg:col-span-2 lg:row-span-2"
           style={{ animationDelay: "0ms" }}
         />
         <FinancialCard
@@ -74,7 +76,7 @@ function Dashboard() {
       {!hasTransactions && <DashboardEmptyState />}
 
       {hasTransactions && !hasFilteredResults && (
-        <div className="rounded-2xl border border-dashed border-[var(--color-border-soft)] bg-[var(--color-surface)] px-6 py-12 text-center">
+        <div className="rounded-[var(--radius-card-lg)] border border-dashed border-[var(--color-border-soft)] bg-[var(--color-surface)] px-6 py-12 text-center">
           <div className="mx-auto mb-3 flex h-11 w-11 items-center justify-center rounded-full bg-[var(--color-ink)]/5">
             <SearchX className="h-5 w-5 text-[var(--color-ink-soft)]" strokeWidth={1.75} />
           </div>

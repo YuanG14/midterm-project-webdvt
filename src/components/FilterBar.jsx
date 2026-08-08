@@ -53,7 +53,7 @@ function FilterBar({ categories, selectedCategory, onCategoryChange, selectedTyp
   }
 
   return (
-    <div className="mb-6 flex flex-col gap-3 rounded-2xl border border-[var(--color-border-soft)] bg-[var(--color-surface)] p-4 shadow-[var(--shadow-xs)] sm:flex-row sm:items-center sm:justify-between">
+    <div className="mb-6 flex flex-col gap-3 rounded-[var(--radius-card)] border border-[var(--color-border-soft)] bg-[var(--color-surface)] p-4 shadow-[var(--shadow-xs)] sm:flex-row sm:items-center sm:justify-between">
       <div className="flex items-center gap-1.5 text-[13px] font-semibold text-[var(--color-ink)]">
         <ListFilter className="h-3.5 w-3.5 text-[var(--color-ink-soft)]" strokeWidth={2} />
         Filter transactions

@@ -33,12 +33,12 @@ function Navbar() {
   }, [location.pathname]);
 
   return (
-    <header className="sticky top-0 z-20 border-b border-[var(--color-border-soft)] bg-[var(--color-surface)]">
-      <div className="page-shell flex items-center justify-between py-3">
+    <header className="sticky top-0 z-20 border-b border-[var(--color-border-soft)] bg-[var(--color-surface)] shadow-[var(--shadow-xs)]">
+      <div className="page-shell flex items-center justify-between py-3.5">
         <BrandMark />
 
-        {/* Desktop / tablet: inline links */}
-        <nav className="hidden items-center gap-1 md:flex">
+        {/* Desktop / tablet: inline links, housed in a segmented pill bar */}
+        <nav className="hidden items-center gap-1 rounded-full border border-[var(--color-border-soft)] bg-[var(--color-canvas)] p-1 md:flex">
           {links.map((link) => (
             <NavItem key={link.to} {...link} />
           ))}
