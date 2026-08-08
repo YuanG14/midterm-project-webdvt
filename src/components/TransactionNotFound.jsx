@@ -35,7 +35,7 @@ function TransactionNotFound() {
         </div>
       </div>
 
-      <div className="animate-[fadeIn_0.4s_var(--ease-premium)] rounded-2xl border border-dashed border-[var(--color-border-soft)] bg-[var(--color-surface)] px-6 py-16 text-center shadow-[var(--shadow-xs)]">
+      <div className="animate-[fadeIn_0.4s_var(--ease-premium)] rounded-[var(--radius-card-lg)] border border-dashed border-[var(--color-border-soft)] bg-[var(--color-surface)] px-6 py-16 text-center shadow-[var(--shadow-xs)]">
         <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-[var(--color-danger)]/10">
           <SearchX className="h-6 w-6 text-[var(--color-danger)]" strokeWidth={1.75} />
         </div>
