@@ -18,7 +18,7 @@ function CategoryBreakdown({ data, activeCategory, onActiveCategoryChange }) {
             onMouseEnter={() => onActiveCategoryChange?.(entry.category)}
             onMouseLeave={() => onActiveCategoryChange?.(null)}
             className={`animate-[fadeIn_0.4s_var(--ease-premium)_backwards] rounded-xl p-2.5 transition-[background-color,opacity] duration-200 ${
-              isActive ? "bg-[var(--color-canvas)]" : "hover:bg-[var(--color-canvas)]"
+              isActive ? "ice-surface-soft" : "hover:bg-[var(--color-canvas)]"
             } ${isDimmed ? "opacity-50" : "opacity-100"}`}
           >
             <div className="mb-2 flex items-center justify-between gap-3 text-[13px]">

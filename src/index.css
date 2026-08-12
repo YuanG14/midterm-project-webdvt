@@ -68,6 +68,18 @@
   --duration-fast: 150ms;
   --duration-base: 220ms;
   --duration-slow: 360ms;
+
+  /*
+    Signature accent (color refinement phase). A single restrained pastel
+    ice-blue, layered on top of the existing palette above — nothing above
+    this line changed. Reserved for interactive/selection states (active
+    nav, selected controls, focus, hover, small icon tints) — never for
+    backgrounds, primary actions, or the income/expense semantic colors,
+    which stay on --color-primary/--color-success/--color-danger. Not
+    overridden in html.dark below: the same light value is what gives the
+    accent quiet contrast against the app's dark navy surfaces.
+  */
+  --color-ice-accent: #c7e7f5;
 }
 
 /*
@@ -444,7 +456,7 @@ textarea:focus-visible {
 
   .btn-secondary:hover:not(:disabled) {
     color: var(--color-ink);
-    background-color: var(--color-surface-hover);
+    background-color: color-mix(in srgb, var(--color-ice-accent) 30%, var(--color-surface));
   }
 
   .btn-ghost {
@@ -556,8 +568,8 @@ textarea:focus-visible {
   .field-select:focus,
   .field-textarea:focus {
     outline: none;
-    border-color: var(--color-primary);
-    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary) 20%, transparent);
+    border-color: var(--color-ice-accent);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-ice-accent) 45%, transparent);
   }
 
   .field-input.field-error-state,
@@ -655,7 +667,27 @@ textarea:focus-visible {
   }
 
   .data-row:hover {
-    background-color: var(--color-surface-hover);
+    background-color: color-mix(in srgb, var(--color-ice-accent) 20%, var(--color-surface));
+  }
+
+  /* --- Ice-blue accent utilities ---------------------------------------
+     Reusable hooks for the signature accent, kept to a small set so the
+     color stays confined to interactive/selection states (nav, selected
+     controls, focus, small icon tints) instead of spreading ad hoc. */
+  .ice-surface {
+    background-color: color-mix(in srgb, var(--color-ice-accent) 38%, var(--color-surface));
+  }
+
+  .ice-surface-soft {
+    background-color: color-mix(in srgb, var(--color-ice-accent) 22%, transparent);
+  }
+
+  .ice-icon {
+    color: color-mix(in srgb, var(--color-ice-accent) 60%, var(--color-ink));
+  }
+
+  .ice-border {
+    border-color: color-mix(in srgb, var(--color-ice-accent) 55%, var(--color-border-strong));
   }
 }
 

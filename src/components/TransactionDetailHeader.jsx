@@ -36,7 +36,7 @@ function TransactionDetailHeader({ transaction }) {
 
         <Link
           to="/"
-          className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-[var(--color-border-soft)] bg-[var(--color-surface)] px-4 py-2.5 text-[13px] font-semibold text-[var(--color-ink-soft)] transition-colors duration-200 hover:text-[var(--color-ink)]"
+          className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-[var(--color-border-soft)] bg-[var(--color-surface)] px-4 py-2.5 text-[13px] font-semibold text-[var(--color-ink-soft)] transition-colors duration-200 hover:border-[var(--color-ice-accent)] hover:bg-[var(--color-ice-accent)]/15 hover:text-[var(--color-ink)]"
         >
           <ArrowLeft className="h-3.5 w-3.5" strokeWidth={2} />
           Back to Dashboard
