@@ -1,12 +1,11 @@
 import { useMemo, useState } from "react";
-import { Wallet, TrendingUp, TrendingDown, SearchX } from "lucide-react";
+import { SearchX } from "lucide-react";
 import DashboardHeader from "../components/DashboardHeader";
-import FinancialCard from "../components/FinancialCard";
+import BalanceOverview from "../components/BalanceOverview";
 import FilterBar from "../components/FilterBar";
 import TransactionCard from "../components/TransactionCard";
 import DashboardEmptyState from "../components/DashboardEmptyState";
 import { useTransactions } from "../hooks/useTransactions";
-import { formatCurrency } from "../utils/formatCurrency";
 
 function Dashboard() {
   const { transactions, incomeTotal, expenseTotal, balance } = useTransactions();
@@ -34,32 +33,7 @@ function Dashboard() {
     <div>
       <DashboardHeader />
 
-      <div className="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        <FinancialCard
-          icon={Wallet}
-          label="Current Balance"
-          value={formatCurrency(balance)}
-          hint="Income minus expenses, updated in real time."
-          accent="balance"
-          style={{ animationDelay: "0ms" }}
-        />
-        <FinancialCard
-          icon={TrendingUp}
-          label="Total Income"
-          value={formatCurrency(incomeTotal)}
-          hint="All money coming in."
-          accent="income"
-          style={{ animationDelay: "70ms" }}
-        />
-        <FinancialCard
-          icon={TrendingDown}
-          label="Total Expenses"
-          value={formatCurrency(expenseTotal)}
-          hint="All money going out."
-          accent="expense"
-          style={{ animationDelay: "140ms" }}
-        />
-      </div>
+      <BalanceOverview balance={balance} incomeTotal={incomeTotal} expenseTotal={expenseTotal} />
 
       {hasTransactions && (
         <FilterBar
@@ -86,15 +60,9 @@ function Dashboard() {
       )}
 
       {hasTransactions && hasFilteredResults && (
-        <div className="flex flex-col gap-3">
-          {filteredTransactions.map((transaction, index) => (
-            <div
-              key={transaction.id}
-              className="animate-[fadeIn_0.25s_ease-out_backwards]"
-              style={{ animationDelay: `${Math.min(index, 8) * 30}ms` }}
-            >
-              <TransactionCard transaction={transaction} />
-            </div>
+        <div className="card card-padded">
+          {filteredTransactions.map((transaction) => (
+            <TransactionCard key={transaction.id} transaction={transaction} />
           ))}
         </div>
       )}

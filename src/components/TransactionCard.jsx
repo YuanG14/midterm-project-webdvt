@@ -1,6 +1,6 @@
 import { memo } from "react";
 import { Link } from "react-router-dom";
-import { ArrowDownRight, ArrowUpRight, ChevronRight } from "lucide-react";
+import { ArrowDownRight, ArrowUpRight } from "lucide-react";
 import { formatCurrency } from "../utils/formatCurrency";
 import { getCategoryIcon } from "../utils/categoryIcons";
 
@@ -21,6 +21,13 @@ function formatRelativeDate(dateString) {
   return date.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
 }
 
+/**
+ * A single row in the transaction list. Renders as a `.data-row` — a
+ * hairline divider above it and a quiet background tint on hover —
+ * rather than its own bordered/shadowed card. Meant to be rendered as
+ * a direct child inside a single containing `.card`, the way `.data-row`
+ * is designed to be used (see index.css).
+ */
 function TransactionCard({ transaction }) {
   const isIncome = transaction.type === "income";
   const CategoryIcon = getCategoryIcon(transaction.category);
@@ -28,17 +35,14 @@ function TransactionCard({ transaction }) {
   const formattedDate = formatRelativeDate(transaction.date);
 
   return (
-    <Link
-      to={`/transaction/${transaction.id}`}
-      className="group flex items-center gap-4 rounded-xl border border-[var(--color-border-soft)] bg-[var(--color-surface)] p-4 shadow-[var(--shadow-xs)] transition-all duration-200 hover:-translate-y-0.5 hover:border-transparent hover:shadow-[var(--shadow-raised)] active:scale-[0.995] active:translate-y-0"
-    >
+    <Link to={`/transaction/${transaction.id}`} className="data-row">
       <div
-        className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-full transition-transform duration-200 group-hover:scale-105 ${
-          isIncome ? "bg-[var(--color-primary)]/10" : "bg-[var(--color-danger)]/10"
+        className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full ${
+          isIncome ? "bg-[var(--color-success)]/10" : "bg-[var(--color-danger)]/10"
         }`}
       >
         <Icon
-          className={`h-5 w-5 ${isIncome ? "text-[var(--color-primary-dark)]" : "text-[var(--color-danger)]"}`}
+          className={`h-4.5 w-4.5 ${isIncome ? "text-[var(--color-success-dark)]" : "text-[var(--color-danger)]"}`}
           strokeWidth={2}
         />
       </div>
@@ -47,39 +51,19 @@ function TransactionCard({ transaction }) {
         <p className="truncate font-display text-sm font-semibold text-[var(--color-ink)]">
           {transaction.title || "Untitled transaction"}
         </p>
-        <div className="mt-1.5 flex flex-wrap items-center gap-1.5 text-[12.5px] text-[var(--color-ink-soft)]">
-          <span
-            className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[11px] font-semibold ${
-              isIncome
-                ? "bg-[var(--color-primary)]/10 text-[var(--color-primary-dark)]"
-                : "bg-[var(--color-danger)]/10 text-[var(--color-danger)]"
-            }`}
-          >
-            {isIncome ? "Income" : "Expense"}
-          </span>
-          <span className="inline-flex items-center rounded-full bg-[var(--color-canvas)] px-2 py-0.5 font-medium">
-            {transaction.category || "Uncategorized"}
-          </span>
-          <span aria-hidden="true">·</span>
-          <span>{formattedDate}</span>
-        </div>
-      </div>
-
-      <div className="shrink-0 text-right">
-        <p
-          className={`font-mono-tabular text-[15px] font-bold ${
-            isIncome ? "text-[var(--color-primary-dark)]" : "text-[var(--color-danger)]"
-          }`}
-        >
-          {isIncome ? "+" : "-"}
-          {formatCurrency(Math.abs(transaction.amount))}
+        <p className="mt-0.5 truncate text-[12.5px] text-[var(--color-ink-soft)]">
+          {transaction.category || "Uncategorized"} · {formattedDate}
         </p>
       </div>
 
-      <ChevronRight
-        className="h-4 w-4 shrink-0 text-[var(--color-ink-soft)] opacity-0 transition-all duration-200 group-hover:translate-x-0.5 group-hover:opacity-100"
-        strokeWidth={2}
-      />
+      <p
+        className={`shrink-0 font-mono-tabular text-[14.5px] font-bold ${
+          isIncome ? "text-[var(--color-success-dark)]" : "text-[var(--color-danger)]"
+        }`}
+      >
+        {isIncome ? "+" : "-"}
+        {formatCurrency(Math.abs(transaction.amount))}
+      </p>
     </Link>
   );
 }

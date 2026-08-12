@@ -13,7 +13,7 @@ const links = [
 function BrandMark() {
   return (
     <div className="flex items-center gap-2.5">
-      <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[var(--color-primary)]">
+      <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-[var(--radius-control)] bg-[var(--color-primary)]">
         <Wallet className="h-4 w-4 text-white" strokeWidth={2} />
       </div>
       <span className="font-display text-[15px] font-bold tracking-tight text-[var(--color-ink)]">
@@ -53,7 +53,7 @@ function Navbar() {
           <button
             type="button"
             onClick={() => setOpen((prev) => !prev)}
-            className="flex h-9 w-9 items-center justify-center rounded-lg text-[var(--color-ink-soft)] transition-colors hover:bg-[var(--color-canvas)] hover:text-[var(--color-ink)] md:hidden"
+            className="flex h-9 w-9 items-center justify-center rounded-[var(--radius-control)] text-[var(--color-ink-soft)] transition-colors hover:bg-[var(--color-canvas)] hover:text-[var(--color-ink)] md:hidden"
             aria-label={open ? "Close navigation menu" : "Open navigation menu"}
             aria-expanded={open}
           >

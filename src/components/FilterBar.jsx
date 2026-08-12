@@ -17,7 +17,7 @@ function Select({ value, onChange, options, label, icon: Icon }) {
       <select
         value={value}
         onChange={(event) => onChange(event.target.value)}
-        className="w-full min-w-0 cursor-pointer appearance-none rounded-full border border-[var(--color-border-soft)] bg-[var(--color-canvas)] py-2.5 pl-9 pr-9 text-[13px] font-medium text-[var(--color-ink)] transition-colors duration-200 hover:border-[var(--color-primary)]/40 focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/30 sm:w-auto"
+        className="field-select w-full min-w-0 cursor-pointer appearance-none pl-9 pr-9 text-[13px] font-medium sm:w-auto"
       >
         {options.map((option) => (
           <option key={option.value} value={option.value}>
@@ -53,7 +53,7 @@ function FilterBar({ categories, selectedCategory, onCategoryChange, selectedTyp
   }
 
   return (
-    <div className="mb-6 flex flex-col gap-3 rounded-2xl border border-[var(--color-border-soft)] bg-[var(--color-surface)] p-4 shadow-[var(--shadow-xs)] sm:flex-row sm:items-center sm:justify-between">
+    <div className="card mb-6 flex flex-col gap-3 p-4 sm:flex-row sm:items-center sm:justify-between">
       <div className="flex items-center gap-1.5 text-[13px] font-semibold text-[var(--color-ink)]">
         <ListFilter className="h-3.5 w-3.5 text-[var(--color-ink-soft)]" strokeWidth={2} />
         Filter transactions
@@ -76,11 +76,7 @@ function FilterBar({ categories, selectedCategory, onCategoryChange, selectedTyp
         />
 
         {hasActiveFilter && (
-          <button
-            type="button"
-            onClick={handleClear}
-            className="inline-flex items-center justify-center gap-1 rounded-full px-3 py-2.5 text-[12.5px] font-semibold text-[var(--color-ink-soft)] transition-colors duration-200 hover:text-[var(--color-ink)]"
-          >
+          <button type="button" onClick={handleClear} className="btn btn-ghost btn-sm">
             <X className="h-3.5 w-3.5" strokeWidth={2} />
             Clear
           </button>
