@@ -137,7 +137,7 @@ function Summary() {
               separate equal-weight cards. */}
           <div className="card card-padded">
             <p className="text-eyebrow mb-5">Overview</p>
-            <div className="grid grid-cols-2 gap-x-6 gap-y-6 sm:grid-cols-4 sm:gap-x-8">
+            <div className="grid grid-cols-1 gap-y-5 sm:grid-cols-2 sm:gap-x-8 sm:gap-y-6 lg:grid-cols-4">
               <div>
                 <p className="text-[12px] font-medium text-[var(--color-ink-soft)]">Balance</p>
                 <p

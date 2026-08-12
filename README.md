@@ -117,3 +117,15 @@ Audit-first final pass. No redesign, no new pages/features, no changes to routin
 - Production build (`npm run build`) succeeds with no errors.
 - `oxlint` reports the same single pre-existing warning as before (no new issues).
 - Dashboard, Add Transaction, Transaction Detail, and Summary all still render, filter, add, edit, delete, and theme-toggle exactly as before — no page, route, or calculation was touched.
+
+### Addendum — mobile overflow fix (large currency values)
+
+After shipping the above, a real device screenshot showed the Summary page's "Overview" panel (Balance/Income/Expenses/Total activity) rendering with overlapping digits on a phone-width screen. Root cause: with account totals in the millions, the formatted currency string (e.g. `₱5,091,300.00`) is long enough, and has no spaces to line-break on, that it doesn't fit a narrow grid column or a large hero heading at small viewport widths — it visually overflows on top of adjacent content instead of wrapping or clipping.
+
+Reproduced and fixed with real values, verified against the live rendered DOM (not just code inspection) with headless-browser overflow checks swept every 10–20px from 320px to 1440px, on all three affected surfaces:
+
+- **`Summary.jsx` "Overview" grid** — was `grid-cols-2` (i.e. 4 stats squeezed 2-per-row) at every width below 640px. Changed to `grid-cols-1` below `sm`, `grid-cols-2` from `sm`, `grid-cols-4` only from `lg` (1024px+), where there's actually room. Each stat now always gets the full card width on phones.
+- **`BalanceOverview.jsx` Income/Expenses row** (Dashboard) — same fix: `grid-cols-1` below `sm`, side-by-side from `sm` up, instead of always 2-up.
+- **`BalanceOverview.jsx` hero "Current Balance" figure** — was a fixed `42px` below the `sm` breakpoint, which fits a typical balance but overflows its own card for a 7-digit balance at common phone widths (375–420px). Replaced the fixed size with `clamp(28px, 13vw - 14px, 42px)` so the hero figure scales continuously with viewport width and is provably within its container at every width in that range, rather than guessing a single breakpoint. `sm:text-[52px]` for tablet/desktop is unchanged.
+
+Confirmed via headless-browser `scrollWidth`/`clientWidth` checks (not just visual spot-checks) that none of the three overflow at any 10–20px step from 320px to 1440px, and that the Transaction Detail page's hero amount — structurally similar but not affected — also has no overflow across the same sweep. No calculations, data, or non-mobile layout changed.
