@@ -3,9 +3,7 @@ import { ArrowLeft, Tag } from "lucide-react";
 import { getCategoryIcon } from "../utils/categoryIcons";
 
 /**
- * Premium Transaction-Detail-only header. Kept separate from the shared
- * PageHeader (still used by Summary) so this redesign doesn't change the
- * appearance of that other page.
+ * Transaction-Detail-only header.
  */
 function TransactionDetailHeader({ transaction }) {
   const isIncome = transaction.type === "income";

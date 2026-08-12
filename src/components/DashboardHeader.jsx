@@ -2,9 +2,7 @@ import { Link } from "react-router-dom";
 import { PlusCircle } from "lucide-react";
 
 /**
- * Premium Dashboard-only header. Kept separate from the shared PageHeader
- * (used by Add Transaction / Transaction Detail / Summary) so this redesign
- * doesn't change those other pages.
+ * Dashboard-only header.
  */
 function DashboardHeader() {
   const today = new Date().toLocaleDateString("en-US", {

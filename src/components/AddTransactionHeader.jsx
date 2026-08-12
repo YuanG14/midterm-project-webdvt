@@ -2,9 +2,7 @@ import { Link } from "react-router-dom";
 import { ArrowLeft, ReceiptText } from "lucide-react";
 
 /**
- * Premium Add-Transaction-only header. Kept separate from the shared
- * PageHeader (still used by Transaction Detail / Summary) so this redesign
- * doesn't change the appearance of those other pages.
+ * Add-Transaction-only header.
  */
 function AddTransactionHeader() {
   return (

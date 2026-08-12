@@ -1,8 +1,7 @@
 import { ChartSpline } from "lucide-react";
 
 /**
- * Premium Summary-only header. Kept separate from the shared PageHeader
- * so this redesign doesn't change the appearance of any other page.
+ * Summary-only header.
  */
 function SummaryHeader() {
   return (
