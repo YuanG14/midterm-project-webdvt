@@ -96,3 +96,24 @@ Since `PageHeader`, `SummaryCard`, and `EmptyState` are shared with other pages 
 ### Confirmation
 
 No changes to `useTransactions.js`, transaction data structure, localStorage logic, Dashboard's balance/income/expense calculations, filter logic, React Router, Theme Context, or CRUD functions. Balance, income, and expense figures, filtering behavior, and transaction navigation all work exactly as before.
+
+## Phase 9 — Final Polish, Consistency & Production QA
+
+Audit-first final pass. No redesign, no new pages/features, no changes to routing, Context API, `useTransactions`, calculations, or transaction schema.
+
+### Audit findings
+
+- `npm run build` and `oxlint` were both already clean (one pre-existing, harmless fast-refresh lint note in `ThemeContext.jsx`, left as-is since it flags a standard React pattern, not a bug).
+- The design-system primitives added in earlier phases (`.card`, `.btn`, `.field-input`, `.badge`, `.data-row`, `.accent-rule`, etc. in `index.css`) were only adopted by a handful of components. Several superseded components from earlier phases — including `GradientMesh`/`PageHeader` (the gradient-blob header treatment the design direction explicitly moved away from) — were still present in `src/` but no longer imported anywhere.
+- `EditTransactionForm` (Transaction Detail's edit form) still used its own hand-rolled Tailwind for inputs/textarea/container instead of the shared `.field-input`/`.field-textarea`/`.card` classes that `TransactionForm` (Add Transaction) already uses, so the two forms didn't quite read as the same product.
+
+### Changes made
+
+- **Removed 17 unused files** with zero remaining imports anywhere in the app: `AnalyticsSection`, `ChartCard`, `FinancialCard`, `FormActions`, `FormField`, `GradientMesh`, `InsightCard`, `InsightDetailRow`, `InsightStatGroup`, `InsightTransactionRow`, `PageHeader`, `PlaceholderPanel`, `Sidebar`, `SummaryCard`, `SummaryStatCard`, `TransactionDetailCard`, `TypeToggle`, and `utils/insightFormatting.js`. These were earlier-phase components/utilities superseded by their current replacements (e.g. `DashboardHeader`/`SummaryHeader`/etc. replaced `PageHeader`, `BalanceOverview` replaced `FinancialCard`, `InsightRow` replaced the `Insight*` set, `Navbar` replaced `Sidebar`). Confirmed unused via static import search before deleting, then verified with a clean production build. Net effect: no visual or behavioral change, smaller bundle (CSS 54.17 kB → 41.90 kB gzipped-relevant output shrank correspondingly), no more dead gradient/blur header code sitting unused in the tree.
+- **`EditTransactionForm.jsx`** — swapped its ad-hoc `rounded-xl border ... focus:ring-2` input/textarea classes and ad-hoc card container for the shared `.field-input` / `.field-textarea` / `.card card-padded` classes already used by `TransactionForm`, `FilterBar`, and `ConfirmationModal`, and added the same `field-error-state` class binding `TransactionForm` uses so an invalid field's border goes red instead of only showing the error text below it. Visual result and all validation/save/cancel/delete behavior are unchanged — this only makes the Edit form's markup consistent with the Add form's, so the two feel like the same designed product rather than two different implementations of the same fields.
+
+### Verified
+
+- Production build (`npm run build`) succeeds with no errors.
+- `oxlint` reports the same single pre-existing warning as before (no new issues).
+- Dashboard, Add Transaction, Transaction Detail, and Summary all still render, filter, add, edit, delete, and theme-toggle exactly as before — no page, route, or calculation was touched.

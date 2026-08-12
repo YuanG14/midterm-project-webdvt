@@ -52,11 +52,7 @@ function EditTransactionForm({ transaction, onSave, onCancel, onDeleteRequest })
 
   return (
     <div className="mt-6 animate-[fadeIn_0.4s_var(--ease-premium)]">
-      <form
-        onSubmit={handleSubmit}
-        noValidate
-        className="flex flex-col gap-8 rounded-2xl border border-[var(--color-border-soft)] bg-[var(--color-surface)] p-6 shadow-[var(--shadow-card)] sm:p-8"
-      >
+      <form onSubmit={handleSubmit} noValidate className="card card-padded flex flex-col gap-8">
         <div className="flex items-center gap-2.5">
           <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[var(--color-canvas)] text-[var(--color-ink-soft)]">
             <Pencil className="h-4 w-4" strokeWidth={2} />
@@ -79,7 +75,7 @@ function EditTransactionForm({ transaction, onSave, onCancel, onDeleteRequest })
               maxLength={TITLE_MAX_LENGTH}
               onChange={(event) => setTitle(event.target.value)}
               placeholder="e.g. Grocery run, Freelance payment"
-              className="w-full rounded-xl border border-[var(--color-border-soft)] bg-[var(--color-canvas)] px-3.5 py-2.5 text-[14px] text-[var(--color-ink)] placeholder:text-[var(--color-ink-soft)]/70 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/30"
+              className={`field-input ${errors.title ? "field-error-state" : ""}`}
             />
           </InputField>
 
@@ -97,7 +93,7 @@ function EditTransactionForm({ transaction, onSave, onCancel, onDeleteRequest })
                 value={amount}
                 onChange={(event) => setAmount(event.target.value)}
                 placeholder="0.00"
-                className="w-full rounded-xl border border-[var(--color-border-soft)] bg-[var(--color-canvas)] py-2.5 pl-7 pr-3.5 text-[14px] text-[var(--color-ink)] placeholder:text-[var(--color-ink-soft)]/70 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/30"
+                className={`field-input pl-7 ${errors.amount ? "field-error-state" : ""}`}
               />
             </div>
           </InputField>
@@ -135,7 +131,7 @@ function EditTransactionForm({ transaction, onSave, onCancel, onDeleteRequest })
                   type="date"
                   value={date}
                   onChange={(event) => setDate(event.target.value)}
-                  className="w-full rounded-xl border border-[var(--color-border-soft)] bg-[var(--color-canvas)] py-2.5 pl-9 pr-3.5 text-[14px] text-[var(--color-ink)] transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/30"
+                  className={`field-input pl-9 ${errors.date ? "field-error-state" : ""}`}
                 />
               </div>
             </InputField>
@@ -156,7 +152,7 @@ function EditTransactionForm({ transaction, onSave, onCancel, onDeleteRequest })
             maxLength={NOTES_MAX_LENGTH}
             onChange={(event) => setNotes(event.target.value)}
             placeholder="Any extra detail worth remembering…"
-            className="w-full resize-none rounded-xl border border-[var(--color-border-soft)] bg-[var(--color-canvas)] px-3.5 py-2.5 text-[14px] text-[var(--color-ink)] placeholder:text-[var(--color-ink-soft)]/70 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/30"
+            className="field-textarea"
           />
         </InputField>
 
