@@ -65,11 +65,7 @@ function TransactionForm() {
 
   return (
     <div className="mx-auto max-w-2xl animate-[fadeIn_0.4s_var(--ease-premium)]">
-      <form
-        onSubmit={handleSubmit}
-        noValidate
-        className="flex flex-col gap-8 rounded-2xl border border-[var(--color-border-soft)] bg-[var(--color-surface)] p-6 shadow-[var(--shadow-card)] sm:p-8"
-      >
+      <form onSubmit={handleSubmit} noValidate className="card card-padded flex flex-col gap-8">
         <FormSection
           icon={FileText}
           title="Transaction Details"
@@ -83,7 +79,7 @@ function TransactionForm() {
               maxLength={TITLE_MAX_LENGTH}
               onChange={(event) => setTitle(event.target.value)}
               placeholder="e.g. Grocery run, Freelance payment"
-              className="w-full rounded-xl border border-[var(--color-border-soft)] bg-[var(--color-canvas)] px-3.5 py-2.5 text-[14px] text-[var(--color-ink)] placeholder:text-[var(--color-ink-soft)]/70 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/30"
+              className={`field-input ${errors.title ? "field-error-state" : ""}`}
             />
           </InputField>
 
@@ -101,7 +97,7 @@ function TransactionForm() {
                 value={amount}
                 onChange={(event) => setAmount(event.target.value)}
                 placeholder="0.00"
-                className="w-full rounded-xl border border-[var(--color-border-soft)] bg-[var(--color-canvas)] py-2.5 pl-7 pr-3.5 text-[14px] text-[var(--color-ink)] placeholder:text-[var(--color-ink-soft)]/70 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/30"
+                className={`field-input pl-7 ${errors.amount ? "field-error-state" : ""}`}
               />
             </div>
           </InputField>
@@ -139,7 +135,7 @@ function TransactionForm() {
                   type="date"
                   value={date}
                   onChange={(event) => setDate(event.target.value)}
-                  className="w-full rounded-xl border border-[var(--color-border-soft)] bg-[var(--color-canvas)] py-2.5 pl-9 pr-3.5 text-[14px] text-[var(--color-ink)] transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/30"
+                  className={`field-input pl-9 ${errors.date ? "field-error-state" : ""}`}
                 />
               </div>
             </InputField>
@@ -162,24 +158,16 @@ function TransactionForm() {
               maxLength={NOTES_MAX_LENGTH}
               onChange={(event) => setNotes(event.target.value)}
               placeholder="Any extra detail worth remembering…"
-              className="w-full resize-none rounded-xl border border-[var(--color-border-soft)] bg-[var(--color-canvas)] px-3.5 py-2.5 text-[14px] text-[var(--color-ink)] placeholder:text-[var(--color-ink-soft)]/70 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/30"
+              className="field-textarea"
             />
           </InputField>
         </FormSection>
 
         <div className="flex flex-col-reverse gap-3 border-t border-[var(--color-border-soft)] pt-6 sm:flex-row sm:justify-end">
-          <button
-            type="button"
-            onClick={handleCancel}
-            className="inline-flex items-center justify-center gap-1.5 rounded-full border border-[var(--color-border-soft)] bg-[var(--color-surface)] px-5 py-2.5 text-[13px] font-semibold text-[var(--color-ink-soft)] transition-colors duration-200 hover:text-[var(--color-ink)] active:scale-[0.97]"
-          >
+          <button type="button" onClick={handleCancel} className="btn btn-secondary">
             Cancel
           </button>
-          <button
-            type="submit"
-            disabled={submitting}
-            className="inline-flex items-center justify-center gap-1.5 rounded-full bg-[var(--color-ink)] px-5 py-2.5 text-[13px] font-semibold text-[var(--color-canvas)] shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[var(--shadow-raised)] active:scale-[0.97] active:translate-y-0 disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0"
-          >
+          <button type="submit" disabled={submitting} className="btn btn-primary">
             {submitting ? (
               <Loader2 className="h-3.5 w-3.5 animate-spin" strokeWidth={2} />
             ) : (
