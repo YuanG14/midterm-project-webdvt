@@ -21,7 +21,7 @@ function TransactionDetail() {
 
   function handleSave(updates) {
     updateTransaction(transaction.id, updates);
-    navigate("/");
+    navigate("/", { state: { flash: { message: "Transaction updated.", tone: "success" } } });
   }
 
   function handleCancel() {
@@ -30,7 +30,7 @@ function TransactionDetail() {
 
   function handleConfirmDelete() {
     deleteTransaction(transaction.id);
-    navigate("/");
+    navigate("/", { state: { flash: { message: "Transaction deleted.", tone: "danger" } } });
   }
 
   return (

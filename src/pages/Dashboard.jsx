@@ -1,14 +1,31 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { SearchX } from "lucide-react";
 import DashboardHeader from "../components/DashboardHeader";
 import BalanceOverview from "../components/BalanceOverview";
 import FilterBar from "../components/FilterBar";
 import TransactionCard from "../components/TransactionCard";
 import DashboardEmptyState from "../components/DashboardEmptyState";
+import Toast from "../components/Toast";
 import { useTransactions } from "../hooks/useTransactions";
 
 function Dashboard() {
   const { transactions, incomeTotal, expenseTotal, balance } = useTransactions();
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  // Add/Edit/Delete land back here with a one-time `flash` message in
+  // router state (see TransactionForm and TransactionDetail). Read it once
+  // into local state, then clear it from history so refreshing or using
+  // the browser's back/forward buttons doesn't replay the toast.
+  const [flash, setFlash] = useState(location.state?.flash ?? null);
+
+  useEffect(() => {
+    if (location.state?.flash) {
+      navigate(location.pathname, { replace: true, state: {} });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location.state]);
 
   const [categoryFilter, setCategoryFilter] = useState("all");
   const [typeFilter, setTypeFilter] = useState("all");
@@ -66,6 +83,8 @@ function Dashboard() {
           ))}
         </div>
       )}
+
+      <Toast message={flash?.message} tone={flash?.tone} onDismiss={() => setFlash(null)} />
     </div>
   );
 }

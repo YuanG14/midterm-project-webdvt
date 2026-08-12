@@ -3,16 +3,23 @@ import { Tag } from "lucide-react";
 import { formatCurrency } from "../utils/formatCurrency";
 import { getCategoryIcon } from "../utils/categoryIcons";
 
-function CategoryBreakdown({ data }) {
+function CategoryBreakdown({ data, activeCategory, onActiveCategoryChange }) {
   return (
     <ul className="flex flex-col gap-1.5">
       {data.map((entry, index) => {
         const Icon = getCategoryIcon(entry.category) ?? Tag;
+        const isActive = activeCategory === entry.category;
+        const isDimmed = Boolean(activeCategory) && !isActive;
+
         return (
           <li
             key={entry.category}
             style={{ animationDelay: `${index * 45}ms` }}
-            className="animate-[fadeIn_0.4s_var(--ease-premium)_backwards] rounded-xl p-2.5 transition-colors duration-200 hover:bg-[var(--color-canvas)]"
+            onMouseEnter={() => onActiveCategoryChange?.(entry.category)}
+            onMouseLeave={() => onActiveCategoryChange?.(null)}
+            className={`animate-[fadeIn_0.4s_var(--ease-premium)_backwards] rounded-xl p-2.5 transition-[background-color,opacity] duration-200 ${
+              isActive ? "bg-[var(--color-canvas)]" : "hover:bg-[var(--color-canvas)]"
+            } ${isDimmed ? "opacity-50" : "opacity-100"}`}
           >
             <div className="mb-2 flex items-center justify-between gap-3 text-[13px]">
               <span className="flex min-w-0 items-center gap-2.5 font-semibold text-[var(--color-ink)]">

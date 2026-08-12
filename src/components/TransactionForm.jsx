@@ -56,7 +56,7 @@ function TransactionForm() {
       notes: notes.trim(),
     });
 
-    navigate("/");
+    navigate("/", { state: { flash: { message: "Transaction added.", tone: "success" } } });
   }
 
   function handleCancel() {

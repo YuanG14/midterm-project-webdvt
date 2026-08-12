@@ -1,6 +1,6 @@
 import { memo } from "react";
 import { Link } from "react-router-dom";
-import { ArrowDownRight, ArrowUpRight } from "lucide-react";
+import { ArrowDownRight, ArrowUpRight, ChevronRight } from "lucide-react";
 import { formatCurrency } from "../utils/formatCurrency";
 import { getCategoryIcon } from "../utils/categoryIcons";
 
@@ -35,7 +35,7 @@ function TransactionCard({ transaction }) {
   const formattedDate = formatRelativeDate(transaction.date);
 
   return (
-    <Link to={`/transaction/${transaction.id}`} className="data-row">
+    <Link to={`/transaction/${transaction.id}`} className="group data-row">
       <div
         className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full ${
           isIncome ? "bg-[var(--color-success)]/10" : "bg-[var(--color-danger)]/10"
@@ -64,6 +64,15 @@ function TransactionCard({ transaction }) {
         {isIncome ? "+" : "-"}
         {formatCurrency(Math.abs(transaction.amount))}
       </p>
+
+      {/* Quiet clickability hint — fades in on hover/focus, doesn't shift
+          layout (reserved width, not inserted). Purely visual; navigation
+          already works from anywhere in the row via the surrounding Link. */}
+      <ChevronRight
+        aria-hidden="true"
+        className="hidden h-4 w-4 shrink-0 text-[var(--color-ink-soft)] opacity-0 transition-opacity duration-150 group-hover:opacity-100 group-focus-visible:opacity-100 sm:block"
+        strokeWidth={2}
+      />
     </Link>
   );
 }
