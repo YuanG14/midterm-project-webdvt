@@ -6,9 +6,9 @@ import { ChartSpline } from "lucide-react";
  */
 function SummaryHeader() {
   return (
-    <div className="mb-8 sm:mb-10">
+    <div className="mb-10">
       <div className="flex items-start gap-4">
-        <div className="hidden h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[var(--color-primary)] sm:flex">
+        <div className="hidden h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[var(--color-accent)] sm:flex">
           <ChartSpline className="h-5.5 w-5.5 text-white" strokeWidth={2} />
         </div>
         <div>

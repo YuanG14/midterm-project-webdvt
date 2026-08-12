@@ -13,11 +13,11 @@ const links = [
 function BrandMark() {
   return (
     <div className="flex items-center gap-2.5">
-      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[var(--color-primary)]">
-        <Wallet className="h-4.5 w-4.5 text-white" strokeWidth={2} />
+      <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[var(--color-primary)]">
+        <Wallet className="h-4 w-4 text-white" strokeWidth={2} />
       </div>
-      <span className="font-display text-base font-bold tracking-tight text-[var(--color-ink)]">
-        Cashflow
+      <span className="font-display text-[15px] font-bold tracking-tight text-[var(--color-ink)]">
+        Ledger
       </span>
     </div>
   );
@@ -33,12 +33,12 @@ function Navbar() {
   }, [location.pathname]);
 
   return (
-    <header className="border-b border-[var(--color-border-soft)]">
-      <div className="page-shell flex items-center justify-between py-4 sm:py-5">
+    <header className="sticky top-0 z-20 border-b border-[var(--color-border-soft)] bg-[var(--color-surface)]">
+      <div className="page-shell flex items-center justify-between py-3">
         <BrandMark />
 
-        {/* Desktop / tablet: inline links, housed in a segmented pill bar */}
-        <nav className="hidden items-center gap-1 rounded-full border border-[var(--color-border-soft)] bg-[var(--color-canvas)] p-1 md:flex">
+        {/* Desktop / tablet: inline links */}
+        <nav className="hidden items-center gap-1 md:flex">
           {links.map((link) => (
             <NavItem key={link.to} {...link} />
           ))}
@@ -53,7 +53,7 @@ function Navbar() {
           <button
             type="button"
             onClick={() => setOpen((prev) => !prev)}
-            className="flex h-11 w-11 items-center justify-center rounded-lg text-[var(--color-ink-soft)] transition-colors hover:bg-[var(--color-canvas)] hover:text-[var(--color-ink)] md:hidden"
+            className="flex h-9 w-9 items-center justify-center rounded-lg text-[var(--color-ink-soft)] transition-colors hover:bg-[var(--color-canvas)] hover:text-[var(--color-ink)] md:hidden"
             aria-label={open ? "Close navigation menu" : "Open navigation menu"}
             aria-expanded={open}
           >

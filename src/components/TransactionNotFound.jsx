@@ -10,7 +10,7 @@ import { ArrowLeft, SearchX } from "lucide-react";
 function TransactionNotFound() {
   return (
     <div>
-      <div className="mb-6 sm:mb-8">
+      <div className="mb-8">
         <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <span className="accent-rule mb-3" />

@@ -5,7 +5,7 @@ import { getCategoryIcon } from "../utils/categoryIcons";
 
 function CategoryBreakdown({ data }) {
   return (
-    <ul className="flex max-h-[22rem] flex-col gap-1.5 overflow-y-auto pr-1 sm:max-h-[26rem]">
+    <ul className="flex flex-col gap-1.5">
       {data.map((entry, index) => {
         const Icon = getCategoryIcon(entry.category) ?? Tag;
         return (

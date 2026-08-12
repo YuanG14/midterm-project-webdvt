@@ -33,63 +33,40 @@ function ChartTooltip({ active, payload }) {
  * the center label — it does not affect how the chart itself is computed.
  */
 function SpendingChart({ data, total }) {
-  // Presentational only: caps the inline legend to the top few slices so it
-  // stays readable, since the full ranked list already appears in the
-  // adjacent "Top Spending Categories" card.
-  const legendEntries = data.slice(0, 6);
-
   return (
-    <div className="flex flex-col gap-4">
-      <div className="relative h-56 w-full sm:h-64">
-        <ResponsiveContainer width="100%" height="100%">
-          <PieChart>
-            <Pie
-              data={data}
-              dataKey="amount"
-              nameKey="category"
-              innerRadius="62%"
-              outerRadius="90%"
-              paddingAngle={2}
-              stroke="var(--color-surface)"
-              strokeWidth={2}
-              animationDuration={700}
-              animationEasing="ease-out"
-            >
-              {data.map((entry) => (
-                <Cell key={entry.category} fill={entry.color} />
-              ))}
-            </Pie>
-            <Tooltip content={<ChartTooltip />} />
-          </PieChart>
-        </ResponsiveContainer>
+    <div className="relative h-64 w-full sm:h-72">
+      <ResponsiveContainer width="100%" height="100%">
+        <PieChart>
+          <Pie
+            data={data}
+            dataKey="amount"
+            nameKey="category"
+            innerRadius="62%"
+            outerRadius="90%"
+            paddingAngle={2}
+            stroke="var(--color-surface)"
+            strokeWidth={2}
+            animationDuration={700}
+            animationEasing="ease-out"
+          >
+            {data.map((entry) => (
+              <Cell key={entry.category} fill={entry.color} />
+            ))}
+          </Pie>
+          <Tooltip content={<ChartTooltip />} />
+        </PieChart>
+      </ResponsiveContainer>
 
-        {typeof total === "number" && (
-          <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center px-6 text-center">
-            <p className="text-[11px] font-medium uppercase tracking-[0.08em] text-[var(--color-ink-soft)]">
-              Total Spent
-            </p>
-            <p className="mt-1 truncate font-display font-mono-tabular text-lg font-bold text-[var(--color-ink)] sm:text-xl">
-              {formatCurrency(total)}
-            </p>
-          </div>
-        )}
-      </div>
-
-      {/* Legend: color key for the slices above, since the donut itself
-          carries no on-chart labels. */}
-      <ul className="flex flex-wrap justify-center gap-x-4 gap-y-2 border-t border-[var(--color-border-soft)] pt-3">
-        {legendEntries.map((entry) => (
-          <li key={entry.category} className="flex items-center gap-1.5 text-[12px] text-[var(--color-ink-soft)]">
-            <span
-              className="h-2 w-2 shrink-0 rounded-full"
-              style={{ backgroundColor: entry.color }}
-              aria-hidden="true"
-            />
-            <span className="max-w-[7.5rem] truncate font-medium text-[var(--color-ink)]">{entry.category}</span>
-            <span className="font-mono-tabular">{entry.percentage.toFixed(0)}%</span>
-          </li>
-        ))}
-      </ul>
+      {typeof total === "number" && (
+        <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
+          <p className="text-[11px] font-medium uppercase tracking-[0.08em] text-[var(--color-ink-soft)]">
+            Total Spent
+          </p>
+          <p className="mt-1 font-display font-mono-tabular text-lg font-bold text-[var(--color-ink)]">
+            {formatCurrency(total)}
+          </p>
+        </div>
+      )}
     </div>
   );
 }

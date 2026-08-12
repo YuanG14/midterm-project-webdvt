@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { Calendar, FileText, Loader2, Pencil, Save, Tag, Trash2, TrendingUpDown, Wallet, X } from "lucide-react";
+import { Calendar, FileText, Loader2, Pencil, Save, Tag, Trash2, X } from "lucide-react";
 import FormSection from "./FormSection";
 import InputField from "./InputField";
 import TransactionTypeSelector from "./TransactionTypeSelector";
@@ -11,15 +11,6 @@ import {
   validateTransactionForm,
 } from "../utils/transactionFormShared";
 
-/**
- * Edit-mode form for an existing transaction, shown inline below the
- * TransactionOverviewCard on the Transaction Detail page. Mirrors the
- * Add Transaction form's composition, section order, hero Amount field,
- * and button treatment (Phase 3) so both forms feel like the same
- * application — same shared InputField / TransactionTypeSelector /
- * CategorySelector / FormSection components, same save/cancel/delete
- * logic, purely restyled.
- */
 function EditTransactionForm({ transaction, onSave, onCancel, onDeleteRequest }) {
   const [type, setType] = useState(transaction.type);
   const [title, setTitle] = useState(transaction.title);
@@ -31,7 +22,6 @@ function EditTransactionForm({ transaction, onSave, onCancel, onDeleteRequest })
   const [submitting, setSubmitting] = useState(false);
 
   const categoryOptions = useMemo(() => CATEGORIES_BY_TYPE[type] ?? [], [type]);
-  const isIncome = type === "income";
 
   function handleTypeChange(nextType) {
     setType(nextType);
@@ -60,26 +50,13 @@ function EditTransactionForm({ transaction, onSave, onCancel, onDeleteRequest })
     });
   }
 
-  const inputClasses =
-    "w-full rounded-[var(--radius-control)] border border-[var(--color-border-soft)] bg-[var(--color-canvas)] px-3.5 py-2.5 text-[14px] text-[var(--color-ink)] placeholder:text-[var(--color-ink-soft)]/70 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/30";
-
   return (
     <div className="mt-6 animate-[fadeIn_0.4s_var(--ease-premium)]">
       <form
         onSubmit={handleSubmit}
         noValidate
-        className="relative flex flex-col gap-6 overflow-hidden rounded-[var(--radius-card-lg)] border border-[var(--color-border-soft)] bg-[var(--color-surface)] p-5 shadow-[var(--shadow-card)] sm:gap-8 sm:p-8"
+        className="flex flex-col gap-8 rounded-2xl border border-[var(--color-border-soft)] bg-[var(--color-surface)] p-6 shadow-[var(--shadow-card)] sm:p-8"
       >
-        {/* Top accent bar — same "colored strip on a white card" language as
-            the Dashboard's FinancialCard tiles and the Add Transaction form,
-            reflecting the currently selected type. */}
-        <div
-          aria-hidden="true"
-          className={`absolute inset-x-0 top-0 h-1 transition-colors duration-300 ${
-            isIncome ? "bg-[var(--color-income)]" : "bg-[var(--color-danger)]"
-          }`}
-        />
-
         <div className="flex items-center gap-2.5">
           <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[var(--color-canvas)] text-[var(--color-ink-soft)]">
             <Pencil className="h-4 w-4" strokeWidth={2} />
@@ -89,32 +66,26 @@ function EditTransactionForm({ transaction, onSave, onCancel, onDeleteRequest })
           </h3>
         </div>
 
-        {/* 1. Transaction type — same order as Add Transaction. */}
         <FormSection
-          icon={TrendingUpDown}
-          title="Transaction Type"
-          description="Is money coming in, or going out?"
+          icon={FileText}
+          title="Transaction Details"
+          description="What is this entry, and how much?"
         >
-          <InputField label="Transaction Type" error={errors.type}>
-            <TransactionTypeSelector value={type} onChange={handleTypeChange} />
+          <InputField label="Title" icon={FileText} htmlFor="edit-title" error={errors.title}>
+            <input
+              id="edit-title"
+              type="text"
+              value={title}
+              maxLength={TITLE_MAX_LENGTH}
+              onChange={(event) => setTitle(event.target.value)}
+              placeholder="e.g. Grocery run, Freelance payment"
+              className="w-full rounded-xl border border-[var(--color-border-soft)] bg-[var(--color-canvas)] px-3.5 py-2.5 text-[14px] text-[var(--color-ink)] placeholder:text-[var(--color-ink-soft)]/70 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/30"
+            />
           </InputField>
-        </FormSection>
 
-        <div className="border-t border-[var(--color-border-soft)]" />
-
-        {/* 2. Transaction information — hero Amount, then Category / Date. */}
-        <FormSection
-          icon={Wallet}
-          title="Transaction Information"
-          description="How much, what category, and when."
-        >
           <InputField label="Amount" htmlFor="edit-amount" error={errors.amount}>
-            <div
-              className={`flex items-baseline gap-2 rounded-[var(--radius-card)] border-2 bg-[var(--color-canvas)] px-4 py-3.5 transition-colors duration-200 focus-within:border-[var(--color-primary)] focus-within:ring-2 focus-within:ring-[var(--color-primary)]/20 sm:px-5 sm:py-4 ${
-                errors.amount ? "border-[var(--color-danger)]" : "border-[var(--color-border-soft)]"
-              }`}
-            >
-              <span className="font-display text-xl font-bold text-[var(--color-ink-soft)] sm:text-2xl">
+            <div className="relative">
+              <span className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-[14px] font-medium text-[var(--color-ink-soft)]">
                 ₱
               </span>
               <input
@@ -126,9 +97,21 @@ function EditTransactionForm({ transaction, onSave, onCancel, onDeleteRequest })
                 value={amount}
                 onChange={(event) => setAmount(event.target.value)}
                 placeholder="0.00"
-                className="w-full min-w-0 bg-transparent font-display text-3xl font-bold tracking-tight text-[var(--color-ink)] placeholder:text-[var(--color-ink-soft)]/30 focus:outline-none sm:text-4xl"
+                className="w-full rounded-xl border border-[var(--color-border-soft)] bg-[var(--color-canvas)] py-2.5 pl-7 pr-3.5 text-[14px] text-[var(--color-ink)] placeholder:text-[var(--color-ink-soft)]/70 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/30"
               />
             </div>
+          </InputField>
+        </FormSection>
+
+        <div className="border-t border-[var(--color-border-soft)]" />
+
+        <FormSection
+          icon={Tag}
+          title="Financial Information"
+          description="Classify the entry so it shows up in the right places."
+        >
+          <InputField label="Transaction Type" error={errors.type}>
+            <TransactionTypeSelector value={type} onChange={handleTypeChange} />
           </InputField>
 
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
@@ -152,7 +135,7 @@ function EditTransactionForm({ transaction, onSave, onCancel, onDeleteRequest })
                   type="date"
                   value={date}
                   onChange={(event) => setDate(event.target.value)}
-                  className={`${inputClasses} pl-9`}
+                  className="w-full rounded-xl border border-[var(--color-border-soft)] bg-[var(--color-canvas)] py-2.5 pl-9 pr-3.5 text-[14px] text-[var(--color-ink)] transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/30"
                 />
               </div>
             </InputField>
@@ -161,43 +144,22 @@ function EditTransactionForm({ transaction, onSave, onCancel, onDeleteRequest })
 
         <div className="border-t border-[var(--color-border-soft)]" />
 
-        {/* 3. Additional details — same grouping as Add Transaction. */}
-        <FormSection
-          icon={FileText}
-          title="Additional Details"
-          description="Add context so this entry is easy to recognize."
+        <InputField
+          label="Notes (optional)"
+          htmlFor="edit-notes"
+          hint={`${notes.length}/${NOTES_MAX_LENGTH}`}
         >
-          <InputField label="Description" icon={Tag} htmlFor="edit-title" error={errors.title}>
-            <input
-              id="edit-title"
-              type="text"
-              value={title}
-              maxLength={TITLE_MAX_LENGTH}
-              onChange={(event) => setTitle(event.target.value)}
-              placeholder="e.g. Grocery run, Freelance payment"
-              className={inputClasses}
-            />
-          </InputField>
+          <textarea
+            id="edit-notes"
+            rows={3}
+            value={notes}
+            maxLength={NOTES_MAX_LENGTH}
+            onChange={(event) => setNotes(event.target.value)}
+            placeholder="Any extra detail worth remembering…"
+            className="w-full resize-none rounded-xl border border-[var(--color-border-soft)] bg-[var(--color-canvas)] px-3.5 py-2.5 text-[14px] text-[var(--color-ink)] placeholder:text-[var(--color-ink-soft)]/70 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/30"
+          />
+        </InputField>
 
-          <InputField
-            label="Notes (optional)"
-            htmlFor="edit-notes"
-            hint={`${notes.length}/${NOTES_MAX_LENGTH}`}
-          >
-            <textarea
-              id="edit-notes"
-              rows={3}
-              value={notes}
-              maxLength={NOTES_MAX_LENGTH}
-              onChange={(event) => setNotes(event.target.value)}
-              placeholder="Any extra detail worth remembering…"
-              className={`${inputClasses} resize-none`}
-            />
-          </InputField>
-        </FormSection>
-
-        {/* 4. Actions — Delete kept visually separate (destructive, red,
-            left-aligned) from Cancel / Save Changes (right-aligned). */}
         <div className="flex flex-col gap-3 border-t border-[var(--color-border-soft)] pt-6 sm:flex-row sm:items-center sm:justify-between">
           <button
             type="button"
@@ -220,7 +182,7 @@ function EditTransactionForm({ transaction, onSave, onCancel, onDeleteRequest })
             <button
               type="submit"
               disabled={submitting}
-              className="inline-flex items-center justify-center gap-1.5 rounded-full bg-[var(--color-primary)] px-5 py-2.5 text-[13px] font-semibold text-white shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:bg-[var(--color-primary-dark)] hover:shadow-[var(--shadow-raised)] active:scale-[0.97] active:translate-y-0 disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0"
+              className="inline-flex items-center justify-center gap-1.5 rounded-full bg-[var(--color-ink)] px-5 py-2.5 text-[13px] font-semibold text-[var(--color-canvas)] shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[var(--shadow-raised)] active:scale-[0.97] active:translate-y-0 disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0"
             >
               {submitting ? (
                 <Loader2 className="h-3.5 w-3.5 animate-spin" strokeWidth={2} />

@@ -25,13 +25,13 @@ function TransactionOverviewCard({ transaction }) {
       {/* Hero: amount is the visual focus */}
       <div
         className={`relative px-6 py-10 text-center sm:px-8 ${
-          isIncome ? "bg-[var(--color-income)]/5" : "bg-[var(--color-danger)]/5"
+          isIncome ? "bg-[var(--color-primary)]/5" : "bg-[var(--color-danger)]/5"
         }`}
       >
         <div
           className={`mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full ${
             isIncome
-              ? "bg-[var(--color-income)]/15 text-[var(--color-income-dark)]"
+              ? "bg-[var(--color-primary)]/15 text-[var(--color-primary-dark)]"
               : "bg-[var(--color-danger)]/15 text-[var(--color-danger)]"
           }`}
         >
@@ -43,8 +43,8 @@ function TransactionOverviewCard({ transaction }) {
         </div>
 
         <p
-          className={`truncate font-mono-tabular text-[32px] font-bold tracking-tight sm:text-4xl md:text-5xl ${
-            isIncome ? "text-[var(--color-income-dark)]" : "text-[var(--color-danger)]"
+          className={`font-mono-tabular text-4xl font-bold tracking-tight sm:text-5xl ${
+            isIncome ? "text-[var(--color-primary-dark)]" : "text-[var(--color-danger)]"
           }`}
         >
           {isIncome ? "+" : "-"}
@@ -58,7 +58,7 @@ function TransactionOverviewCard({ transaction }) {
         <span
           className={`mt-3 inline-flex items-center gap-1 rounded-full px-3 py-1 text-[12px] font-semibold ${
             isIncome
-              ? "bg-[var(--color-income)]/10 text-[var(--color-income-dark)]"
+              ? "bg-[var(--color-primary)]/10 text-[var(--color-primary-dark)]"
               : "bg-[var(--color-danger)]/10 text-[var(--color-danger)]"
           }`}
         >

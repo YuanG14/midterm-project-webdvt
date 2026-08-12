@@ -1,4 +1,4 @@
-import { Tags, TrendingUpDown, X } from "lucide-react";
+import { ListFilter, Tags, TrendingUpDown, X } from "lucide-react";
 
 const TYPE_OPTIONS = [
   { value: "all", label: "All Types" },
@@ -7,25 +7,17 @@ const TYPE_OPTIONS = [
 ];
 
 function Select({ value, onChange, options, label, icon: Icon }) {
-  const isActive = value !== "all";
-
   return (
-    <label className="relative inline-flex shrink-0 items-center">
+    <label className="relative flex flex-1 items-center sm:flex-none">
       <span className="sr-only">{label}</span>
       <Icon
-        className={`pointer-events-none absolute left-3 h-3.5 w-3.5 ${
-          isActive ? "text-[var(--color-primary-dark)]" : "text-[var(--color-ink-soft)]"
-        }`}
+        className="pointer-events-none absolute left-3.5 h-3.5 w-3.5 text-[var(--color-ink-soft)]"
         strokeWidth={2}
       />
       <select
         value={value}
         onChange={(event) => onChange(event.target.value)}
-        className={`cursor-pointer appearance-none rounded-[var(--radius-pill)] border py-2 pl-8 pr-7 text-[12.5px] font-semibold transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/25 ${
-          isActive
-            ? "border-[var(--color-primary)]/35 bg-[var(--color-primary)]/10 text-[var(--color-primary-dark)]"
-            : "border-[var(--color-border-soft)] bg-[var(--color-surface)] text-[var(--color-ink)] hover:border-[var(--color-border-strong)]"
-        }`}
+        className="w-full min-w-0 cursor-pointer appearance-none rounded-full border border-[var(--color-border-soft)] bg-[var(--color-canvas)] py-2.5 pl-9 pr-9 text-[13px] font-medium text-[var(--color-ink)] transition-colors duration-200 hover:border-[var(--color-primary)]/40 focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/30 sm:w-auto"
       >
         {options.map((option) => (
           <option key={option.value} value={option.value}>
@@ -34,9 +26,7 @@ function Select({ value, onChange, options, label, icon: Icon }) {
         ))}
       </select>
       <svg
-        className={`pointer-events-none absolute right-2.5 h-3 w-3 ${
-          isActive ? "text-[var(--color-primary-dark)]" : "text-[var(--color-ink-soft)]"
-        }`}
+        className="pointer-events-none absolute right-3 h-3.5 w-3.5 text-[var(--color-ink-soft)]"
         viewBox="0 0 24 24"
         fill="none"
         stroke="currentColor"
@@ -49,12 +39,6 @@ function Select({ value, onChange, options, label, icon: Icon }) {
   );
 }
 
-/**
- * Compact filter row for "All Transactions" — bare pill controls instead of
- * a padded, bordered container, so it reads as part of the section rather
- * than its own boxed widget. Active filters get a tinted, colored state;
- * inactive ones stay quiet.
- */
 function FilterBar({ categories, selectedCategory, onCategoryChange, selectedType, onTypeChange }) {
   const categoryOptions = [
     { value: "all", label: "All Categories" },
@@ -69,32 +53,39 @@ function FilterBar({ categories, selectedCategory, onCategoryChange, selectedTyp
   }
 
   return (
-    <div className="mb-4 flex flex-wrap items-center gap-2">
-      <Select
-        label="Filter by category"
-        icon={Tags}
-        value={selectedCategory}
-        onChange={onCategoryChange}
-        options={categoryOptions}
-      />
-      <Select
-        label="Filter by type"
-        icon={TrendingUpDown}
-        value={selectedType}
-        onChange={onTypeChange}
-        options={TYPE_OPTIONS}
-      />
+    <div className="mb-6 flex flex-col gap-3 rounded-2xl border border-[var(--color-border-soft)] bg-[var(--color-surface)] p-4 shadow-[var(--shadow-xs)] sm:flex-row sm:items-center sm:justify-between">
+      <div className="flex items-center gap-1.5 text-[13px] font-semibold text-[var(--color-ink)]">
+        <ListFilter className="h-3.5 w-3.5 text-[var(--color-ink-soft)]" strokeWidth={2} />
+        Filter transactions
+      </div>
 
-      {hasActiveFilter && (
-        <button
-          type="button"
-          onClick={handleClear}
-          className="inline-flex items-center justify-center gap-1 rounded-[var(--radius-pill)] px-2.5 py-2 text-[12px] font-semibold text-[var(--color-ink-soft)] transition-colors duration-200 hover:text-[var(--color-ink)]"
-        >
-          <X className="h-3.5 w-3.5" strokeWidth={2} />
-          Clear
-        </button>
-      )}
+      <div className="flex flex-col gap-2.5 sm:flex-row sm:items-center">
+        <Select
+          label="Filter by category"
+          icon={Tags}
+          value={selectedCategory}
+          onChange={onCategoryChange}
+          options={categoryOptions}
+        />
+        <Select
+          label="Filter by type"
+          icon={TrendingUpDown}
+          value={selectedType}
+          onChange={onTypeChange}
+          options={TYPE_OPTIONS}
+        />
+
+        {hasActiveFilter && (
+          <button
+            type="button"
+            onClick={handleClear}
+            className="inline-flex items-center justify-center gap-1 rounded-full px-3 py-2.5 text-[12.5px] font-semibold text-[var(--color-ink-soft)] transition-colors duration-200 hover:text-[var(--color-ink)]"
+          >
+            <X className="h-3.5 w-3.5" strokeWidth={2} />
+            Clear
+          </button>
+        )}
+      </div>
     </div>
   );
 }

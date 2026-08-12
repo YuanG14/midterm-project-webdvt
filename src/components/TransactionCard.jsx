@@ -21,54 +21,63 @@ function formatRelativeDate(dateString) {
   return date.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
 }
 
-/**
- * Single row in the "All Transactions" activity feed. Deliberately flat —
- * a hairline top divider (via `.data-row`) and a quiet hover tint instead
- * of a bordered card per row, so a long list reads as one continuous
- * premium ledger rather than a stack of boxes. Only the Income/Expense
- * word carries color; category and date stay muted so the eye lands on
- * type + amount first.
- */
 function TransactionCard({ transaction }) {
   const isIncome = transaction.type === "income";
   const CategoryIcon = getCategoryIcon(transaction.category);
   const Icon = CategoryIcon ?? (isIncome ? ArrowUpRight : ArrowDownRight);
   const formattedDate = formatRelativeDate(transaction.date);
-  const directionColor = isIncome ? "text-[var(--color-income-dark)]" : "text-[var(--color-danger)]";
 
   return (
     <Link
       to={`/transaction/${transaction.id}`}
-      className="data-row group -mx-1 rounded-lg px-1 sm:-mx-2 sm:px-2"
+      className="group flex items-center gap-4 rounded-xl border border-[var(--color-border-soft)] bg-[var(--color-surface)] p-4 shadow-[var(--shadow-xs)] transition-all duration-200 hover:-translate-y-0.5 hover:border-transparent hover:shadow-[var(--shadow-raised)] active:scale-[0.995] active:translate-y-0"
     >
       <div
-        className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-lg transition-transform duration-200 group-hover:scale-105 ${
-          isIncome ? "bg-[var(--color-income)]/10" : "bg-[var(--color-danger)]/10"
+        className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-full transition-transform duration-200 group-hover:scale-105 ${
+          isIncome ? "bg-[var(--color-primary)]/10" : "bg-[var(--color-danger)]/10"
         }`}
       >
-        <Icon className={`h-[15px] w-[15px] ${directionColor}`} strokeWidth={2.25} />
+        <Icon
+          className={`h-5 w-5 ${isIncome ? "text-[var(--color-primary-dark)]" : "text-[var(--color-danger)]"}`}
+          strokeWidth={2}
+        />
       </div>
 
       <div className="min-w-0 flex-1">
-        <p className="truncate font-display text-[13.5px] font-semibold text-[var(--color-ink)]">
+        <p className="truncate font-display text-sm font-semibold text-[var(--color-ink)]">
           {transaction.title || "Untitled transaction"}
         </p>
-        <p className="mt-0.5 truncate text-[12px] text-[var(--color-ink-soft)]">
-          <span className={`font-semibold ${directionColor}`}>{isIncome ? "Income" : "Expense"}</span>
-          {" · "}
-          {transaction.category || "Uncategorized"}
-          {" · "}
-          {formattedDate}
+        <div className="mt-1.5 flex flex-wrap items-center gap-1.5 text-[12.5px] text-[var(--color-ink-soft)]">
+          <span
+            className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[11px] font-semibold ${
+              isIncome
+                ? "bg-[var(--color-primary)]/10 text-[var(--color-primary-dark)]"
+                : "bg-[var(--color-danger)]/10 text-[var(--color-danger)]"
+            }`}
+          >
+            {isIncome ? "Income" : "Expense"}
+          </span>
+          <span className="inline-flex items-center rounded-full bg-[var(--color-canvas)] px-2 py-0.5 font-medium">
+            {transaction.category || "Uncategorized"}
+          </span>
+          <span aria-hidden="true">·</span>
+          <span>{formattedDate}</span>
+        </div>
+      </div>
+
+      <div className="shrink-0 text-right">
+        <p
+          className={`font-mono-tabular text-[15px] font-bold ${
+            isIncome ? "text-[var(--color-primary-dark)]" : "text-[var(--color-danger)]"
+          }`}
+        >
+          {isIncome ? "+" : "-"}
+          {formatCurrency(Math.abs(transaction.amount))}
         </p>
       </div>
 
-      <p className={`shrink-0 font-mono-tabular text-[13.5px] font-bold sm:text-[14.5px] ${directionColor}`}>
-        {isIncome ? "+" : "-"}
-        {formatCurrency(Math.abs(transaction.amount))}
-      </p>
-
       <ChevronRight
-        className="hidden h-4 w-4 shrink-0 text-[var(--color-ink-soft)] opacity-0 transition-all duration-200 group-hover:translate-x-0.5 group-hover:opacity-100 sm:block"
+        className="h-4 w-4 shrink-0 text-[var(--color-ink-soft)] opacity-0 transition-all duration-200 group-hover:translate-x-0.5 group-hover:opacity-100"
         strokeWidth={2}
       />
     </Link>

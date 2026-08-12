@@ -6,35 +6,31 @@
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, monospace;
 
-  --color-canvas: #f0f1f0;
+  --color-canvas: #f5f6f8;
   --color-surface: #ffffff;
   --color-border-soft: #e4e7ec;
   --color-ink: #10151c;
   --color-ink-soft: #5b6472;
-  --color-primary: #ee7c1f;
-  --color-primary-dark: #d3670f;
-  --color-accent: #10151c;
-  --color-income: #189956;
-  --color-income-dark: #12793f;
-  --color-danger: #d43b28;
-  --color-warning: #c08a0e;
+  --color-primary: #0f9d74;
+  --color-primary-dark: #0b7f5e;
+  --color-accent: #4338ca;
+  --color-danger: #c2482f;
+  --color-warning: #b4790e;
 
   /*
     Design system (Phase 1). Tokens layered on top of the base palette
     above — nothing above this line has changed, so no currently-rendering
     page is affected by this file alone.
 
-    Direction: Premium Fintech + Bento + Soft Minimalism, per the uploaded
-    Raxon-style reference — orange as the single primary accent, green/red
-    reserved for income/expense only, large-radius white cards on a light
-    gray canvas. Depth and hierarchy come from type, spacing and layout,
-    not decorative gradients, glow blobs, or glass/blur surfaces. The old
-    GradientMesh page-header glow has been removed (Phase 1); remaining
-    gradient hero-card glow and backdrop-blur navbar/modal treatments will
-    be replaced component-by-component in upcoming phases — the flat/
-    typographic primitives below (trend text, accent-rule, data-row) exist
-    so those phases have a restrained alternative to build with instead of
-    reaching for gradients again.
+    Direction: restrained "editorial luxury" fintech — Stripe / Linear /
+    Copilot Money / Apple Wallet as reference points. Depth and hierarchy
+    come from type, spacing and layout, not decorative gradients, glow
+    blobs, or glass/blur surfaces. The current markup (GradientMesh page
+    headers, gradient hero-card glows, backdrop-blur navbar/modals) still
+    uses the old approach and will be replaced component-by-component in
+    upcoming phases — the flat/typographic primitives below (trend text,
+    accent-rule, data-row) exist so those phases have a restrained
+    alternative to build with instead of reaching for gradients again.
   */
 
   /* Secondary surface + border steps, for subtle layering (e.g. a card
@@ -45,12 +41,10 @@
   --color-ink-faint: #9aa2ad;
 
   /* Semantic aliases so later components can express *intent* (success/
-     error) rather than a literal color. --color-primary is the orange
-     brand/action color (buttons, active nav, focus rings) and is
-     deliberately kept separate from --color-income/--color-danger, which
-     are reserved for financial direction (money in/out) only. */
-  --color-success: var(--color-income);
-  --color-success-dark: var(--color-income-dark);
+     error) rather than a literal color, while still resolving to the same
+     values as --color-primary/--color-danger today. */
+  --color-success: var(--color-primary);
+  --color-success-dark: var(--color-primary-dark);
   --color-error: var(--color-danger);
 
   /* Named radii — Tailwind auto-generates rounded-control / rounded-card /
@@ -58,10 +52,9 @@
      already in use (inputs ≈ 12px, cards ≈ 16px, buttons/badges = pill),
      just given semantic names instead of repeating rounded-xl / rounded-2xl
      / rounded-full ad hoc in every component. */
-  --radius-control: 0.875rem;
-  --radius-card: 1.25rem;
-  --radius-card-lg: 1.75rem;
-  --radius-shell: 2rem;
+  --radius-control: 0.75rem;
+  --radius-card: 1rem;
+  --radius-card-lg: 1.25rem;
   --radius-pill: 999px;
 
   /* Easing library. --ease-premium (unchanged) remains the default for
@@ -90,11 +83,6 @@
   --shadow-raised: 0 8px 20px -10px rgba(16, 21, 28, 0.18);
   --shadow-float: 0 8px 24px -6px rgba(16, 21, 28, 0.25);
   --shadow-inset: inset 0 1px 2px rgba(16, 21, 28, 0.06);
-  /* Outer "app surface" shadow — the large rounded panel that now houses
-     the navbar + page content on a light gray canvas, per the Raxon-style
-     reference. Deliberately soft/diffuse rather than the tighter card
-     shadows above, since it's lifting a much larger surface. */
-  --shadow-shell: 0 1px 2px rgba(16, 21, 28, 0.03), 0 32px 64px -28px rgba(16, 21, 28, 0.16);
 }
 
 html {
@@ -114,11 +102,9 @@ html.dark {
   --color-border-soft: #232b36;
   --color-ink: #eef1f5;
   --color-ink-soft: #8a96a3;
-  --color-primary: #f4923a;
-  --color-primary-dark: #ee7c1f;
-  --color-accent: #eef1f5;
-  --color-income: #2fbf72;
-  --color-income-dark: #22a15e;
+  --color-primary: #17c78e;
+  --color-primary-dark: #12a877;
+  --color-accent: #7c7ff0;
   --color-danger: #e2593c;
   --color-warning: #e0a530;
 
@@ -133,7 +119,6 @@ html.dark {
   --shadow-raised: 0 8px 20px -10px rgba(0, 0, 0, 0.6);
   --shadow-float: 0 8px 24px -6px rgba(0, 0, 0, 0.65);
   --shadow-inset: inset 0 1px 2px rgba(0, 0, 0, 0.35);
-  --shadow-shell: 0 1px 2px rgba(0, 0, 0, 0.3), 0 32px 64px -28px rgba(0, 0, 0, 0.7);
 }
 
 html,
@@ -329,7 +314,7 @@ textarea:focus-visible {
    ========================================================================== */
 .page-shell {
   width: 100%;
-  max-width: 1180px;
+  max-width: none;
   margin-inline: auto;
   padding-inline: 1.25rem;
 }
@@ -343,6 +328,12 @@ textarea:focus-visible {
 @media (min-width: 1024px) {
   .page-shell {
     padding-inline: 2.5rem;
+  }
+}
+
+@media (min-width: 1600px) {
+  .page-shell {
+    padding-inline: 4rem;
   }
 }
 
@@ -484,7 +475,7 @@ textarea:focus-visible {
   /* --- Cards ----------------------------------------------------------- */
   .card {
     background-color: var(--color-surface);
-    border: 1px solid color-mix(in srgb, var(--color-border-soft) 45%, var(--color-surface));
+    border: 1px solid var(--color-border-soft);
     border-radius: var(--radius-card);
     box-shadow: var(--shadow-card);
   }

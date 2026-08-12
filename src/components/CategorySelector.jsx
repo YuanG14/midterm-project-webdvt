@@ -44,7 +44,7 @@ function CategorySelector({ id, value, onChange, options, placeholder = "Select 
         onClick={() => setOpen((prev) => !prev)}
         aria-haspopup="listbox"
         aria-expanded={open}
-        className={`flex w-full items-center justify-between gap-2 rounded-[var(--radius-control)] border bg-[var(--color-canvas)] px-3.5 py-2.5 text-left text-[14px] transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/30 ${
+        className={`flex w-full items-center justify-between gap-2 rounded-xl border bg-[var(--color-canvas)] px-3.5 py-2.5 text-left text-[14px] transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/30 ${
           open ? "border-[var(--color-primary)]" : "border-[var(--color-border-soft)]"
         }`}
       >
@@ -67,7 +67,7 @@ function CategorySelector({ id, value, onChange, options, placeholder = "Select 
           role="listbox"
           aria-label="Category"
           tabIndex={-1}
-          className="absolute z-10 mt-1.5 max-h-60 w-full overflow-auto rounded-[var(--radius-control)] border border-[var(--color-border-soft)] bg-[var(--color-surface)] p-1.5 shadow-[var(--shadow-card-hover)] animate-[fadeIn_0.15s_ease-out]"
+          className="absolute z-10 mt-1.5 max-h-60 w-full overflow-auto rounded-xl border border-[var(--color-border-soft)] bg-[var(--color-surface)] p-1.5 shadow-[var(--shadow-card-hover)] animate-[fadeIn_0.15s_ease-out]"
         >
           {options.map((option) => {
             const OptionIcon = getCategoryIcon(option) ?? Tag;

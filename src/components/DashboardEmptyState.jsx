@@ -8,7 +8,7 @@ import { HandCoins, PlusCircle } from "lucide-react";
  */
 function DashboardEmptyState() {
   return (
-    <div className="rounded-[var(--radius-card-lg)] border border-dashed border-[var(--color-border-soft)] bg-[var(--color-surface)] px-6 py-16 text-center shadow-[var(--shadow-xs)]">
+    <div className="rounded-2xl border border-dashed border-[var(--color-border-soft)] bg-[var(--color-surface)] px-6 py-16 text-center shadow-[var(--shadow-xs)]">
       <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-[var(--color-primary)]/10">
         <HandCoins className="h-7 w-7 text-[var(--color-primary-dark)]" strokeWidth={1.75} />
       </div>

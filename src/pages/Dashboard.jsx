@@ -1,11 +1,5 @@
 import { useMemo, useState } from "react";
-import {
-  Wallet,
-  TrendingUp,
-  TrendingDown,
-  SearchX,
-  Receipt,
-} from "lucide-react";
+import { Wallet, TrendingUp, TrendingDown, SearchX } from "lucide-react";
 import DashboardHeader from "../components/DashboardHeader";
 import FinancialCard from "../components/FinancialCard";
 import FilterBar from "../components/FilterBar";
@@ -40,17 +34,13 @@ function Dashboard() {
     <div>
       <DashboardHeader />
 
-      {/* Main financial area — Current Balance is the dominant tile, with
-          compact Income / Expenses tiles alongside it. */}
-      <div className="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
         <FinancialCard
           icon={Wallet}
           label="Current Balance"
           value={formatCurrency(balance)}
           hint="Income minus expenses, updated in real time."
           accent="balance"
-          hero
-          className="sm:col-span-2 lg:col-span-2"
           style={{ animationDelay: "0ms" }}
         />
         <FinancialCard
@@ -71,66 +61,42 @@ function Dashboard() {
         />
       </div>
 
+      {hasTransactions && (
+        <FilterBar
+          categories={categories}
+          selectedCategory={categoryFilter}
+          onCategoryChange={setCategoryFilter}
+          selectedType={typeFilter}
+          onTypeChange={setTypeFilter}
+        />
+      )}
+
       {!hasTransactions && <DashboardEmptyState />}
 
-      {hasTransactions && (
-        <>
-          {/* Full transaction list — required filtering + detail navigation
-              behavior, unchanged from before this redesign; only the
-              presentation (header, filters, row styling) is refined. */}
-          <section id="all-transactions" className="scroll-mt-24">
-            <div className="mb-5 flex flex-wrap items-end justify-between gap-x-4 gap-y-2">
-              <div className="flex items-center gap-2.5">
-                <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-[var(--color-ink)]/[0.06]">
-                  <Receipt className="h-3.5 w-3.5 text-[var(--color-ink-soft)]" strokeWidth={2.25} />
-                </span>
-                <div>
-                  <h2 className="font-display text-[15px] font-bold tracking-tight text-[var(--color-ink)]">
-                    All Transactions
-                  </h2>
-                  <p className="text-[12.5px] text-[var(--color-ink-soft)]">Your complete income and expense history</p>
-                </div>
-              </div>
-              <span className="text-[12px] font-medium text-[var(--color-ink-soft)]">
-                {filteredTransactions.length} of {transactions.length}
-              </span>
+      {hasTransactions && !hasFilteredResults && (
+        <div className="rounded-2xl border border-dashed border-[var(--color-border-soft)] bg-[var(--color-surface)] px-6 py-12 text-center">
+          <div className="mx-auto mb-3 flex h-11 w-11 items-center justify-center rounded-full bg-[var(--color-ink)]/5">
+            <SearchX className="h-5 w-5 text-[var(--color-ink-soft)]" strokeWidth={1.75} />
+          </div>
+          <p className="text-sm font-medium text-[var(--color-ink)]">No matching transactions</p>
+          <p className="mt-1 text-[13px] text-[var(--color-ink-soft)]">
+            Try a different category or type filter.
+          </p>
+        </div>
+      )}
+
+      {hasTransactions && hasFilteredResults && (
+        <div className="flex flex-col gap-3">
+          {filteredTransactions.map((transaction, index) => (
+            <div
+              key={transaction.id}
+              className="animate-[fadeIn_0.25s_ease-out_backwards]"
+              style={{ animationDelay: `${Math.min(index, 8) * 30}ms` }}
+            >
+              <TransactionCard transaction={transaction} />
             </div>
-
-            <FilterBar
-              categories={categories}
-              selectedCategory={categoryFilter}
-              onCategoryChange={setCategoryFilter}
-              selectedType={typeFilter}
-              onTypeChange={setTypeFilter}
-            />
-
-            {!hasFilteredResults && (
-              <div className="rounded-[var(--radius-card-lg)] border border-[var(--color-border-soft)] bg-[var(--color-surface)] px-6 py-12 text-center">
-                <div className="mx-auto mb-3 flex h-11 w-11 items-center justify-center rounded-full bg-[var(--color-ink)]/5">
-                  <SearchX className="h-5 w-5 text-[var(--color-ink-soft)]" strokeWidth={1.75} />
-                </div>
-                <p className="text-sm font-medium text-[var(--color-ink)]">No matching transactions</p>
-                <p className="mt-1 text-[13px] text-[var(--color-ink-soft)]">
-                  Try a different category or type filter.
-                </p>
-              </div>
-            )}
-
-            {hasFilteredResults && (
-              <div className="rounded-[var(--radius-card-lg)] border border-[var(--color-border-soft)] bg-[var(--color-surface)] px-4 py-1 shadow-[var(--shadow-xs)] sm:px-5">
-                {filteredTransactions.map((transaction, index) => (
-                  <div
-                    key={transaction.id}
-                    className="animate-[fadeIn_0.25s_ease-out_backwards]"
-                    style={{ animationDelay: `${Math.min(index, 8) * 30}ms` }}
-                  >
-                    <TransactionCard transaction={transaction} />
-                  </div>
-                ))}
-              </div>
-            )}
-          </section>
-        </>
+          ))}
+        </div>
       )}
     </div>
   );

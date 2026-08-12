@@ -14,7 +14,7 @@ function DashboardHeader() {
   });
 
   return (
-    <div className="mb-8 sm:mb-10">
+    <div className="mb-10">
       <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <span className="accent-rule mb-3" />
@@ -22,10 +22,10 @@ function DashboardHeader() {
             {today}
           </p>
           <h1 className="font-display text-3xl font-bold tracking-tight text-[var(--color-ink)] sm:text-4xl">
-            Financial Overview
+            Welcome back
           </h1>
           <p className="mt-3 max-w-xl text-[15px] leading-relaxed text-[var(--color-ink-soft)]">
-            Real-time insights into your balance, income, and spending — all in one place.
+            Here's your financial overview — balances, recent activity, and spending trends, all in one place.
           </p>
         </div>
         <div className="shrink-0">
