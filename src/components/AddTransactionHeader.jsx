@@ -10,7 +10,7 @@ function AddTransactionHeader() {
       <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
         <div className="flex items-start gap-4">
           <div className="hidden h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[var(--color-primary)] sm:flex">
-            <ReceiptText className="h-5.5 w-5.5 text-white" strokeWidth={2} />
+            <ReceiptText className="h-5.5 w-5.5 text-[var(--color-ink)]" strokeWidth={2} />
           </div>
           <div>
             <span className="accent-rule mb-3" />

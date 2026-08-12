@@ -15,7 +15,7 @@ function TransactionDetailHeader({ transaction }) {
         <div className="flex items-start gap-4">
           <div
             className={`hidden h-12 w-12 shrink-0 items-center justify-center rounded-2xl sm:flex ${
-              isIncome ? "bg-[var(--color-primary)]" : "bg-[var(--color-danger)]"
+              isIncome ? "bg-[var(--color-income)]" : "bg-[var(--color-danger)]"
             }`}
           >
             <CategoryIcon className="h-5.5 w-5.5 text-white" strokeWidth={2} />

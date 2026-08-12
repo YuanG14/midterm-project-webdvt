@@ -14,7 +14,7 @@ function BrandMark() {
   return (
     <div className="flex items-center gap-2.5">
       <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-[var(--radius-control)] bg-[var(--color-primary)]">
-        <Wallet className="h-4 w-4 text-white" strokeWidth={2} />
+        <Wallet className="h-4 w-4 text-[var(--color-ink)]" strokeWidth={2} />
       </div>
       <span className="font-display text-[15px] font-bold tracking-tight text-[var(--color-ink)]">
         Ledger
