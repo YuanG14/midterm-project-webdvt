@@ -133,24 +133,24 @@ function Summary() {
             )}
           </div>
 
-          {/* Supporting financial information — one slim strip, not four
-              separate equal-weight cards. */}
+          {/* Financial overview — Balance leads with the strongest
+              hierarchy; Income/Expenses/Total activity are secondary,
+              smaller stats below it rather than four equal-weight tiles. */}
           <div className="card card-padded">
-            <p className="text-eyebrow mb-5">Overview</p>
-            <div className="grid grid-cols-1 gap-y-5 sm:grid-cols-2 sm:gap-x-8 sm:gap-y-6 lg:grid-cols-4">
-              <div>
-                <p className="text-[12px] font-medium text-[var(--color-ink-soft)]">Balance</p>
-                <p
-                  className={`text-value mt-1.5 text-xl sm:text-2xl ${
-                    balancePositive ? "text-[var(--color-success-dark)]" : "text-[var(--color-danger)]"
-                  }`}
-                >
-                  {formatCurrency(balance)}
-                </p>
-              </div>
+            <p className="text-eyebrow mb-1">Financial Overview</p>
+            <p className="text-[12px] font-medium text-[var(--color-ink-soft)]">Balance</p>
+            <p
+              className={`font-display mt-1 text-[32px] font-extrabold tracking-tight sm:text-[36px] ${
+                balancePositive ? "text-[var(--color-success-dark)]" : "text-[var(--color-danger)]"
+              }`}
+            >
+              {formatCurrency(balance)}
+            </p>
+
+            <div className="mt-6 grid grid-cols-1 gap-y-5 border-t border-[var(--color-border-soft)] pt-5 sm:grid-cols-3 sm:gap-x-8">
               <div>
                 <p className="text-[12px] font-medium text-[var(--color-ink-soft)]">Income</p>
-                <p className="text-value mt-1.5 text-xl text-[var(--color-success-dark)] sm:text-2xl">
+                <p className="text-value mt-1.5 text-lg text-[var(--color-success-dark)]">
                   {formatCurrency(incomeTotal)}
                 </p>
                 <p className="mt-1 text-[12px] text-[var(--color-ink-soft)]">
@@ -159,7 +159,7 @@ function Summary() {
               </div>
               <div>
                 <p className="text-[12px] font-medium text-[var(--color-ink-soft)]">Expenses</p>
-                <p className="text-value mt-1.5 text-xl text-[var(--color-danger)] sm:text-2xl">
+                <p className="text-value mt-1.5 text-lg text-[var(--color-danger)]">
                   {formatCurrency(expenseTotal)}
                 </p>
                 <p className="mt-1 text-[12px] text-[var(--color-ink-soft)]">
@@ -168,7 +168,7 @@ function Summary() {
               </div>
               <div>
                 <p className="text-[12px] font-medium text-[var(--color-ink-soft)]">Total activity</p>
-                <p className="text-value mt-1.5 text-xl sm:text-2xl">{transactions.length}</p>
+                <p className="text-value mt-1.5 text-lg">{transactions.length}</p>
                 <p className="mt-1 text-[12px] text-[var(--color-ink-soft)]">transactions recorded</p>
               </div>
             </div>
