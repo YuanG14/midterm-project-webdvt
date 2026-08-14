@@ -4,6 +4,7 @@ import { SearchX } from "lucide-react";
 import DashboardHeader from "../components/DashboardHeader";
 import BalanceOverview from "../components/BalanceOverview";
 import FilterBar from "../components/FilterBar";
+import TransactionTableHeader from "../components/TransactionTableHeader";
 import TransactionCard from "../components/TransactionCard";
 import DashboardEmptyState from "../components/DashboardEmptyState";
 import Toast from "../components/Toast";
@@ -78,15 +79,14 @@ function Dashboard() {
           <div className="mx-auto mb-3 flex h-11 w-11 items-center justify-center rounded-full bg-[var(--color-ink)]/5">
             <SearchX className="h-5 w-5 text-[var(--color-ink-soft)]" strokeWidth={1.75} />
           </div>
-          <p className="text-sm font-medium text-[var(--color-ink)]">No matching transactions</p>
-          <p className="mt-1 text-[13px] text-[var(--color-ink-soft)]">
-            Try a different category or type filter.
-          </p>
+          <p className="text-sm font-medium text-[var(--color-ink)]">No transactions found</p>
+          <p className="mt-1 text-[13px] text-[var(--color-ink-soft)]">Try adjusting your filters.</p>
         </div>
       )}
 
       {hasTransactions && hasFilteredResults && (
         <div className="card card-padded">
+          <TransactionTableHeader />
           {filteredTransactions.map((transaction) => (
             <TransactionCard key={transaction.id} transaction={transaction} />
           ))}
