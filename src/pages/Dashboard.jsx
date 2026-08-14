@@ -53,6 +53,15 @@ function Dashboard() {
       <BalanceOverview balance={balance} incomeTotal={incomeTotal} expenseTotal={expenseTotal} />
 
       {hasTransactions && (
+        <div className="mb-4 flex items-center justify-between">
+          <h2 className="font-display text-[15px] font-semibold text-[var(--color-ink)]">All Transactions</h2>
+          <span className="text-[12.5px] text-[var(--color-ink-soft)]">
+            {filteredTransactions.length} {filteredTransactions.length === 1 ? "entry" : "entries"}
+          </span>
+        </div>
+      )}
+
+      {hasTransactions && (
         <FilterBar
           categories={categories}
           selectedCategory={categoryFilter}
@@ -65,7 +74,7 @@ function Dashboard() {
       {!hasTransactions && <DashboardEmptyState />}
 
       {hasTransactions && !hasFilteredResults && (
-        <div className="rounded-2xl border border-dashed border-[var(--color-border-soft)] bg-[var(--color-surface)] px-6 py-12 text-center">
+        <div className="rounded-[var(--radius-card-lg)] border border-dashed border-[var(--color-border-soft)] bg-[var(--color-surface)] px-6 py-10 text-center">
           <div className="mx-auto mb-3 flex h-11 w-11 items-center justify-center rounded-full bg-[var(--color-ink)]/5">
             <SearchX className="h-5 w-5 text-[var(--color-ink-soft)]" strokeWidth={1.75} />
           </div>

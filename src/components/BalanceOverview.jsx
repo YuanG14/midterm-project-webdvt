@@ -1,5 +1,5 @@
 import { memo } from "react";
-import { TrendingDown, TrendingUp } from "lucide-react";
+import { TrendingDown, TrendingUp, Wallet } from "lucide-react";
 import { formatCurrency } from "../utils/formatCurrency";
 
 /**
@@ -12,16 +12,23 @@ import { formatCurrency } from "../utils/formatCurrency";
  */
 function BalanceOverview({ balance, incomeTotal, expenseTotal }) {
   return (
-    <div className="card card-padded mb-8">
-      <p className="text-eyebrow">Current Balance</p>
-      <p className="text-value-hero mt-2 text-[clamp(28px,13vw_-_14px,42px)] leading-none sm:text-[52px]">
-        {formatCurrency(balance)}
-      </p>
-      <p className="mt-3 text-[13.5px] leading-relaxed text-[var(--color-ink-soft)]">
-        Income minus expenses, updated in real time.
-      </p>
+    <div className="card card-padded mb-6">
+      <div className="flex items-start justify-between gap-4">
+        <div>
+          <p className="text-eyebrow">Current Balance</p>
+          <p className="text-value-hero mt-2 text-[clamp(28px,13vw_-_14px,42px)] leading-none sm:text-[44px]">
+            {formatCurrency(balance)}
+          </p>
+          <p className="mt-3 text-[13.5px] leading-relaxed text-[var(--color-ink-soft)]">
+            Income minus expenses, updated in real time.
+          </p>
+        </div>
+        <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-[var(--radius-control)] ice-surface">
+          <Wallet className="h-5 w-5 ice-icon" strokeWidth={2} />
+        </div>
+      </div>
 
-      <div className="mt-8 grid grid-cols-1 gap-4 border-t border-[var(--color-border-soft)] pt-6 sm:grid-cols-2 sm:gap-12">
+      <div className="mt-7 grid grid-cols-1 gap-4 border-t border-[var(--color-border-soft)] pt-6 sm:grid-cols-2 sm:gap-12">
         <div>
           <div className="flex items-center gap-1.5 text-eyebrow text-[var(--color-ink-soft)]">
             <TrendingUp className="h-3.5 w-3.5 text-[var(--color-success-dark)]" strokeWidth={2} />

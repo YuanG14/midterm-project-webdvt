@@ -7,17 +7,23 @@ const TYPE_OPTIONS = [
 ];
 
 function Select({ value, onChange, options, label, icon: Icon }) {
+  const isActive = value !== "all";
+
   return (
     <label className="relative flex flex-1 items-center sm:flex-none">
       <span className="sr-only">{label}</span>
       <Icon
-        className="pointer-events-none absolute left-3.5 h-3.5 w-3.5 text-[var(--color-ink-soft)]"
+        className={`pointer-events-none absolute left-3.5 h-3.5 w-3.5 ${
+          isActive ? "text-[var(--color-primary-dark)]" : "text-[var(--color-ink-soft)]"
+        }`}
         strokeWidth={2}
       />
       <select
         value={value}
         onChange={(event) => onChange(event.target.value)}
-        className="field-select w-full min-w-0 cursor-pointer appearance-none pl-9 pr-9 text-[13px] font-medium sm:w-auto"
+        className={`field-select w-full min-w-0 cursor-pointer appearance-none pl-9 pr-9 text-[13px] font-medium sm:w-auto ${
+          isActive ? "border-[var(--color-primary-dark)] bg-[var(--color-ice-surface)] text-[var(--color-ink)]" : ""
+        }`}
       >
         {options.map((option) => (
           <option key={option.value} value={option.value}>
@@ -26,7 +32,9 @@ function Select({ value, onChange, options, label, icon: Icon }) {
         ))}
       </select>
       <svg
-        className="pointer-events-none absolute right-3 h-3.5 w-3.5 text-[var(--color-ink-soft)]"
+        className={`pointer-events-none absolute right-3 h-3.5 w-3.5 ${
+          isActive ? "text-[var(--color-primary-dark)]" : "text-[var(--color-ink-soft)]"
+        }`}
         viewBox="0 0 24 24"
         fill="none"
         stroke="currentColor"

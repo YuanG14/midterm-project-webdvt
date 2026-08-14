@@ -723,7 +723,7 @@ textarea:focus-visible {
   }
 
   .data-row:hover {
-    background-color: color-mix(in srgb, var(--color-ice-accent) 20%, var(--color-surface));
+    background-color: var(--color-ice-surface);
   }
 
   /* --- Ice-blue accent utilities ---------------------------------------

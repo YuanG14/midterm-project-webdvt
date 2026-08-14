@@ -5,32 +5,20 @@ import { PlusCircle } from "lucide-react";
  * Dashboard-only header.
  */
 function DashboardHeader() {
-  const today = new Date().toLocaleDateString("en-US", {
-    weekday: "long",
-    month: "long",
-    day: "numeric",
-  });
-
   return (
-    <div className="mb-10">
-      <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
+    <div className="mb-8">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <span className="accent-rule mb-3" />
-          <p className="mb-2 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.14em] text-[var(--color-primary-dark)]">
-            {today}
-          </p>
-          <h1 className="font-display text-3xl font-bold tracking-tight text-[var(--color-ink)] sm:text-4xl">
-            Welcome back
+          <h1 className="font-display text-[26px] font-bold tracking-tight text-[var(--color-ink)] sm:text-[28px]">
+            Dashboard
           </h1>
-          <p className="mt-3 max-w-xl text-[15px] leading-relaxed text-[var(--color-ink-soft)]">
-            Here's your financial overview — balances, recent activity, and spending trends, all in one place.
+          <p className="mt-1.5 text-[14px] text-[var(--color-ink-soft)]">
+            Your financial overview at a glance.
           </p>
         </div>
         <div className="shrink-0">
-          <Link
-            to="/add"
-            className="inline-flex items-center gap-1.5 rounded-full bg-[var(--color-ink)] px-4 py-2.5 text-[13px] font-semibold text-[var(--color-canvas)] shadow-sm transition-transform duration-200 hover:-translate-y-0.5"
-          >
+          <Link to="/add" className="btn btn-primary">
             <PlusCircle className="h-4 w-4" strokeWidth={2} />
             Add Transaction
           </Link>
