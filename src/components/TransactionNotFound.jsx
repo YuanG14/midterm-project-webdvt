@@ -11,28 +11,21 @@ function TransactionNotFound() {
   return (
     <div>
       <div className="mb-8">
-        <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
-          <div>
-            <span className="accent-rule mb-3" />
-            <p className="mb-2 text-xs font-semibold uppercase tracking-[0.14em] text-[var(--color-primary-dark)]">
-              Record
-            </p>
-            <h1 className="font-display text-3xl font-bold tracking-tight text-[var(--color-ink)] sm:text-4xl">
-              Transaction Detail
-            </h1>
-            <p className="mt-3 max-w-md text-[15px] leading-relaxed text-[var(--color-ink-soft)]">
-              We couldn't find the transaction you're looking for.
-            </p>
-          </div>
+        <Link
+          to="/"
+          className="mb-4 inline-flex items-center gap-1.5 text-[12.5px] font-semibold text-[var(--color-primary-dark)] transition-colors duration-200 hover:text-[var(--color-ink)]"
+        >
+          <ArrowLeft className="h-3.5 w-3.5" strokeWidth={2} />
+          Back to Transactions
+        </Link>
 
-          <Link
-            to="/"
-            className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-[var(--color-border-soft)] bg-[var(--color-surface)] px-4 py-2.5 text-[13px] font-semibold text-[var(--color-ink-soft)] transition-colors duration-200 hover:text-[var(--color-ink)]"
-          >
-            <ArrowLeft className="h-3.5 w-3.5" strokeWidth={2} />
-            Back to Dashboard
-          </Link>
-        </div>
+        <span className="accent-rule mb-3" aria-hidden="true" />
+        <h1 className="font-display text-2xl font-bold tracking-tight text-[var(--color-ink)] sm:text-[28px]">
+          Transaction Details
+        </h1>
+        <p className="mt-1.5 text-[13.5px] leading-relaxed text-[var(--color-ink-soft)]">
+          We couldn't find the transaction you're looking for.
+        </p>
       </div>
 
       <div className="animate-[fadeIn_0.4s_var(--ease-premium)] rounded-2xl border border-dashed border-[var(--color-border-soft)] bg-[var(--color-surface)] px-6 py-16 text-center shadow-[var(--shadow-xs)]">

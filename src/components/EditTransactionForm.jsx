@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { Calendar, FileText, Loader2, Pencil, Save, Tag, Trash2, X } from "lucide-react";
+import { Calendar, FileText, Loader2, Pencil, Save, Tag, X } from "lucide-react";
 import FormSection from "./FormSection";
 import InputField from "./InputField";
 import TransactionTypeSelector from "./TransactionTypeSelector";
@@ -11,7 +11,13 @@ import {
   validateTransactionForm,
 } from "../utils/transactionFormShared";
 
-function EditTransactionForm({ transaction, onSave, onCancel, onDeleteRequest }) {
+/**
+ * Same card/section/field anatomy as TransactionForm (Add Transaction, Phase
+ * 4) so Add and Edit are visibly the same form. Delete lives on the
+ * read-only overview instead of here, so this footer matches the Add
+ * Transaction form's Cancel/Save pair exactly.
+ */
+function EditTransactionForm({ transaction, onSave, onCancel }) {
   const [type, setType] = useState(transaction.type);
   const [title, setTitle] = useState(transaction.title);
   const [amount, setAmount] = useState(String(transaction.amount));
@@ -51,13 +57,13 @@ function EditTransactionForm({ transaction, onSave, onCancel, onDeleteRequest })
   }
 
   return (
-    <div className="mt-6 animate-[fadeIn_0.4s_var(--ease-premium)]">
-      <form onSubmit={handleSubmit} noValidate className="card card-padded flex flex-col gap-8">
+    <div className="mx-auto max-w-2xl animate-[fadeIn_0.4s_var(--ease-premium)]">
+      <form onSubmit={handleSubmit} noValidate className="card card-padded flex flex-col gap-6">
         <div className="flex items-center gap-2.5">
-          <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[var(--color-canvas)] text-[var(--color-ink-soft)]">
-            <Pencil className="h-4 w-4" strokeWidth={2} />
+          <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-[var(--color-canvas)] text-[var(--color-ink-soft)]">
+            <Pencil className="h-3.5 w-3.5" strokeWidth={2} />
           </span>
-          <h3 className="font-display text-sm font-bold uppercase tracking-[0.08em] text-[var(--color-ink)]">
+          <h3 className="font-display text-[12.5px] font-bold uppercase tracking-[0.08em] text-[var(--color-ink)]">
             Edit Transaction
           </h3>
         </div>
@@ -93,7 +99,9 @@ function EditTransactionForm({ transaction, onSave, onCancel, onDeleteRequest })
                 value={amount}
                 onChange={(event) => setAmount(event.target.value)}
                 placeholder="0.00"
-                className={`field-input pl-7 ${errors.amount ? "field-error-state" : ""}`}
+                className={`field-input pl-7 font-mono-tabular text-[15px] font-semibold ${
+                  errors.amount ? "field-error-state" : ""
+                }`}
               />
             </div>
           </InputField>
@@ -156,26 +164,19 @@ function EditTransactionForm({ transaction, onSave, onCancel, onDeleteRequest })
           />
         </InputField>
 
-        <div className="flex flex-col gap-3 border-t border-[var(--color-border-soft)] pt-6 sm:flex-row sm:items-center sm:justify-between">
-          <button type="button" onClick={onDeleteRequest} className="btn btn-danger">
-            <Trash2 className="h-3.5 w-3.5" strokeWidth={2} />
-            Delete Transaction
+        <div className="flex flex-col-reverse gap-3 border-t border-[var(--color-border-soft)] pt-6 sm:flex-row sm:justify-end">
+          <button type="button" onClick={onCancel} className="btn btn-secondary">
+            <X className="h-3.5 w-3.5" strokeWidth={2} />
+            Cancel
           </button>
-
-          <div className="flex flex-col-reverse gap-3 sm:flex-row">
-            <button type="button" onClick={onCancel} className="btn btn-secondary">
-              <X className="h-3.5 w-3.5" strokeWidth={2} />
-              Cancel
-            </button>
-            <button type="submit" disabled={submitting} className="btn btn-primary">
-              {submitting ? (
-                <Loader2 className="h-3.5 w-3.5 animate-spin" strokeWidth={2} />
-              ) : (
-                <Save className="h-3.5 w-3.5" strokeWidth={2} />
-              )}
-              {submitting ? "Saving…" : "Save Changes"}
-            </button>
-          </div>
+          <button type="submit" disabled={submitting} className="btn btn-primary">
+            {submitting ? (
+              <Loader2 className="h-3.5 w-3.5 animate-spin" strokeWidth={2} />
+            ) : (
+              <Save className="h-3.5 w-3.5" strokeWidth={2} />
+            )}
+            {submitting ? "Saving…" : "Save Changes"}
+          </button>
         </div>
       </form>
     </div>

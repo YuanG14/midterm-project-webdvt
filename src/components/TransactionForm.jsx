@@ -65,7 +65,7 @@ function TransactionForm() {
 
   return (
     <div className="mx-auto max-w-2xl animate-[fadeIn_0.4s_var(--ease-premium)]">
-      <form onSubmit={handleSubmit} noValidate className="card card-padded flex flex-col gap-8">
+      <form onSubmit={handleSubmit} noValidate className="card card-padded flex flex-col gap-6">
         <FormSection
           icon={FileText}
           title="Transaction Details"
@@ -97,7 +97,9 @@ function TransactionForm() {
                 value={amount}
                 onChange={(event) => setAmount(event.target.value)}
                 placeholder="0.00"
-                className={`field-input pl-7 ${errors.amount ? "field-error-state" : ""}`}
+                className={`field-input pl-7 font-mono-tabular text-[15px] font-semibold ${
+                  errors.amount ? "field-error-state" : ""
+                }`}
               />
             </div>
           </InputField>

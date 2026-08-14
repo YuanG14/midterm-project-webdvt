@@ -1,17 +1,19 @@
 /**
- * A single labeled detail row (icon + label + value) used inside the
- * Transaction Overview Card — e.g. Category, Date, Notes.
+ * A single labeled detail row used inside the Transaction Overview Card
+ * (Description, Category, Type, Date). Flat label-over-value rows rather
+ * than individually bordered/boxed cards — reads as a scannable financial
+ * record instead of a grid of decorative tiles.
  */
 function TransactionInfoItem({ icon: Icon, label, value }) {
   return (
-    <div className="flex items-start gap-3 rounded-xl border border-[var(--color-border-soft)] bg-[var(--color-canvas)] p-4">
-      <span className="ice-surface-soft flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-[var(--color-ink-soft)] shadow-[var(--shadow-xs)]">
-        {Icon && <Icon className="h-4 w-4" strokeWidth={2} />}
+    <div className="flex items-start justify-between gap-4 py-3">
+      <span className="flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.08em] text-[var(--color-ink-soft)]">
+        {Icon && <Icon className="h-3.5 w-3.5" strokeWidth={2} />}
+        {label}
       </span>
-      <div className="min-w-0">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[var(--color-ink-soft)]">{label}</p>
-        <p className="mt-0.5 break-words text-[14px] font-semibold leading-snug text-[var(--color-ink)]">{value}</p>
-      </div>
+      <p className="max-w-[65%] break-words text-right text-[14px] font-semibold leading-snug text-[var(--color-ink)]">
+        {value}
+      </p>
     </div>
   );
 }
