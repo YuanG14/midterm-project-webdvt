@@ -6,11 +6,11 @@
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, monospace;
 
-  --color-canvas: #f5f8fb;
+  --color-canvas: #f4f9fc;
   --color-surface: #ffffff;
-  --color-border-soft: #dce8ee;
-  --color-ink: #172033;
-  --color-ink-soft: #667085;
+  --color-border-soft: #dceaf0;
+  --color-ink: #14212b;
+  --color-ink-soft: #647783;
 
   /*
     Brand identity: Pastel Ice Blue. --color-primary is the signature fill
@@ -19,19 +19,32 @@
     of it, never white, since the pastel is too light for white text/icons
     to read against. --color-primary-dark is a deeper step of the same
     hue, used where the color needs to work as small TEXT/ICON tint on a
-    light surface instead (eyebrows, wash icons) — it's independently
-    contrast-checked against white/canvas rather than just a darker
-    percentage of --color-primary.
+    light surface instead (eyebrows, wash icons, active nav icon) — it's
+    independently contrast-checked against white/canvas rather than just
+    a darker percentage of --color-primary.
   */
   --color-primary: #c7e7f5;
-  --color-primary-dark: #2f6e8c;
+  --color-primary-dark: #397c96;
+
+  /* A stronger step of the ice-blue accent, for interactive states that
+     need more contrast than the pastel fill but shouldn't jump all the
+     way to --color-primary-dark (e.g. hovered/pressed selection). */
+  --color-primary-strong: #9dd3e8;
+
+  /* Dedicated "active nav / selected row" surface tint — a flat value
+     rather than a color-mix of the primary, so selection states hit the
+     exact spec tone regardless of what --color-surface happens to be. */
+  --color-ice-surface: #eaf6fb;
 
   /* Deep-navy "foundation" tone — the neutral counterweight to the ice-blue
      accent (SummaryHeader icon, average/neutral insight tone, moon icon),
      distinct from both --color-ink (body text) and --color-primary. */
   --color-accent: #1f2e42;
 
-  --color-danger: #c2482f;
+  /* Expense and "error/danger" share one coral so the two never drift —
+     a failed validation reads with the same semantic weight as money
+     going out. */
+  --color-danger: #e76f51;
   --color-warning: #b4790e;
 
   /*
@@ -41,8 +54,8 @@
     alias so existing "positive outcome" usages (toasts, insight tone,
     balance figures) automatically stay green too.
   */
-  --color-income: #0f9d74;
-  --color-income-dark: #0b7f5e;
+  --color-income: #4dbf7a;
+  --color-income-dark: #2f9760;
 
   /*
     Design system (Phase 1). Tokens layered on top of the base palette
@@ -65,7 +78,9 @@
   --color-surface-sunken: #eaf2f6;
   --color-surface-hover: #e3eef3;
   --color-border-strong: #c3d6de;
-  --color-ink-faint: #98a2b3;
+  /* Muted text: the third, faintest step below --color-ink (primary) and
+     --color-ink-soft (secondary) — timestamps, placeholder-like metadata. */
+  --color-ink-faint: #8a9aa3;
 
   /* Semantic aliases so components can express *intent* (success/error)
      rather than a literal color. Success resolves to the income green
@@ -81,9 +96,9 @@
      already in use (inputs ≈ 12px, cards ≈ 16px, buttons/badges = pill),
      just given semantic names instead of repeating rounded-xl / rounded-2xl
      / rounded-full ad hoc in every component. */
-  --radius-control: 0.75rem;
-  --radius-card: 1rem;
-  --radius-card-lg: 1.25rem;
+  --radius-control: 0.5rem;
+  --radius-card: 0.75rem;
+  --radius-card-lg: 1rem;
   --radius-pill: 999px;
 
   /* Easing library. --ease-premium (unchanged) remains the default for
@@ -118,12 +133,12 @@
   a plain shadow-sm/shadow-md utility can't be re-themed per html.dark.
 */
 :root {
-  --shadow-xs: 0 1px 2px rgba(16, 21, 28, 0.04);
-  --shadow-card: 0 1px 2px rgba(16, 21, 28, 0.04), 0 8px 24px -12px rgba(16, 21, 28, 0.08);
-  --shadow-card-hover: 0 1px 2px rgba(16, 21, 28, 0.06), 0 16px 32px -14px rgba(16, 21, 28, 0.16);
-  --shadow-raised: 0 8px 20px -10px rgba(16, 21, 28, 0.18);
-  --shadow-float: 0 8px 24px -6px rgba(16, 21, 28, 0.25);
-  --shadow-inset: inset 0 1px 2px rgba(16, 21, 28, 0.06);
+  --shadow-xs: 0 1px 2px rgba(20, 33, 43, 0.04);
+  --shadow-card: 0 1px 2px rgba(20, 33, 43, 0.03), 0 4px 12px -8px rgba(20, 33, 43, 0.06);
+  --shadow-card-hover: 0 1px 2px rgba(20, 33, 43, 0.04), 0 8px 20px -10px rgba(20, 33, 43, 0.1);
+  --shadow-raised: 0 6px 16px -8px rgba(20, 33, 43, 0.14);
+  --shadow-float: 0 8px 24px -6px rgba(20, 33, 43, 0.2);
+  --shadow-inset: inset 0 1px 2px rgba(20, 33, 43, 0.05);
 }
 
 html {
@@ -716,15 +731,15 @@ textarea:focus-visible {
      color stays confined to interactive/selection states (nav, selected
      controls, focus, small icon tints) instead of spreading ad hoc. */
   .ice-surface {
-    background-color: color-mix(in srgb, var(--color-ice-accent) 38%, var(--color-surface));
+    background-color: var(--color-ice-surface);
   }
 
   .ice-surface-soft {
-    background-color: color-mix(in srgb, var(--color-ice-accent) 22%, transparent);
+    background-color: color-mix(in srgb, var(--color-ice-surface) 65%, transparent);
   }
 
   .ice-icon {
-    color: color-mix(in srgb, var(--color-ice-accent) 60%, var(--color-ink));
+    color: var(--color-primary-dark);
   }
 
   .ice-border {

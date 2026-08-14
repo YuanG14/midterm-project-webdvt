@@ -13,11 +13,11 @@ const links = [
 function BrandMark() {
   return (
     <div className="flex items-center gap-2.5 px-1">
-      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-accent)] shadow-[var(--shadow-xs)]">
-        <Wallet className="h-4.5 w-4.5 text-white" strokeWidth={2} />
+      <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-[var(--radius-control)] bg-[var(--color-primary)]">
+        <Wallet className="h-4 w-4 text-[var(--color-primary-dark)]" strokeWidth={2} />
       </div>
       <div className="min-w-0 leading-tight">
-        <p className="font-display truncate text-[15px] font-bold tracking-tight text-[var(--color-ink)]">
+        <p className="font-display truncate text-[14px] font-bold tracking-tight text-[var(--color-ink)]">
           Ledger
         </p>
         <p className="truncate text-[11px] font-medium text-[var(--color-ink-soft)]">
@@ -30,9 +30,9 @@ function BrandMark() {
 
 function NavList({ onNavigate }) {
   return (
-    <nav className="flex flex-col gap-1">
+    <nav className="flex flex-col gap-0.5">
       {links.map((link) => (
-        <NavItem key={link.to} {...link} onClick={onNavigate} />
+        <NavItem key={link.to} {...link} onClick={onNavigate} variant="block" />
       ))}
     </nav>
   );
@@ -61,7 +61,7 @@ function Sidebar() {
   return (
     <>
       {/* Desktop / tablet-landscape: persistent sidebar */}
-      <aside className="fixed inset-y-0 left-0 z-20 hidden w-64 shrink-0 flex-col border-r border-[var(--color-border-soft)] bg-[var(--color-surface)] px-4 py-6 lg:flex">
+      <aside className="fixed inset-y-0 left-0 z-20 hidden w-60 shrink-0 flex-col border-r border-[var(--color-border-soft)] bg-[var(--color-surface)] px-3 py-6 lg:flex">
         <BrandMark />
 
         <div className="mt-8 flex-1">
@@ -74,7 +74,7 @@ function Sidebar() {
       </aside>
 
       {/* Mobile / tablet-portrait: slim top bar */}
-      <header className="sticky top-0 z-20 flex items-center justify-between border-b border-[var(--color-border-soft)] bg-[var(--color-surface)]/80 px-5 py-3.5 backdrop-blur-md lg:hidden">
+      <header className="sticky top-0 z-20 flex items-center justify-between border-b border-[var(--color-border-soft)] bg-[var(--color-surface)] px-5 py-3.5 lg:hidden">
         <BrandMark />
 
         <div className="flex items-center gap-2">
@@ -94,7 +94,7 @@ function Sidebar() {
       {/* Mobile drawer + backdrop */}
       <div
         aria-hidden={!open}
-        className={`fixed inset-0 z-30 bg-black/40 backdrop-blur-[1px] transition-opacity duration-300 ease-[var(--ease-premium)] lg:hidden ${
+        className={`fixed inset-0 z-30 bg-black/35 transition-opacity duration-300 ease-[var(--ease-premium)] lg:hidden ${
           open ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"
         }`}
         onClick={() => setOpen(false)}

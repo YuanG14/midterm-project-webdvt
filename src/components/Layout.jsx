@@ -1,6 +1,6 @@
 import { AnimatePresence } from "framer-motion";
 import { Outlet, useLocation } from "react-router-dom";
-import Navbar from "./Navbar";
+import Sidebar from "./Sidebar";
 import PageTransition from "./PageTransition";
 
 function Layout() {
@@ -8,13 +8,15 @@ function Layout() {
 
   return (
     <div className="min-h-screen bg-[var(--color-canvas)]">
-      <Navbar />
-      <main className="page-shell py-10 sm:py-14">
-        <AnimatePresence mode="wait">
-          <PageTransition key={location.pathname}>
-            <Outlet />
-          </PageTransition>
-        </AnimatePresence>
+      <Sidebar />
+      <main className="lg:pl-60">
+        <div className="page-shell py-8 sm:py-10">
+          <AnimatePresence mode="wait">
+            <PageTransition key={location.pathname}>
+              <Outlet />
+            </PageTransition>
+          </AnimatePresence>
+        </div>
       </main>
     </div>
   );
