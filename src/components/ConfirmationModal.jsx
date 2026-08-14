@@ -56,7 +56,7 @@ function ConfirmationModal({
             aria-modal="true"
             aria-labelledby="confirmation-modal-title"
             onClick={(event) => event.stopPropagation()}
-            className="w-full max-w-sm rounded-2xl border border-[var(--color-border-soft)] bg-[var(--color-surface)] p-7 text-center shadow-[var(--shadow-float)]"
+            className="w-full max-w-sm rounded-2xl border border-[var(--color-border-soft)] bg-[var(--color-modal-surface)] p-7 text-center shadow-[var(--shadow-float)]"
             initial="initial"
             animate="animate"
             exit="exit"

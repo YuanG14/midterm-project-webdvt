@@ -31,6 +31,13 @@
      way to --color-primary-dark (e.g. hovered/pressed selection). */
   --color-primary-strong: #9dd3e8;
 
+  /* Fixed "Deep Ice Blue" swatch — same hex in both themes by design
+     (Phase 7). Distinct from --color-primary-dark, which is allowed to
+     shift per-theme for its small-text/icon-tint role; this token exists
+     for surfaces (e.g. the dark-mode primary button fill) that need the
+     literal deep-blue value regardless of theme. */
+  --color-primary-deep: #397c96;
+
   /* Dedicated "active nav / selected row" surface tint — a flat value
      rather than a color-mix of the primary, so selection states hit the
      exact spec tone regardless of what --color-surface happens to be. */
@@ -124,6 +131,12 @@
     navy surfaces.
   */
   --color-ice-accent: var(--color-primary);
+
+  /* Modal-specific surface (Phase 7) — same as --color-surface in light
+     mode, but given its own token so dark mode can target the
+     Secondary Surface tone for overlays without changing every other
+     consumer of --color-surface (cards, sidebar, table). */
+  --color-modal-surface: var(--color-surface);
 }
 
 /*
@@ -153,30 +166,64 @@ html {
   no component markup changes required.
 */
 html.dark {
-  --color-canvas: #0b1220;
-  --color-surface: #111a2b;
-  --color-border-soft: #22314a;
-  --color-ink: #f5f8fb;
-  --color-ink-soft: #aab5c5;
+  /* Main background / Primary surface / Border — Phase 7 spec values. */
+  --color-canvas: #0e1720;
+  --color-surface: #15232d;
+  --color-border-soft: #263c48;
+  --color-ink: #f4f9fc;
+  --color-ink-soft: #a8bac4;
+  --color-ink-faint: #7f949f;
 
-  /* --color-primary is intentionally NOT overridden here — see the
-     --color-ice-accent comment above; the same pastel reads with quiet
-     contrast against these dark navy surfaces. --color-primary-dark
-     (the small-text/icon-tint role) does need a lighter step in dark
-     mode, since the light-mode deep-ice-blue text color would be too
-     dark to read here. */
-  --color-primary-dark: #9fd3e8;
+  /* --color-primary (pastel ice blue) is intentionally NOT overridden —
+     see the --color-ice-accent comment above; the same pastel reads with
+     quiet contrast against these dark navy surfaces, and the spec's dark
+     palette lists the same hex for "Ice Blue" as light mode's "Primary
+     Ice Blue". --color-primary-strong is likewise left un-overridden
+     (same "Strong Ice Blue" hex in both themes).
+
+     --color-primary-dark keeps its light-mode role (small text/icon
+     tint) but needs a lighter step here, since the light-mode deep-blue
+     value would be too dark to read on these surfaces — this is the
+     exact value the spec's Sidebar section gives for "Active icon" in
+     dark mode. --color-primary-deep (defined once above, unchanged here)
+     carries the literal Deep Ice Blue swatch for surfaces that need it
+     regardless of theme, e.g. the dark-mode primary button fill. */
+  --color-primary-dark: #9dd3e8;
+
   --color-accent: #6b84a6;
-  --color-danger: #e2593c;
+  --color-danger: #e76f51;
   --color-warning: #e0a530;
 
-  --color-income: #17c78e;
-  --color-income-dark: #12a877;
+  /* Income/Expense are financial semantics that stay the SAME hex in
+     both themes per spec, so a green or coral reads identically
+     regardless of which mode the user is in. */
+  --color-income: #4dbf7a;
+  --color-income-dark: #4dbf7a;
 
-  --color-surface-sunken: #162235;
-  --color-surface-hover: #1b2a40;
-  --color-border-strong: #33455f;
-  --color-ink-faint: #7c8aa0;
+  /* Secondary Surface / Elevated Surface hierarchy (Phase 7). Three
+     distinct steps from --color-canvas: Surface (#15232d) sits above
+     canvas, Secondary Surface (#1a2c37, reused as the hover tone) sits
+     above that, and --color-ice-surface below is repurposed as the
+     Elevated Surface tone (#203540) for active/selected states — see
+     the --color-ice-surface override below for why. */
+  --color-surface-sunken: #1a2c37;
+  --color-surface-hover: #1a2c37;
+  --color-border-strong: #33495a;
+
+  /* --color-modal-surface targets the spec's dark Modal Surface
+     (#1a2c37 — Secondary Surface), distinct from --color-surface
+     (#15232d) which cards/sidebar/table use. */
+  --color-modal-surface: #1a2c37;
+
+  /* Bug fix (Phase 7): this token was previously left un-overridden in
+     dark mode, so every "active/selected" surface that reads it — the
+     sidebar's active nav row, the category dropdown's selected option,
+     the active filter chip, icon-wrap backgrounds — rendered as a pale
+     light-mode ice-blue patch sitting on top of the dark navy UI.
+     Overriding it to the spec's Elevated Surface tone (#203540) gives
+     dark mode its own proper "selected" tier instead of light mode
+     bleeding through. */
+  --color-ice-surface: #203540;
 
   --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.3);
   --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 24px -12px rgba(0, 0, 0, 0.55);
@@ -478,6 +525,10 @@ textarea:focus-visible {
     font-size: 0.875rem;
   }
 
+  /* Light: pastel ice-blue fill + navy text (spec "Light Primary").
+     Dark: overridden below to the deep-ice-blue fill + light text
+     (spec "Dark Primary") — a deliberately different resting fill per
+     theme, while the hover tone (Strong Ice Blue) is identical in both. */
   .btn-primary {
     background-color: var(--color-primary);
     color: var(--color-ink);
@@ -485,9 +536,13 @@ textarea:focus-visible {
   }
 
   .btn-primary:hover:not(:disabled) {
-    background-color: color-mix(in srgb, var(--color-primary) 82%, var(--color-ink) 8%);
+    background-color: var(--color-primary-strong);
     transform: translateY(-1px);
     box-shadow: var(--shadow-raised);
+  }
+
+  html.dark .btn-primary {
+    background-color: var(--color-primary-deep);
   }
 
   /* Secondary, higher-contrast brand button (dark navy fill) — for
@@ -722,8 +777,12 @@ textarea:focus-visible {
     border-top: none;
   }
 
+  /* Phase 7: hover reads --color-surface-hover (the Secondary Surface /
+     Table Hover tone), not --color-ice-surface — that token is reserved
+     for active/selected states (see the html.dark override above), so a
+     plain row hover doesn't visually compete with "selected". */
   .data-row:hover {
-    background-color: var(--color-ice-surface);
+    background-color: var(--color-surface-hover);
   }
 
   /* --- Ice-blue accent utilities ---------------------------------------
