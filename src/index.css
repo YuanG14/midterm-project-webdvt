@@ -250,21 +250,17 @@ body {
 }
 
 /* Consistent, accessible focus state for every interactive element,
-   applied globally so individual buttons/links don't need repeating it. */
+   applied globally so individual buttons/links don't need repeating it.
+   (Single source of truth — see the @layer base rule further down for
+   the visible ring itself, which uses `outline` so it composes cleanly
+   with any element that also has its own box-shadow, e.g. .field-input's
+   focus ring or .btn-primary's hover shadow.) */
 a,
 button,
 input,
 select,
 textarea {
   outline: none;
-}
-
-a:focus-visible,
-button:focus-visible,
-input:focus-visible,
-select:focus-visible,
-textarea:focus-visible {
-  box-shadow: 0 0 0 2px var(--color-surface), 0 0 0 4px var(--color-primary);
 }
 
 ::selection {
@@ -687,6 +683,14 @@ textarea:focus-visible {
   .field-select.field-error-state,
   .field-textarea.field-error-state {
     border-color: var(--color-danger);
+  }
+
+  .field-input:disabled,
+  .field-select:disabled,
+  .field-textarea:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+    background-color: var(--color-surface-sunken);
   }
 
   .field-textarea {
