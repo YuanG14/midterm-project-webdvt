@@ -784,8 +784,19 @@ textarea {
   /* Phase 7: hover reads --color-surface-hover (the Secondary Surface /
      Table Hover tone), not --color-ice-surface — that token is reserved
      for active/selected states (see the html.dark override above), so a
-     plain row hover doesn't visually compete with "selected". */
-  .data-row:hover {
+     plain row hover doesn't visually compete with "selected". Scoped to
+     hover-capable pointers (mouse/trackpad) so a touch tap doesn't get
+     stuck showing a "hover" tint after the finger lifts. */
+  @media (hover: hover) {
+    .data-row:hover {
+      background-color: var(--color-surface-hover);
+    }
+  }
+
+  /* Touch equivalent of the hover above: fires on tap-down for devices
+     with no real hover (phones/tablets), so a tap still gets the same
+     quiet tint as a desktop hover instead of no feedback at all. */
+  .data-row:active {
     background-color: var(--color-surface-hover);
   }
 
