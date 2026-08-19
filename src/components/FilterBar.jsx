@@ -66,7 +66,7 @@ function FilterBar({ categories, selectedCategory, onCategoryChange, selectedTyp
   }
 
   return (
-    <div className="card mb-6 flex flex-col gap-4 p-4 sm:flex-row sm:items-end sm:justify-between">
+    <div className="flex flex-col gap-4 border-y border-[var(--color-border-soft)] bg-[var(--color-surface-sunken)]/45 px-4 py-4 sm:flex-row sm:items-end sm:justify-between sm:px-6">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-end">
         <Select
           label="Filter by category"

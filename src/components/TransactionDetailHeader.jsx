@@ -26,8 +26,8 @@ function TransactionDetailHeader({ transaction }) {
         Back to Transactions
       </Link>
 
-      <span className="accent-rule mb-3" aria-hidden="true" />
-      <h1 className="font-display text-2xl font-bold tracking-tight text-[var(--color-ink)] sm:text-[28px]">
+      <p className="mb-2 text-[12px] font-semibold uppercase tracking-[0.1em] text-[var(--color-primary-dark)]">Transaction</p>
+      <h1 className="font-display text-[28px] font-extrabold tracking-[-0.035em] text-[var(--color-ink)] sm:text-[34px]">
         {transaction.title || "Untitled transaction"}
       </h1>
       <p className="mt-1.5 text-[13.5px] leading-relaxed text-[var(--color-ink-soft)]">

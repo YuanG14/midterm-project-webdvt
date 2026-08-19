@@ -7,12 +7,12 @@
 function SummaryHeader() {
   return (
     <div className="mb-8">
-      <span className="accent-rule mb-3" aria-hidden="true" />
-      <h1 className="font-display text-2xl font-bold tracking-tight text-[var(--color-ink)] sm:text-[28px]">
-        Summary
+      <p className="mb-2 text-[12px] font-semibold uppercase tracking-[0.1em] text-[var(--color-primary-dark)]">Analytics</p>
+      <h1 className="font-display text-[28px] font-extrabold tracking-[-0.035em] text-[var(--color-ink)] sm:text-[34px]">
+        Financial summary
       </h1>
-      <p className="mt-1.5 text-[13.5px] leading-relaxed text-[var(--color-ink-soft)]">
-        Review your spending and financial activity.
+      <p className="mt-1.5 max-w-xl text-[13.5px] leading-relaxed text-[var(--color-ink-soft)] sm:text-[14px]">
+        Understand where your money goes and spot the patterns that matter.
       </p>
     </div>
   );

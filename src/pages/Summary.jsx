@@ -92,11 +92,11 @@ function Summary() {
           actionLabel="Add Transaction"
         />
       ) : (
-        <div className="flex flex-col gap-6 sm:gap-8">
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-5 lg:items-start">
           {/* Primary spending overview — the page's focal surface */}
-          <div className="card card-lg card-padded">
+          <section className="card card-lg card-padded lg:col-span-3" aria-labelledby="spending-breakdown-heading">
             <div className="mb-6 sm:mb-8">
-              <h2 className="font-display text-lg font-bold tracking-tight text-[var(--color-ink)] sm:text-xl">
+              <h2 id="spending-breakdown-heading" className="font-display text-lg font-bold tracking-tight text-[var(--color-ink)] sm:text-xl">
                 Spending breakdown
               </h2>
               <p className="mt-1 text-[13.5px] text-[var(--color-ink-soft)]">
@@ -109,8 +109,8 @@ function Summary() {
             </div>
 
             {hasExpenses ? (
-              <div className="grid grid-cols-1 gap-8 lg:grid-cols-5 lg:gap-10">
-                <div className="flex items-center justify-center lg:col-span-2 lg:border-r lg:border-[var(--color-border-soft)] lg:pr-8">
+              <div className="grid grid-cols-1 gap-7 md:grid-cols-2 md:gap-8">
+                <div className="flex items-center justify-center md:border-r md:border-[var(--color-border-soft)] md:pr-6">
                   <SpendingChart
                     data={categoryBreakdown}
                     total={expenseTotal}
@@ -118,7 +118,7 @@ function Summary() {
                     onActiveCategoryChange={setActiveCategory}
                   />
                 </div>
-                <div className="lg:col-span-3">
+                <div>
                   <CategoryBreakdown
                     data={categoryBreakdown}
                     activeCategory={activeCategory}
@@ -131,13 +131,13 @@ function Summary() {
                 No expenses recorded yet.
               </p>
             )}
-          </div>
+          </section>
 
           {/* Financial overview — Balance leads with the strongest
               hierarchy; Income/Expenses/Total activity are secondary,
               smaller stats below it rather than four equal-weight tiles. */}
-          <div className="card card-padded">
-            <p className="text-eyebrow mb-1">Financial Overview</p>
+          <section className="card card-lg card-padded lg:col-span-2" aria-labelledby="financial-overview-heading">
+            <p id="financial-overview-heading" className="text-eyebrow mb-1">Financial Overview</p>
             <p className="text-[12px] font-medium text-[var(--color-ink-soft)]">Balance</p>
             <p
               className={`font-display mt-1 text-[32px] font-extrabold tracking-tight sm:text-[36px] ${
@@ -147,8 +147,8 @@ function Summary() {
               {formatCurrency(balance)}
             </p>
 
-            <div className="mt-6 grid grid-cols-1 gap-y-5 border-t border-[var(--color-border-soft)] pt-5 sm:grid-cols-3 sm:gap-x-8">
-              <div>
+            <div className="mt-6 grid grid-cols-1 gap-y-5 border-t border-[var(--color-border-soft)] pt-5 sm:grid-cols-3 sm:gap-x-8 lg:grid-cols-1 lg:divide-y lg:divide-[var(--color-border-soft)] lg:gap-y-0 xl:grid-cols-1">
+              <div className="lg:pb-5">
                 <p className="text-[12px] font-medium text-[var(--color-ink-soft)]">Income</p>
                 <p className="text-value mt-1.5 text-lg text-[var(--color-success-dark)]">
                   {formatCurrency(incomeTotal)}
@@ -157,7 +157,7 @@ function Summary() {
                   {insights.incomeCount} {insights.incomeCount === 1 ? "transaction" : "transactions"}
                 </p>
               </div>
-              <div>
+              <div className="lg:py-5">
                 <p className="text-[12px] font-medium text-[var(--color-ink-soft)]">Expenses</p>
                 <p className="text-value mt-1.5 text-lg text-[var(--color-danger)]">
                   {formatCurrency(expenseTotal)}
@@ -166,19 +166,19 @@ function Summary() {
                   {insights.expenseCount} {insights.expenseCount === 1 ? "transaction" : "transactions"}
                 </p>
               </div>
-              <div>
+              <div className="lg:pt-5">
                 <p className="text-[12px] font-medium text-[var(--color-ink-soft)]">Total activity</p>
                 <p className="text-value mt-1.5 text-lg">{transactions.length}</p>
                 <p className="mt-1 text-[12px] text-[var(--color-ink-soft)]">transactions recorded</p>
               </div>
             </div>
-          </div>
+          </section>
 
           {/* Key insights — a quiet, divided list rather than a grid of
               identical stat tiles. */}
           {hasInsights && (
-            <div className="card card-padded">
-              <p className="text-eyebrow mb-1">Key insights</p>
+            <section className="card card-lg card-padded lg:col-span-5" aria-labelledby="key-insights-heading">
+              <p id="key-insights-heading" className="text-eyebrow mb-1">Key insights</p>
               <div className="flex flex-col">
                 {insights.largestExpenseCategory && (
                   <InsightRow
@@ -224,7 +224,7 @@ function Summary() {
                   />
                 )}
               </div>
-            </div>
+            </section>
           )}
         </div>
       )}

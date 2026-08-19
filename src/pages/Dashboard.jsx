@@ -53,44 +53,47 @@ function Dashboard() {
 
       <BalanceOverview balance={balance} incomeTotal={incomeTotal} expenseTotal={expenseTotal} />
 
-      {hasTransactions && (
-        <div className="mb-4 flex items-center justify-between">
-          <h2 className="font-display text-[15px] font-semibold text-[var(--color-ink)]">All Transactions</h2>
-          <span className="text-[12.5px] text-[var(--color-ink-soft)]">
-            {filteredTransactions.length} {filteredTransactions.length === 1 ? "entry" : "entries"}
-          </span>
-        </div>
-      )}
-
-      {hasTransactions && (
-        <FilterBar
-          categories={categories}
-          selectedCategory={categoryFilter}
-          onCategoryChange={setCategoryFilter}
-          selectedType={typeFilter}
-          onTypeChange={setTypeFilter}
-        />
-      )}
-
       {!hasTransactions && <DashboardEmptyState />}
 
-      {hasTransactions && !hasFilteredResults && (
-        <div className="rounded-[var(--radius-card-lg)] border border-dashed border-[var(--color-border-soft)] bg-[var(--color-surface)] px-6 py-10 text-center">
-          <div className="mx-auto mb-3 flex h-11 w-11 items-center justify-center rounded-full bg-[var(--color-ink)]/5">
-            <SearchX className="h-5 w-5 text-[var(--color-ink-soft)]" strokeWidth={1.75} />
+      {hasTransactions && (
+        <section className="card card-lg overflow-hidden" aria-labelledby="transactions-heading">
+          <div className="flex items-center justify-between gap-4 px-4 py-5 sm:px-6">
+            <div>
+              <h2 id="transactions-heading" className="font-display text-[16px] font-bold tracking-tight text-[var(--color-ink)]">
+                All transactions
+              </h2>
+              <p className="mt-0.5 text-[12.5px] text-[var(--color-ink-soft)]">Your latest income and spending activity</p>
+            </div>
+            <span className="badge badge-neutral shrink-0">
+              {filteredTransactions.length} {filteredTransactions.length === 1 ? "entry" : "entries"}
+            </span>
           </div>
-          <p className="text-sm font-medium text-[var(--color-ink)]">No transactions found</p>
-          <p className="mt-1 text-[13px] text-[var(--color-ink-soft)]">Try adjusting your filters.</p>
-        </div>
-      )}
 
-      {hasTransactions && hasFilteredResults && (
-        <div className="card card-padded">
-          <TransactionTableHeader />
-          {filteredTransactions.map((transaction) => (
-            <TransactionCard key={transaction.id} transaction={transaction} />
-          ))}
-        </div>
+          <FilterBar
+            categories={categories}
+            selectedCategory={categoryFilter}
+            onCategoryChange={setCategoryFilter}
+            selectedType={typeFilter}
+            onTypeChange={setTypeFilter}
+          />
+
+          {!hasFilteredResults ? (
+            <div className="px-6 py-12 text-center">
+              <div className="mx-auto mb-3 flex h-11 w-11 items-center justify-center rounded-full bg-[var(--color-ink)]/5">
+                <SearchX className="h-5 w-5 text-[var(--color-ink-soft)]" strokeWidth={1.75} />
+              </div>
+              <p className="text-sm font-semibold text-[var(--color-ink)]">No transactions found</p>
+              <p className="mt-1 text-[13px] text-[var(--color-ink-soft)]">Try adjusting your filters.</p>
+            </div>
+          ) : (
+            <div className="px-4 pb-2 pt-4 sm:px-6">
+              <TransactionTableHeader />
+              {filteredTransactions.map((transaction) => (
+                <TransactionCard key={transaction.id} transaction={transaction} />
+              ))}
+            </div>
+          )}
+        </section>
       )}
 
       <Toast message={flash?.message} tone={flash?.tone} onDismiss={() => setFlash(null)} />
