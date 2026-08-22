@@ -8,6 +8,26 @@ import { NavLink } from "react-router-dom";
  * Routing/active-state detection comes entirely from React Router's NavLink.
  */
 function NavItem({ to, label, icon: Icon, end, onClick, variant = "pill" }) {
+  if (variant === "bottom") {
+    return (
+      <NavLink
+        to={to}
+        end={end}
+        onClick={onClick}
+        className={({ isActive }) =>
+          `flex min-h-12 flex-col items-center justify-center gap-1 rounded-xl px-2 text-[10.5px] font-semibold transition-colors ${
+            isActive
+              ? "bg-[var(--color-ice-surface)] text-[var(--color-primary-dark)]"
+              : "text-[var(--color-ink-soft)]"
+          }`
+        }
+      >
+        <Icon className="h-[18px] w-[18px]" strokeWidth={2} />
+        <span>{label === "Add Transaction" ? "Add" : label}</span>
+      </NavLink>
+    );
+  }
+
   if (variant === "block") {
     return (
       <NavLink
@@ -17,7 +37,7 @@ function NavItem({ to, label, icon: Icon, end, onClick, variant = "pill" }) {
         className={({ isActive }) =>
           `group relative flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-[14px] font-medium transition-all duration-200 active:scale-[0.98] ${
             isActive
-              ? "bg-[var(--color-canvas)] text-[var(--color-ink)] ring-1 ring-[var(--color-border-soft)]"
+              ? "ice-surface text-[var(--color-ink)] ring-1 ring-[var(--color-border-soft)]"
               : "text-[var(--color-ink-soft)] hover:bg-[var(--color-canvas)] hover:text-[var(--color-ink)]"
           }`
         }
@@ -26,12 +46,12 @@ function NavItem({ to, label, icon: Icon, end, onClick, variant = "pill" }) {
           <>
             <span
               aria-hidden="true"
-              className={`absolute left-0 top-1/2 h-5 w-[3px] -translate-y-1/2 rounded-full bg-[var(--color-primary)] transition-opacity duration-200 ${
+              className={`absolute left-0 top-1/2 h-5 w-[3px] -translate-y-1/2 rounded-full bg-[var(--color-ice-accent)] transition-opacity duration-200 ${
                 isActive ? "opacity-100" : "opacity-0"
               }`}
             />
             <Icon
-              className={`h-4 w-4 shrink-0 ${isActive ? "text-[var(--color-primary)]" : "text-[var(--color-ink-soft)] group-hover:text-[var(--color-ink)]"}`}
+              className={`h-4 w-4 shrink-0 ${isActive ? "ice-icon" : "text-[var(--color-ink-soft)] group-hover:text-[var(--color-ink)]"}`}
               strokeWidth={2}
             />
             <span>{label}</span>
@@ -47,9 +67,9 @@ function NavItem({ to, label, icon: Icon, end, onClick, variant = "pill" }) {
       end={end}
       onClick={onClick}
       className={({ isActive }) =>
-        `flex items-center gap-2 rounded-full px-3.5 py-2 text-[13.5px] font-medium transition-all duration-200 active:scale-[0.97] ${
+        `flex items-center gap-2 rounded-[var(--radius-control)] px-3.5 py-2 text-[13px] font-semibold transition-all duration-200 active:scale-[0.97] ${
           isActive
-            ? "bg-[var(--color-canvas)] text-[var(--color-ink)] shadow-[var(--shadow-xs)] ring-1 ring-[var(--color-border-soft)]"
+            ? "ice-surface text-[var(--color-ink)] shadow-[var(--shadow-xs)] ring-1 ring-[var(--color-border-soft)]"
             : "text-[var(--color-ink-soft)] hover:bg-[var(--color-canvas)] hover:text-[var(--color-ink)]"
         }`
       }
@@ -57,7 +77,7 @@ function NavItem({ to, label, icon: Icon, end, onClick, variant = "pill" }) {
       {({ isActive }) => (
         <>
           <Icon
-            className={`h-4 w-4 shrink-0 ${isActive ? "text-[var(--color-primary)]" : ""}`}
+            className={`h-4 w-4 shrink-0 ${isActive ? "ice-icon" : ""}`}
             strokeWidth={2}
           />
           <span>{label}</span>

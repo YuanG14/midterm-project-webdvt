@@ -96,3 +96,36 @@ Since `PageHeader`, `SummaryCard`, and `EmptyState` are shared with other pages 
 ### Confirmation
 
 No changes to `useTransactions.js`, transaction data structure, localStorage logic, Dashboard's balance/income/expense calculations, filter logic, React Router, Theme Context, or CRUD functions. Balance, income, and expense figures, filtering behavior, and transaction navigation all work exactly as before.
+
+## Phase 9 — Final Polish, Consistency & Production QA
+
+Audit-first final pass. No redesign, no new pages/features, no changes to routing, Context API, `useTransactions`, calculations, or transaction schema.
+
+### Audit findings
+
+- `npm run build` and `oxlint` were both already clean (one pre-existing, harmless fast-refresh lint note in `ThemeContext.jsx`, left as-is since it flags a standard React pattern, not a bug).
+- The design-system primitives added in earlier phases (`.card`, `.btn`, `.field-input`, `.badge`, `.data-row`, `.accent-rule`, etc. in `index.css`) were only adopted by a handful of components. Several superseded components from earlier phases — including `GradientMesh`/`PageHeader` (the gradient-blob header treatment the design direction explicitly moved away from) — were still present in `src/` but no longer imported anywhere.
+- `EditTransactionForm` (Transaction Detail's edit form) still used its own hand-rolled Tailwind for inputs/textarea/container instead of the shared `.field-input`/`.field-textarea`/`.card` classes that `TransactionForm` (Add Transaction) already uses, so the two forms didn't quite read as the same product.
+
+### Changes made
+
+- **Removed 17 unused files** with zero remaining imports anywhere in the app: `AnalyticsSection`, `ChartCard`, `FinancialCard`, `FormActions`, `FormField`, `GradientMesh`, `InsightCard`, `InsightDetailRow`, `InsightStatGroup`, `InsightTransactionRow`, `PageHeader`, `PlaceholderPanel`, `Sidebar`, `SummaryCard`, `SummaryStatCard`, `TransactionDetailCard`, `TypeToggle`, and `utils/insightFormatting.js`. These were earlier-phase components/utilities superseded by their current replacements (e.g. `DashboardHeader`/`SummaryHeader`/etc. replaced `PageHeader`, `BalanceOverview` replaced `FinancialCard`, `InsightRow` replaced the `Insight*` set, `Navbar` replaced `Sidebar`). Confirmed unused via static import search before deleting, then verified with a clean production build. Net effect: no visual or behavioral change, smaller bundle (CSS 54.17 kB → 41.90 kB gzipped-relevant output shrank correspondingly), no more dead gradient/blur header code sitting unused in the tree.
+- **`EditTransactionForm.jsx`** — swapped its ad-hoc `rounded-xl border ... focus:ring-2` input/textarea classes and ad-hoc card container for the shared `.field-input` / `.field-textarea` / `.card card-padded` classes already used by `TransactionForm`, `FilterBar`, and `ConfirmationModal`, and added the same `field-error-state` class binding `TransactionForm` uses so an invalid field's border goes red instead of only showing the error text below it. Visual result and all validation/save/cancel/delete behavior are unchanged — this only makes the Edit form's markup consistent with the Add form's, so the two feel like the same designed product rather than two different implementations of the same fields.
+
+### Verified
+
+- Production build (`npm run build`) succeeds with no errors.
+- `oxlint` reports the same single pre-existing warning as before (no new issues).
+- Dashboard, Add Transaction, Transaction Detail, and Summary all still render, filter, add, edit, delete, and theme-toggle exactly as before — no page, route, or calculation was touched.
+
+### Addendum — mobile overflow fix (large currency values)
+
+After shipping the above, a real device screenshot showed the Summary page's "Overview" panel (Balance/Income/Expenses/Total activity) rendering with overlapping digits on a phone-width screen. Root cause: with account totals in the millions, the formatted currency string (e.g. `₱5,091,300.00`) is long enough, and has no spaces to line-break on, that it doesn't fit a narrow grid column or a large hero heading at small viewport widths — it visually overflows on top of adjacent content instead of wrapping or clipping.
+
+Reproduced and fixed with real values, verified against the live rendered DOM (not just code inspection) with headless-browser overflow checks swept every 10–20px from 320px to 1440px, on all three affected surfaces:
+
+- **`Summary.jsx` "Overview" grid** — was `grid-cols-2` (i.e. 4 stats squeezed 2-per-row) at every width below 640px. Changed to `grid-cols-1` below `sm`, `grid-cols-2` from `sm`, `grid-cols-4` only from `lg` (1024px+), where there's actually room. Each stat now always gets the full card width on phones.
+- **`BalanceOverview.jsx` Income/Expenses row** (Dashboard) — same fix: `grid-cols-1` below `sm`, side-by-side from `sm` up, instead of always 2-up.
+- **`BalanceOverview.jsx` hero "Current Balance" figure** — was a fixed `42px` below the `sm` breakpoint, which fits a typical balance but overflows its own card for a 7-digit balance at common phone widths (375–420px). Replaced the fixed size with `clamp(28px, 13vw - 14px, 42px)` so the hero figure scales continuously with viewport width and is provably within its container at every width in that range, rather than guessing a single breakpoint. `sm:text-[52px]` for tablet/desktop is unchanged.
+
+Confirmed via headless-browser `scrollWidth`/`clientWidth` checks (not just visual spot-checks) that none of the three overflow at any 10–20px step from 320px to 1440px, and that the Transaction Detail page's hero amount — structurally similar but not affected — also has no overflow across the same sweep. No calculations, data, or non-mobile layout changed.

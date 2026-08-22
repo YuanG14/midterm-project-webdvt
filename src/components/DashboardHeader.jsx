@@ -1,39 +1,34 @@
 import { Link } from "react-router-dom";
-import { PlusCircle } from "lucide-react";
+import { CalendarDays, Plus } from "lucide-react";
 
 /**
- * Premium Dashboard-only header. Kept separate from the shared PageHeader
- * (used by Add Transaction / Transaction Detail / Summary) so this redesign
- * doesn't change those other pages.
+ * Dashboard-only header.
  */
 function DashboardHeader() {
-  const today = new Date().toLocaleDateString("en-US", {
+  const today = new Intl.DateTimeFormat("en-PH", {
     weekday: "long",
     month: "long",
     day: "numeric",
-  });
+  }).format(new Date());
 
   return (
-    <div className="mb-10">
+    <div className="mb-6 sm:mb-8">
       <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <span className="accent-rule mb-3" />
-          <p className="mb-2 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.14em] text-[var(--color-primary-dark)]">
+          <p className="mb-2 flex items-center gap-1.5 text-[12px] font-semibold text-[var(--color-primary-dark)]">
+            <CalendarDays className="h-3.5 w-3.5" strokeWidth={2} />
             {today}
           </p>
-          <h1 className="font-display text-3xl font-bold tracking-tight text-[var(--color-ink)] sm:text-4xl">
+          <h1 className="font-display text-[28px] font-extrabold tracking-[-0.035em] text-[var(--color-ink)] sm:text-[34px]">
             Welcome back
           </h1>
-          <p className="mt-3 max-w-xl text-[15px] leading-relaxed text-[var(--color-ink-soft)]">
-            Here's your financial overview — balances, recent activity, and spending trends, all in one place.
+          <p className="mt-1.5 text-[13.5px] leading-relaxed text-[var(--color-ink-soft)] sm:text-[14px]">
+            Here’s a clear view of your money and recent activity.
           </p>
         </div>
         <div className="shrink-0">
-          <Link
-            to="/add"
-            className="inline-flex items-center gap-1.5 rounded-full bg-[var(--color-ink)] px-4 py-2.5 text-[13px] font-semibold text-[var(--color-canvas)] shadow-sm transition-transform duration-200 hover:-translate-y-0.5"
-          >
-            <PlusCircle className="h-4 w-4" strokeWidth={2} />
+          <Link to="/add" className="btn btn-primary">
+            <Plus className="h-4 w-4" strokeWidth={2.25} />
             Add Transaction
           </Link>
         </div>

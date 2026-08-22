@@ -28,7 +28,7 @@ function TransactionTypeSelector({ value, onChange }) {
             className={`group relative flex items-center gap-3 rounded-xl border p-3.5 text-left transition-all duration-200 active:scale-[0.98] ${
               isSelected
                 ? isIncome
-                  ? "border-[var(--color-primary)] bg-[var(--color-primary)]/10 shadow-[var(--shadow-xs)]"
+                  ? "border-[var(--color-income)] bg-[var(--color-income)]/10 shadow-[var(--shadow-xs)]"
                   : "border-[var(--color-danger)] bg-[var(--color-danger)]/10 shadow-[var(--shadow-xs)]"
                 : "border-[var(--color-border-soft)] bg-[var(--color-canvas)] hover:border-[var(--color-ink-soft)]/40 hover:-translate-y-0.5"
             }`}
@@ -37,7 +37,7 @@ function TransactionTypeSelector({ value, onChange }) {
               className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-lg transition-colors duration-200 ${
                 isSelected
                   ? isIncome
-                    ? "bg-[var(--color-primary)] text-white"
+                    ? "bg-[var(--color-income)] text-white"
                     : "bg-[var(--color-danger)] text-white"
                   : "bg-[var(--color-surface)] text-[var(--color-ink-soft)]"
               }`}
@@ -53,7 +53,7 @@ function TransactionTypeSelector({ value, onChange }) {
             {isSelected && (
               <Check
                 className={`ml-auto h-4 w-4 shrink-0 ${
-                  isIncome ? "text-[var(--color-primary)]" : "text-[var(--color-danger)]"
+                  isIncome ? "text-[var(--color-income)]" : "text-[var(--color-danger)]"
                 }`}
                 strokeWidth={2.5}
               />

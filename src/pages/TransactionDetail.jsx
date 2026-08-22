@@ -12,6 +12,10 @@ function TransactionDetail() {
   const navigate = useNavigate();
   const { getTransaction, updateTransaction, deleteTransaction } = useTransactions();
   const [confirmingDelete, setConfirmingDelete] = useState(false);
+  // View/edit is purely a presentation toggle — onSave/onDelete still call the
+  // exact same hook functions they always did; this just decides whether the
+  // read-only overview or the edit form is what's on screen right now.
+  const [isEditing, setIsEditing] = useState(false);
 
   const transaction = getTransaction(id);
 
@@ -21,30 +25,31 @@ function TransactionDetail() {
 
   function handleSave(updates) {
     updateTransaction(transaction.id, updates);
-    navigate("/");
-  }
-
-  function handleCancel() {
-    navigate("/");
+    navigate("/", { state: { flash: { message: "Transaction updated.", tone: "success" } } });
   }
 
   function handleConfirmDelete() {
     deleteTransaction(transaction.id);
-    navigate("/");
+    navigate("/", { state: { flash: { message: "Transaction deleted.", tone: "danger" } } });
   }
 
   return (
     <div>
       <TransactionDetailHeader transaction={transaction} />
 
-      <TransactionOverviewCard transaction={transaction} />
-
-      <EditTransactionForm
-        transaction={transaction}
-        onSave={handleSave}
-        onCancel={handleCancel}
-        onDeleteRequest={() => setConfirmingDelete(true)}
-      />
+      {isEditing ? (
+        <EditTransactionForm
+          transaction={transaction}
+          onSave={handleSave}
+          onCancel={() => setIsEditing(false)}
+        />
+      ) : (
+        <TransactionOverviewCard
+          transaction={transaction}
+          onEdit={() => setIsEditing(true)}
+          onDeleteRequest={() => setConfirmingDelete(true)}
+        />
+      )}
 
       <ConfirmationModal
         open={confirmingDelete}

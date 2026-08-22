@@ -1,15 +1,32 @@
-import { useMemo, useState } from "react";
-import { Wallet, TrendingUp, TrendingDown, SearchX } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { SearchX } from "lucide-react";
 import DashboardHeader from "../components/DashboardHeader";
-import FinancialCard from "../components/FinancialCard";
+import BalanceOverview from "../components/BalanceOverview";
 import FilterBar from "../components/FilterBar";
+import TransactionTableHeader from "../components/TransactionTableHeader";
 import TransactionCard from "../components/TransactionCard";
 import DashboardEmptyState from "../components/DashboardEmptyState";
+import Toast from "../components/Toast";
 import { useTransactions } from "../hooks/useTransactions";
-import { formatCurrency } from "../utils/formatCurrency";
 
 function Dashboard() {
   const { transactions, incomeTotal, expenseTotal, balance } = useTransactions();
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  // Add/Edit/Delete land back here with a one-time `flash` message in
+  // router state (see TransactionForm and TransactionDetail). Read it once
+  // into local state, then clear it from history so refreshing or using
+  // the browser's back/forward buttons doesn't replay the toast.
+  const [flash, setFlash] = useState(location.state?.flash ?? null);
+
+  useEffect(() => {
+    if (location.state?.flash) {
+      navigate(location.pathname, { replace: true, state: {} });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location.state]);
 
   const [categoryFilter, setCategoryFilter] = useState("all");
   const [typeFilter, setTypeFilter] = useState("all");
@@ -34,70 +51,52 @@ function Dashboard() {
     <div>
       <DashboardHeader />
 
-      <div className="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        <FinancialCard
-          icon={Wallet}
-          label="Current Balance"
-          value={formatCurrency(balance)}
-          hint="Income minus expenses, updated in real time."
-          accent="balance"
-          style={{ animationDelay: "0ms" }}
-        />
-        <FinancialCard
-          icon={TrendingUp}
-          label="Total Income"
-          value={formatCurrency(incomeTotal)}
-          hint="All money coming in."
-          accent="income"
-          style={{ animationDelay: "70ms" }}
-        />
-        <FinancialCard
-          icon={TrendingDown}
-          label="Total Expenses"
-          value={formatCurrency(expenseTotal)}
-          hint="All money going out."
-          accent="expense"
-          style={{ animationDelay: "140ms" }}
-        />
-      </div>
-
-      {hasTransactions && (
-        <FilterBar
-          categories={categories}
-          selectedCategory={categoryFilter}
-          onCategoryChange={setCategoryFilter}
-          selectedType={typeFilter}
-          onTypeChange={setTypeFilter}
-        />
-      )}
+      <BalanceOverview balance={balance} incomeTotal={incomeTotal} expenseTotal={expenseTotal} />
 
       {!hasTransactions && <DashboardEmptyState />}
 
-      {hasTransactions && !hasFilteredResults && (
-        <div className="rounded-2xl border border-dashed border-[var(--color-border-soft)] bg-[var(--color-surface)] px-6 py-12 text-center">
-          <div className="mx-auto mb-3 flex h-11 w-11 items-center justify-center rounded-full bg-[var(--color-ink)]/5">
-            <SearchX className="h-5 w-5 text-[var(--color-ink-soft)]" strokeWidth={1.75} />
+      {hasTransactions && (
+        <section className="card card-lg overflow-hidden" aria-labelledby="transactions-heading">
+          <div className="flex items-center justify-between gap-4 px-4 py-5 sm:px-6">
+            <div>
+              <h2 id="transactions-heading" className="font-display text-[16px] font-bold tracking-tight text-[var(--color-ink)]">
+                All transactions
+              </h2>
+              <p className="mt-0.5 text-[12.5px] text-[var(--color-ink-soft)]">Your latest income and spending activity</p>
+            </div>
+            <span className="badge badge-neutral shrink-0">
+              {filteredTransactions.length} {filteredTransactions.length === 1 ? "entry" : "entries"}
+            </span>
           </div>
-          <p className="text-sm font-medium text-[var(--color-ink)]">No matching transactions</p>
-          <p className="mt-1 text-[13px] text-[var(--color-ink-soft)]">
-            Try a different category or type filter.
-          </p>
-        </div>
+
+          <FilterBar
+            categories={categories}
+            selectedCategory={categoryFilter}
+            onCategoryChange={setCategoryFilter}
+            selectedType={typeFilter}
+            onTypeChange={setTypeFilter}
+          />
+
+          {!hasFilteredResults ? (
+            <div className="px-6 py-12 text-center">
+              <div className="mx-auto mb-3 flex h-11 w-11 items-center justify-center rounded-full bg-[var(--color-ink)]/5">
+                <SearchX className="h-5 w-5 text-[var(--color-ink-soft)]" strokeWidth={1.75} />
+              </div>
+              <p className="text-sm font-semibold text-[var(--color-ink)]">No transactions found</p>
+              <p className="mt-1 text-[13px] text-[var(--color-ink-soft)]">Try adjusting your filters.</p>
+            </div>
+          ) : (
+            <div className="px-4 pb-2 pt-4 sm:px-6">
+              <TransactionTableHeader />
+              {filteredTransactions.map((transaction) => (
+                <TransactionCard key={transaction.id} transaction={transaction} />
+              ))}
+            </div>
+          )}
+        </section>
       )}
 
-      {hasTransactions && hasFilteredResults && (
-        <div className="flex flex-col gap-3">
-          {filteredTransactions.map((transaction, index) => (
-            <div
-              key={transaction.id}
-              className="animate-[fadeIn_0.25s_ease-out_backwards]"
-              style={{ animationDelay: `${Math.min(index, 8) * 30}ms` }}
-            >
-              <TransactionCard transaction={transaction} />
-            </div>
-          ))}
-        </div>
-      )}
+      <Toast message={flash?.message} tone={flash?.tone} onDismiss={() => setFlash(null)} />
     </div>
   );
 }

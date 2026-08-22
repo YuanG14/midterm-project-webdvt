@@ -1,36 +1,16 @@
-import { useMemo } from "react";
-import {
-  Wallet,
-  TrendingUp,
-  TrendingDown,
-  Receipt,
-  Flame,
-  Briefcase,
-  ArrowUpRight,
-  ArrowDownRight,
-  Calculator,
-  ChartSpline,
-  Moon,
-  PieChart,
-  ListOrdered,
-  Sparkles,
-} from "lucide-react";
+import { useMemo, useState } from "react";
+import { Briefcase, Calculator, ChartSpline, Flame, Receipt } from "lucide-react";
 import SummaryHeader from "../components/SummaryHeader";
-import SummaryStatCard from "../components/SummaryStatCard";
 import SpendingChart from "../components/SpendingChart";
 import CategoryBreakdown from "../components/CategoryBreakdown";
-import InsightCard from "../components/InsightCard";
+import InsightRow from "../components/InsightRow";
 import EmptyState from "../components/EmptyState";
-import ChartCard from "../components/ChartCard";
-import AnalyticsSection from "../components/AnalyticsSection";
 import { useTransactions } from "../hooks/useTransactions";
-import { useTheme } from "../context/ThemeContext";
 import { formatCurrency } from "../utils/formatCurrency";
 import { getCategoryColor } from "../utils/categoryColors";
 
 function Summary() {
   const { transactions, incomeTotal, expenseTotal, balance } = useTransactions();
-  const { theme } = useTheme();
 
   const expenseTransactions = useMemo(
     () => transactions.filter((transaction) => transaction.type === "expense"),
@@ -84,11 +64,20 @@ function Summary() {
     };
   }, [categoryBreakdown, expenseTransactions, incomeTransactions, expenseTotal, incomeTotal]);
 
+  // Shared hover state so the donut chart and the category list highlight
+  // the same category together (see SpendingChart / CategoryBreakdown).
+  // Purely interactive — doesn't touch any of the totals computed above.
+  const [activeCategory, setActiveCategory] = useState(null);
+
   const hasTransactions = transactions.length > 0;
+  const hasExpenses = categoryBreakdown.length > 0;
+  const hasInsights = Boolean(
+    insights.largestExpenseCategory || insights.highestExpense || insights.largestIncomeSource
+  );
 
   // Presentational only: picks a visual accent based on the already-computed
   // balance sign. Does not change the displayed value.
-  const balanceAccent = balance >= 0 ? "balance" : "expense";
+  const balancePositive = balance >= 0;
 
   return (
     <div>
@@ -98,155 +87,145 @@ function Summary() {
         <EmptyState
           icon={ChartSpline}
           title="No financial data yet"
-          message="Add a transaction to start seeing your balances, spending breakdown, and insights here."
+          message="Add a transaction to start seeing your spending breakdown and insights here."
           actionTo="/add"
           actionLabel="Add Transaction"
         />
       ) : (
-        <div className="flex flex-col gap-8">
-          {/* Financial Overview */}
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            <SummaryStatCard
-              icon={Wallet}
-              label="Current Balance"
-              value={formatCurrency(balance)}
-              hint="Income minus expenses."
-              accent={balanceAccent}
-              style={{ animationDelay: "0ms" }}
-            />
-            <SummaryStatCard
-              icon={TrendingUp}
-              label="Total Income"
-              value={formatCurrency(incomeTotal)}
-              hint={`${insights.incomeCount} income transactions`}
-              accent="income"
-              style={{ animationDelay: "60ms" }}
-            />
-            <SummaryStatCard
-              icon={TrendingDown}
-              label="Total Expenses"
-              value={formatCurrency(expenseTotal)}
-              hint={`${insights.expenseCount} expense transactions`}
-              accent="expense"
-              style={{ animationDelay: "120ms" }}
-            />
-            <SummaryStatCard
-              icon={Receipt}
-              label="Total Transactions"
-              value={String(transactions.length)}
-              hint="All recorded activity."
-              accent="count"
-              style={{ animationDelay: "180ms" }}
-            />
-          </div>
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-5 lg:items-start">
+          {/* Primary spending overview — the page's focal surface */}
+          <section className="card card-lg card-padded lg:col-span-3" aria-labelledby="spending-breakdown-heading">
+            <div className="mb-6 sm:mb-8">
+              <h2 id="spending-breakdown-heading" className="font-display text-lg font-bold tracking-tight text-[var(--color-ink)] sm:text-xl">
+                Spending breakdown
+              </h2>
+              <p className="mt-1 text-[13.5px] text-[var(--color-ink-soft)]">
+                {hasExpenses
+                  ? `${formatCurrency(expenseTotal)} across ${categoryBreakdown.length} ${
+                      categoryBreakdown.length === 1 ? "category" : "categories"
+                    }`
+                  : "Where your spending goes, once you log an expense."}
+              </p>
+            </div>
 
-          {/* Spending Breakdown + Chart */}
-          <div className="grid grid-cols-1 gap-4 lg:grid-cols-5">
-            <ChartCard className="lg:col-span-2">
-              <AnalyticsSection icon={PieChart} title="Expense Distribution">
-                {categoryBreakdown.length > 0 ? (
-                  <SpendingChart data={categoryBreakdown} total={expenseTotal} />
-                ) : (
-                  <p className="py-10 text-center text-[13px] text-[var(--color-ink-soft)]">
-                    No expenses recorded yet.
-                  </p>
-                )}
-              </AnalyticsSection>
-            </ChartCard>
+            {hasExpenses ? (
+              <div className="grid grid-cols-1 gap-7 md:grid-cols-2 md:gap-8">
+                <div className="flex items-center justify-center md:border-r md:border-[var(--color-border-soft)] md:pr-6">
+                  <SpendingChart
+                    data={categoryBreakdown}
+                    total={expenseTotal}
+                    activeCategory={activeCategory}
+                    onActiveCategoryChange={setActiveCategory}
+                  />
+                </div>
+                <div>
+                  <CategoryBreakdown
+                    data={categoryBreakdown}
+                    activeCategory={activeCategory}
+                    onActiveCategoryChange={setActiveCategory}
+                  />
+                </div>
+              </div>
+            ) : (
+              <p className="py-10 text-center text-[13px] text-[var(--color-ink-soft)]">
+                No expenses recorded yet.
+              </p>
+            )}
+          </section>
 
-            <ChartCard className="lg:col-span-3">
-              <AnalyticsSection
-                icon={ListOrdered}
-                title="Top Spending Categories"
-                hint={categoryBreakdown.length > 0 ? `${categoryBreakdown.length} categories` : undefined}
-              >
-                {categoryBreakdown.length > 0 ? (
-                  <CategoryBreakdown data={categoryBreakdown} />
-                ) : (
-                  <p className="py-10 text-center text-[13px] text-[var(--color-ink-soft)]">
-                    No expenses recorded yet.
-                  </p>
-                )}
-              </AnalyticsSection>
-            </ChartCard>
-          </div>
+          {/* Financial overview — Balance leads with the strongest
+              hierarchy; Income/Expenses/Total activity are secondary,
+              smaller stats below it rather than four equal-weight tiles. */}
+          <section className="card card-lg card-padded lg:col-span-2" aria-labelledby="financial-overview-heading">
+            <p id="financial-overview-heading" className="text-eyebrow mb-1">Financial Overview</p>
+            <p className="text-[12px] font-medium text-[var(--color-ink-soft)]">Balance</p>
+            <p
+              className={`font-display mt-1 text-[32px] font-extrabold tracking-tight sm:text-[36px] ${
+                balancePositive ? "text-[var(--color-success-dark)]" : "text-[var(--color-danger)]"
+              }`}
+            >
+              {formatCurrency(balance)}
+            </p>
 
-          {/* Recent Insights */}
-          <AnalyticsSection icon={Sparkles} title="Recent Insights">
-            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
-              {insights.largestExpenseCategory && (
-                <div className="animate-[fadeIn_0.4s_var(--ease-premium)_backwards]" style={{ animationDelay: "0ms" }}>
-                  <InsightCard
+            <div className="mt-6 grid grid-cols-1 gap-y-5 border-t border-[var(--color-border-soft)] pt-5 sm:grid-cols-3 sm:gap-x-8 lg:grid-cols-1 lg:divide-y lg:divide-[var(--color-border-soft)] lg:gap-y-0 xl:grid-cols-1">
+              <div className="lg:pb-5">
+                <p className="text-[12px] font-medium text-[var(--color-ink-soft)]">Income</p>
+                <p className="text-value mt-1.5 text-lg text-[var(--color-success-dark)]">
+                  {formatCurrency(incomeTotal)}
+                </p>
+                <p className="mt-1 text-[12px] text-[var(--color-ink-soft)]">
+                  {insights.incomeCount} {insights.incomeCount === 1 ? "transaction" : "transactions"}
+                </p>
+              </div>
+              <div className="lg:py-5">
+                <p className="text-[12px] font-medium text-[var(--color-ink-soft)]">Expenses</p>
+                <p className="text-value mt-1.5 text-lg text-[var(--color-danger)]">
+                  {formatCurrency(expenseTotal)}
+                </p>
+                <p className="mt-1 text-[12px] text-[var(--color-ink-soft)]">
+                  {insights.expenseCount} {insights.expenseCount === 1 ? "transaction" : "transactions"}
+                </p>
+              </div>
+              <div className="lg:pt-5">
+                <p className="text-[12px] font-medium text-[var(--color-ink-soft)]">Total activity</p>
+                <p className="text-value mt-1.5 text-lg">{transactions.length}</p>
+                <p className="mt-1 text-[12px] text-[var(--color-ink-soft)]">transactions recorded</p>
+              </div>
+            </div>
+          </section>
+
+          {/* Key insights — a quiet, divided list rather than a grid of
+              identical stat tiles. */}
+          {hasInsights && (
+            <section className="card card-lg card-padded lg:col-span-5" aria-labelledby="key-insights-heading">
+              <p id="key-insights-heading" className="text-eyebrow mb-1">Key insights</p>
+              <div className="flex flex-col">
+                {insights.largestExpenseCategory && (
+                  <InsightRow
                     icon={Flame}
-                    label="Largest Expense Category"
+                    label="Largest expense category"
                     value={insights.largestExpenseCategory.category}
                     hint={formatCurrency(insights.largestExpenseCategory.amount)}
                     tone="danger"
                   />
-                </div>
-              )}
-              {insights.highestExpense && (
-                <div className="animate-[fadeIn_0.4s_var(--ease-premium)_backwards]" style={{ animationDelay: "50ms" }}>
-                  <InsightCard
+                )}
+                {insights.highestExpense && (
+                  <InsightRow
                     icon={Receipt}
-                    label="Highest Individual Expense"
+                    label="Highest individual expense"
                     value={insights.highestExpense.title || "Untitled transaction"}
                     hint={formatCurrency(insights.highestExpense.amount)}
                     tone="danger"
                   />
-                </div>
-              )}
-              {insights.largestIncomeSource && (
-                <div className="animate-[fadeIn_0.4s_var(--ease-premium)_backwards]" style={{ animationDelay: "100ms" }}>
-                  <InsightCard
+                )}
+                {insights.largestIncomeSource && (
+                  <InsightRow
                     icon={Briefcase}
-                    label="Largest Income Source"
+                    label="Largest income source"
                     value={insights.largestIncomeSource[0]}
                     hint={formatCurrency(insights.largestIncomeSource[1])}
                     tone="primary"
                   />
-                </div>
-              )}
-              <div className="animate-[fadeIn_0.4s_var(--ease-premium)_backwards]" style={{ animationDelay: "150ms" }}>
-                <InsightCard
-                  icon={ArrowUpRight}
-                  label="Income Transactions"
-                  value={String(insights.incomeCount)}
-                  tone="primary"
-                />
+                )}
+                {insights.expenseCount > 0 && (
+                  <InsightRow
+                    icon={Calculator}
+                    label="Average expense"
+                    value={formatCurrency(insights.averageExpense)}
+                    tone="accent"
+                  />
+                )}
+                {insights.incomeCount > 0 && (
+                  <InsightRow
+                    icon={Calculator}
+                    label="Average income"
+                    value={formatCurrency(insights.averageIncome)}
+                    tone="accent"
+                  />
+                )}
               </div>
-              <div className="animate-[fadeIn_0.4s_var(--ease-premium)_backwards]" style={{ animationDelay: "200ms" }}>
-                <InsightCard
-                  icon={ArrowDownRight}
-                  label="Expense Transactions"
-                  value={String(insights.expenseCount)}
-                  tone="danger"
-                />
-              </div>
-              <div className="animate-[fadeIn_0.4s_var(--ease-premium)_backwards]" style={{ animationDelay: "250ms" }}>
-                <InsightCard
-                  icon={Calculator}
-                  label="Average Expense"
-                  value={formatCurrency(insights.averageExpense)}
-                  tone="accent"
-                />
-              </div>
-              <div className="animate-[fadeIn_0.4s_var(--ease-premium)_backwards]" style={{ animationDelay: "300ms" }}>
-                <InsightCard
-                  icon={Calculator}
-                  label="Average Income"
-                  value={formatCurrency(insights.averageIncome)}
-                  tone="accent"
-                />
-              </div>
-            </div>
-          </AnalyticsSection>
-
-          {/* Theme reminder */}
-          <div className="flex items-center gap-2.5 rounded-full border border-[var(--color-border-soft)] bg-[var(--color-surface)] px-4 py-3 text-[12.5px] text-[var(--color-ink-soft)] shadow-[var(--shadow-xs)]">
-            <Moon className="h-3.5 w-3.5 shrink-0" strokeWidth={2} />
-            Currently viewing in {theme === "dark" ? "dark" : "light"} mode — toggle anytime from the navbar.
-          </div>
+            </section>
+          )}
         </div>
       )}
     </div>

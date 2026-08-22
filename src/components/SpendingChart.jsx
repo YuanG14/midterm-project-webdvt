@@ -31,8 +31,14 @@ function ChartTooltip({ active, payload }) {
 /**
  * Renders the expense-by-category donut. `total` is only used to render
  * the center label — it does not affect how the chart itself is computed.
+ *
+ * `activeCategory` / `onActiveCategoryChange` let this chart and the
+ * adjacent CategoryBreakdown list highlight the same category together:
+ * hovering a slice here dims the others (handled below), and hovering a
+ * row in the list dims slices here too, via the same shared state living
+ * in the Summary page. Purely visual — doesn't touch chart data/calcs.
  */
-function SpendingChart({ data, total }) {
+function SpendingChart({ data, total, activeCategory, onActiveCategoryChange }) {
   return (
     <div className="relative h-64 w-full sm:h-72">
       <ResponsiveContainer width="100%" height="100%">
@@ -48,9 +54,16 @@ function SpendingChart({ data, total }) {
             strokeWidth={2}
             animationDuration={700}
             animationEasing="ease-out"
+            onMouseEnter={(entry) => onActiveCategoryChange?.(entry?.payload?.category ?? entry?.category)}
+            onMouseLeave={() => onActiveCategoryChange?.(null)}
           >
             {data.map((entry) => (
-              <Cell key={entry.category} fill={entry.color} />
+              <Cell
+                key={entry.category}
+                fill={entry.color}
+                opacity={activeCategory && activeCategory !== entry.category ? 0.35 : 1}
+                style={{ transition: "opacity 150ms ease-out" }}
+              />
             ))}
           </Pie>
           <Tooltip content={<ChartTooltip />} />

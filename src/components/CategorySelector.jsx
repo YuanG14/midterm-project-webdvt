@@ -44,8 +44,8 @@ function CategorySelector({ id, value, onChange, options, placeholder = "Select 
         onClick={() => setOpen((prev) => !prev)}
         aria-haspopup="listbox"
         aria-expanded={open}
-        className={`flex w-full items-center justify-between gap-2 rounded-xl border bg-[var(--color-canvas)] px-3.5 py-2.5 text-left text-[14px] transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/30 ${
-          open ? "border-[var(--color-primary)]" : "border-[var(--color-border-soft)]"
+        className={`flex w-full items-center justify-between gap-2 rounded-xl border bg-[var(--color-canvas)] px-3.5 py-2.5 text-left text-[14px] transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[var(--color-ice-accent)]/45 ${
+          open ? "border-[var(--color-ice-accent)]" : "border-[var(--color-border-soft)]"
         }`}
       >
         <span className="flex min-w-0 items-center gap-2">
@@ -85,7 +85,7 @@ function CategorySelector({ id, value, onChange, options, placeholder = "Select 
                   }}
                   className={`flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-left text-[13.5px] font-medium transition-colors duration-150 ${
                     isSelected
-                      ? "bg-[var(--color-primary)]/10 text-[var(--color-primary-dark)]"
+                      ? "ice-surface-soft text-[var(--color-ink)]"
                       : "text-[var(--color-ink-soft)] hover:bg-[var(--color-canvas)] hover:text-[var(--color-ink)]"
                   }`}
                 >

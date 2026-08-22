@@ -6,16 +6,63 @@
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, monospace;
 
-  --color-canvas: #f5f6f8;
+  --color-canvas: #f4f9fc;
   --color-surface: #ffffff;
-  --color-border-soft: #e4e7ec;
-  --color-ink: #10151c;
-  --color-ink-soft: #5b6472;
-  --color-primary: #0f9d74;
-  --color-primary-dark: #0b7f5e;
-  --color-accent: #4338ca;
-  --color-danger: #c2482f;
+  --color-border-soft: #dceaf0;
+  --color-ink: #14212b;
+  --color-ink-soft: #647783;
+
+  /*
+    Brand identity: Pastel Ice Blue. --color-primary is the signature fill
+    (buttons, active nav, logo mark, icon squares, hero/interactive
+    surfaces) — always paired with dark navy (--color-ink) content on top
+    of it, never white, since the pastel is too light for white text/icons
+    to read against. --color-primary-dark is a deeper step of the same
+    hue, used where the color needs to work as small TEXT/ICON tint on a
+    light surface instead (eyebrows, wash icons, active nav icon) — it's
+    independently contrast-checked against white/canvas rather than just
+    a darker percentage of --color-primary.
+  */
+  --color-primary: #c7e7f5;
+  --color-primary-dark: #397c96;
+
+  /* A stronger step of the ice-blue accent, for interactive states that
+     need more contrast than the pastel fill but shouldn't jump all the
+     way to --color-primary-dark (e.g. hovered/pressed selection). */
+  --color-primary-strong: #9dd3e8;
+
+  /* Fixed "Deep Ice Blue" swatch — same hex in both themes by design
+     (Phase 7). Distinct from --color-primary-dark, which is allowed to
+     shift per-theme for its small-text/icon-tint role; this token exists
+     for surfaces (e.g. the dark-mode primary button fill) that need the
+     literal deep-blue value regardless of theme. */
+  --color-primary-deep: #397c96;
+
+  /* Dedicated "active nav / selected row" surface tint — a flat value
+     rather than a color-mix of the primary, so selection states hit the
+     exact spec tone regardless of what --color-surface happens to be. */
+  --color-ice-surface: #eaf6fb;
+
+  /* Deep-navy "foundation" tone — the neutral counterweight to the ice-blue
+     accent (SummaryHeader icon, average/neutral insight tone, moon icon),
+     distinct from both --color-ink (body text) and --color-primary. */
+  --color-accent: #1f2e42;
+
+  /* Expense and "error/danger" share one coral so the two never drift —
+     a failed validation reads with the same semantic weight as money
+     going out. */
+  --color-danger: #e76f51;
   --color-warning: #b4790e;
+
+  /*
+    Income/expense are financial semantics, not brand color — they stay on
+    their own green/coral track so they never get relabeled ice blue just
+    because ice blue is now the brand accent. --color-success(-dark) is an
+    alias so existing "positive outcome" usages (toasts, insight tone,
+    balance figures) automatically stay green too.
+  */
+  --color-income: #4dbf7a;
+  --color-income-dark: #2f9760;
 
   /*
     Design system (Phase 1). Tokens layered on top of the base palette
@@ -35,16 +82,20 @@
 
   /* Secondary surface + border steps, for subtle layering (e.g. a card
      nested on a card, a hovered row) without introducing a new color. */
-  --color-surface-sunken: #f0f1f4;
-  --color-surface-hover: #eef0f3;
-  --color-border-strong: #d3d8e0;
-  --color-ink-faint: #9aa2ad;
+  --color-surface-sunken: #eaf2f6;
+  --color-surface-hover: #e3eef3;
+  --color-border-strong: #c3d6de;
+  /* Muted text: the third, faintest step below --color-ink (primary) and
+     --color-ink-soft (secondary) — timestamps, placeholder-like metadata. */
+  --color-ink-faint: #8a9aa3;
 
-  /* Semantic aliases so later components can express *intent* (success/
-     error) rather than a literal color, while still resolving to the same
-     values as --color-primary/--color-danger today. */
-  --color-success: var(--color-primary);
-  --color-success-dark: var(--color-primary-dark);
+  /* Semantic aliases so components can express *intent* (success/error)
+     rather than a literal color. Success resolves to the income green
+     (not the ice-blue brand primary) so positive-outcome UI (toasts,
+     "largest income source" insight, balance-positive figures) stays on
+     the same green as income everywhere else. */
+  --color-success: var(--color-income);
+  --color-success-dark: var(--color-income-dark);
   --color-error: var(--color-danger);
 
   /* Named radii — Tailwind auto-generates rounded-control / rounded-card /
@@ -68,6 +119,24 @@
   --duration-fast: 150ms;
   --duration-base: 220ms;
   --duration-slow: 360ms;
+
+  /*
+    Ice-accent is now just an alias for the brand primary above — both are
+    the same Pastel Ice Blue #C7E7F5. Kept as its own name (rather than
+    replacing every existing --color-ice-accent reference) so the smaller
+    interactive/selection touches that already used it — active nav
+    indicator, focus rings, selected-row tints — pick up the new brand
+    color for free. Not overridden in html.dark below: the same light
+    value is what gives the accent quiet contrast against the app's dark
+    navy surfaces.
+  */
+  --color-ice-accent: var(--color-primary);
+
+  /* Modal-specific surface (Phase 7) — same as --color-surface in light
+     mode, but given its own token so dark mode can target the
+     Secondary Surface tone for overlays without changing every other
+     consumer of --color-surface (cards, sidebar, table). */
+  --color-modal-surface: var(--color-surface);
 }
 
 /*
@@ -77,12 +146,12 @@
   a plain shadow-sm/shadow-md utility can't be re-themed per html.dark.
 */
 :root {
-  --shadow-xs: 0 1px 2px rgba(16, 21, 28, 0.04);
-  --shadow-card: 0 1px 2px rgba(16, 21, 28, 0.04), 0 8px 24px -12px rgba(16, 21, 28, 0.08);
-  --shadow-card-hover: 0 1px 2px rgba(16, 21, 28, 0.06), 0 16px 32px -14px rgba(16, 21, 28, 0.16);
-  --shadow-raised: 0 8px 20px -10px rgba(16, 21, 28, 0.18);
-  --shadow-float: 0 8px 24px -6px rgba(16, 21, 28, 0.25);
-  --shadow-inset: inset 0 1px 2px rgba(16, 21, 28, 0.06);
+  --shadow-xs: 0 1px 2px rgba(20, 33, 43, 0.04);
+  --shadow-card: 0 1px 2px rgba(20, 33, 43, 0.03), 0 4px 12px -8px rgba(20, 33, 43, 0.06);
+  --shadow-card-hover: 0 1px 2px rgba(20, 33, 43, 0.04), 0 8px 20px -10px rgba(20, 33, 43, 0.1);
+  --shadow-raised: 0 6px 16px -8px rgba(20, 33, 43, 0.14);
+  --shadow-float: 0 8px 24px -6px rgba(20, 33, 43, 0.2);
+  --shadow-inset: inset 0 1px 2px rgba(20, 33, 43, 0.05);
 }
 
 html {
@@ -97,21 +166,64 @@ html {
   no component markup changes required.
 */
 html.dark {
-  --color-canvas: #0b0f14;
-  --color-surface: #131922;
-  --color-border-soft: #232b36;
-  --color-ink: #eef1f5;
-  --color-ink-soft: #8a96a3;
-  --color-primary: #17c78e;
-  --color-primary-dark: #12a877;
-  --color-accent: #7c7ff0;
-  --color-danger: #e2593c;
+  /* Main background / Primary surface / Border — Phase 7 spec values. */
+  --color-canvas: #0e1720;
+  --color-surface: #15232d;
+  --color-border-soft: #263c48;
+  --color-ink: #f4f9fc;
+  --color-ink-soft: #a8bac4;
+  --color-ink-faint: #7f949f;
+
+  /* --color-primary (pastel ice blue) is intentionally NOT overridden —
+     see the --color-ice-accent comment above; the same pastel reads with
+     quiet contrast against these dark navy surfaces, and the spec's dark
+     palette lists the same hex for "Ice Blue" as light mode's "Primary
+     Ice Blue". --color-primary-strong is likewise left un-overridden
+     (same "Strong Ice Blue" hex in both themes).
+
+     --color-primary-dark keeps its light-mode role (small text/icon
+     tint) but needs a lighter step here, since the light-mode deep-blue
+     value would be too dark to read on these surfaces — this is the
+     exact value the spec's Sidebar section gives for "Active icon" in
+     dark mode. --color-primary-deep (defined once above, unchanged here)
+     carries the literal Deep Ice Blue swatch for surfaces that need it
+     regardless of theme, e.g. the dark-mode primary button fill. */
+  --color-primary-dark: #9dd3e8;
+
+  --color-accent: #6b84a6;
+  --color-danger: #e76f51;
   --color-warning: #e0a530;
 
-  --color-surface-sunken: #0f141b;
-  --color-surface-hover: #1a212c;
-  --color-border-strong: #303a47;
-  --color-ink-faint: #667080;
+  /* Income/Expense are financial semantics that stay the SAME hex in
+     both themes per spec, so a green or coral reads identically
+     regardless of which mode the user is in. */
+  --color-income: #4dbf7a;
+  --color-income-dark: #4dbf7a;
+
+  /* Secondary Surface / Elevated Surface hierarchy (Phase 7). Three
+     distinct steps from --color-canvas: Surface (#15232d) sits above
+     canvas, Secondary Surface (#1a2c37, reused as the hover tone) sits
+     above that, and --color-ice-surface below is repurposed as the
+     Elevated Surface tone (#203540) for active/selected states — see
+     the --color-ice-surface override below for why. */
+  --color-surface-sunken: #1a2c37;
+  --color-surface-hover: #1a2c37;
+  --color-border-strong: #33495a;
+
+  /* --color-modal-surface targets the spec's dark Modal Surface
+     (#1a2c37 — Secondary Surface), distinct from --color-surface
+     (#15232d) which cards/sidebar/table use. */
+  --color-modal-surface: #1a2c37;
+
+  /* Bug fix (Phase 7): this token was previously left un-overridden in
+     dark mode, so every "active/selected" surface that reads it — the
+     sidebar's active nav row, the category dropdown's selected option,
+     the active filter chip, icon-wrap backgrounds — rendered as a pale
+     light-mode ice-blue patch sitting on top of the dark navy UI.
+     Overriding it to the spec's Elevated Surface tone (#203540) gives
+     dark mode its own proper "selected" tier instead of light mode
+     bleeding through. */
+  --color-ice-surface: #203540;
 
   --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.3);
   --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 24px -12px rgba(0, 0, 0, 0.55);
@@ -128,6 +240,7 @@ body {
 
 body {
   margin: 0;
+  min-width: 320px;
   background-color: var(--color-canvas);
   color: var(--color-ink);
 }
@@ -138,21 +251,17 @@ body {
 }
 
 /* Consistent, accessible focus state for every interactive element,
-   applied globally so individual buttons/links don't need repeating it. */
+   applied globally so individual buttons/links don't need repeating it.
+   (Single source of truth — see the @layer base rule further down for
+   the visible ring itself, which uses `outline` so it composes cleanly
+   with any element that also has its own box-shadow, e.g. .field-input's
+   focus ring or .btn-primary's hover shadow.) */
 a,
 button,
 input,
 select,
 textarea {
   outline: none;
-}
-
-a:focus-visible,
-button:focus-visible,
-input:focus-visible,
-select:focus-visible,
-textarea:focus-visible {
-  box-shadow: 0 0 0 2px var(--color-surface), 0 0 0 4px var(--color-primary);
 }
 
 ::selection {
@@ -314,7 +423,7 @@ textarea:focus-visible {
    ========================================================================== */
 .page-shell {
   width: 100%;
-  max-width: 1180px;
+  max-width: 1280px;
   margin-inline: auto;
   padding-inline: 1.25rem;
 }
@@ -328,6 +437,12 @@ textarea:focus-visible {
 @media (min-width: 1024px) {
   .page-shell {
     padding-inline: 2.5rem;
+  }
+}
+
+@media (min-width: 1600px) {
+  .page-shell {
+    padding-inline: 4rem;
   }
 }
 
@@ -373,7 +488,7 @@ textarea:focus-visible {
     align-items: center;
     justify-content: center;
     gap: 0.375rem;
-    border-radius: var(--radius-pill);
+    border-radius: var(--radius-control);
     padding-inline: 1.25rem;
     padding-block: 0.625rem;
     font-size: 0.8125rem;
@@ -407,25 +522,36 @@ textarea:focus-visible {
     font-size: 0.875rem;
   }
 
+  /* Light: pastel ice-blue fill + navy text (spec "Light Primary").
+     Dark: overridden below to the deep-ice-blue fill + light text
+     (spec "Dark Primary") — a deliberately different resting fill per
+     theme, while the hover tone (Strong Ice Blue) is identical in both. */
   .btn-primary {
+    background-color: var(--color-primary);
+    color: var(--color-ink);
+    box-shadow: var(--shadow-xs);
+  }
+
+  .btn-primary:hover:not(:disabled) {
+    background-color: var(--color-primary-strong);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-raised);
+  }
+
+  html.dark .btn-primary {
+    background-color: var(--color-primary-deep);
+  }
+
+  /* Secondary, higher-contrast brand button (dark navy fill) — for
+     contexts that want the "Deep Navy foundation" treatment instead of
+     the pastel ice-blue fill above. */
+  .btn-accent {
     background-color: var(--color-ink);
     color: var(--color-canvas);
     box-shadow: var(--shadow-xs);
   }
 
-  .btn-primary:hover:not(:disabled) {
-    transform: translateY(-1px);
-    box-shadow: var(--shadow-raised);
-  }
-
-  .btn-accent {
-    background-color: var(--color-primary);
-    color: white;
-    box-shadow: var(--shadow-xs);
-  }
-
   .btn-accent:hover:not(:disabled) {
-    background-color: var(--color-primary-dark);
     transform: translateY(-1px);
     box-shadow: var(--shadow-raised);
   }
@@ -438,7 +564,7 @@ textarea:focus-visible {
 
   .btn-secondary:hover:not(:disabled) {
     color: var(--color-ink);
-    background-color: var(--color-surface-hover);
+    background-color: color-mix(in srgb, var(--color-ice-accent) 30%, var(--color-surface));
   }
 
   .btn-ghost {
@@ -472,6 +598,10 @@ textarea:focus-visible {
     border: 1px solid var(--color-border-soft);
     border-radius: var(--radius-card);
     box-shadow: var(--shadow-card);
+  }
+
+  .balance-card {
+    background: linear-gradient(145deg, var(--color-surface) 0%, var(--color-ice-surface) 160%);
   }
 
   .card-lg {
@@ -550,14 +680,22 @@ textarea:focus-visible {
   .field-select:focus,
   .field-textarea:focus {
     outline: none;
-    border-color: var(--color-primary);
-    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary) 20%, transparent);
+    border-color: var(--color-ice-accent);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-ice-accent) 45%, transparent);
   }
 
   .field-input.field-error-state,
   .field-select.field-error-state,
   .field-textarea.field-error-state {
     border-color: var(--color-danger);
+  }
+
+  .field-input:disabled,
+  .field-select:disabled,
+  .field-textarea:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+    background-color: var(--color-surface-sunken);
   }
 
   .field-textarea {
@@ -648,8 +786,43 @@ textarea:focus-visible {
     border-top: none;
   }
 
-  .data-row:hover {
+  /* Phase 7: hover reads --color-surface-hover (the Secondary Surface /
+     Table Hover tone), not --color-ice-surface — that token is reserved
+     for active/selected states (see the html.dark override above), so a
+     plain row hover doesn't visually compete with "selected". Scoped to
+     hover-capable pointers (mouse/trackpad) so a touch tap doesn't get
+     stuck showing a "hover" tint after the finger lifts. */
+  @media (hover: hover) {
+    .data-row:hover {
+      background-color: var(--color-surface-hover);
+    }
+  }
+
+  /* Touch equivalent of the hover above: fires on tap-down for devices
+     with no real hover (phones/tablets), so a tap still gets the same
+     quiet tint as a desktop hover instead of no feedback at all. */
+  .data-row:active {
     background-color: var(--color-surface-hover);
+  }
+
+  /* --- Ice-blue accent utilities ---------------------------------------
+     Reusable hooks for the signature accent, kept to a small set so the
+     color stays confined to interactive/selection states (nav, selected
+     controls, focus, small icon tints) instead of spreading ad hoc. */
+  .ice-surface {
+    background-color: var(--color-ice-surface);
+  }
+
+  .ice-surface-soft {
+    background-color: color-mix(in srgb, var(--color-ice-surface) 65%, transparent);
+  }
+
+  .ice-icon {
+    color: var(--color-primary-dark);
+  }
+
+  .ice-border {
+    border-color: color-mix(in srgb, var(--color-ice-accent) 55%, var(--color-border-strong));
   }
 }
 

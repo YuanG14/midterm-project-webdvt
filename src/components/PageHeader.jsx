@@ -1,11 +1,9 @@
-import GradientMesh from "./GradientMesh";
-
 function PageHeader({ eyebrow, title, description, action }) {
   return (
-    <div className="relative mb-10">
-      <GradientMesh />
+    <div className="relative mb-8">
       <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
         <div>
+          <span className="accent-rule mb-3" aria-hidden="true" />
           <p className="mb-2 text-xs font-semibold uppercase tracking-[0.14em] text-[var(--color-primary-dark)]">
             {eyebrow}
           </p>

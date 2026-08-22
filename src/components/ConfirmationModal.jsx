@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { AlertTriangle } from "lucide-react";
 import { modalOverlayVariants, modalContentVariants } from "../utils/motionVariants";
@@ -13,6 +13,8 @@ function ConfirmationModal({
   onCancel,
 }) {
   const shouldReduceMotion = useReducedMotion();
+  const cancelButtonRef = useRef(null);
+  const previouslyFocusedRef = useRef(null);
 
   useEffect(() => {
     if (!open) return undefined;
@@ -24,6 +26,18 @@ function ConfirmationModal({
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
   }, [open, onCancel]);
+
+  // Move focus into the dialog on open (defaulting to Cancel, the
+  // non-destructive action) and return it to whatever triggered the
+  // modal once it closes, so keyboard users never lose their place.
+  useEffect(() => {
+    if (open) {
+      previouslyFocusedRef.current = document.activeElement;
+      cancelButtonRef.current?.focus();
+    } else if (previouslyFocusedRef.current instanceof HTMLElement) {
+      previouslyFocusedRef.current.focus();
+    }
+  }, [open]);
 
   return (
     <AnimatePresence>
@@ -42,7 +56,7 @@ function ConfirmationModal({
             aria-modal="true"
             aria-labelledby="confirmation-modal-title"
             onClick={(event) => event.stopPropagation()}
-            className="w-full max-w-sm rounded-2xl border border-[var(--color-border-soft)] bg-[var(--color-surface)] p-7 text-center shadow-[var(--shadow-float)]"
+            className="w-full max-w-sm rounded-2xl border border-[var(--color-border-soft)] bg-[var(--color-modal-surface)] p-7 text-center shadow-[var(--shadow-float)]"
             initial="initial"
             animate="animate"
             exit="exit"
@@ -61,9 +75,10 @@ function ConfirmationModal({
 
             <div className="mt-7 flex flex-col-reverse gap-2.5 sm:flex-row sm:justify-center">
               <button
+                ref={cancelButtonRef}
                 type="button"
                 onClick={onCancel}
-                className="inline-flex flex-1 items-center justify-center rounded-full border border-[var(--color-border-soft)] bg-[var(--color-canvas)] px-4 py-2.5 text-[13px] font-semibold text-[var(--color-ink)] transition-colors duration-200 hover:bg-[var(--color-border-soft)]/60 active:scale-[0.97] sm:flex-none"
+                className="btn btn-secondary flex-1 sm:flex-none"
               >
                 {cancelLabel}
               </button>
