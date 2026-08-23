@@ -1,4 +1,4 @@
-import { LayoutDashboard, PieChart, PlusCircle, WalletCards } from "lucide-react";
+import { LayoutDashboard, PieChart, PlusCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import NavItem from "./NavItem";
 import ThemeToggle from "./ThemeToggle";
@@ -11,13 +11,14 @@ const links = [
 
 function BrandMark() {
   return (
-    <Link to="/" aria-label="Ledger dashboard" className="flex items-center gap-2.5 rounded-[var(--radius-control)]">
-      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[var(--radius-control)] bg-[var(--color-primary)] shadow-[var(--shadow-xs)]">
-        <WalletCards className="h-[18px] w-[18px] text-[var(--color-ink)]" strokeWidth={2.25} />
+    <Link to="/" aria-label="Ledger dashboard" className="brand-lockup rounded-[var(--radius-control)]">
+      <div className="brand-monogram" aria-hidden="true">
+        <span>L</span>
+        <i />
       </div>
       <div className="leading-tight">
-        <span className="block font-display text-[15px] font-extrabold tracking-[-0.02em] text-[var(--color-ink)]">Ledger</span>
-        <span className="hidden text-[10px] font-medium tracking-wide text-[var(--color-ink-faint)] sm:block">PERSONAL FINANCE</span>
+        <span className="block font-display text-[16px] font-extrabold tracking-[-0.035em] text-[var(--color-ink)]">Ledger</span>
+        <span className="hidden text-[12px] font-semibold tracking-[0.08em] text-[var(--color-ink-faint)] sm:block">MONEY, MADE CLEAR</span>
       </div>
     </Link>
   );
@@ -26,8 +27,8 @@ function BrandMark() {
 function Navbar() {
   return (
     <>
-      <header className="sticky top-0 z-30 border-b border-[var(--color-border-soft)] bg-[var(--color-surface)]/95">
-        <div className="page-shell flex h-[68px] items-center justify-between">
+      <header className="app-navbar sticky top-0 z-30 border-b border-[var(--color-border-soft)] bg-[var(--color-surface)]/92">
+        <div className="page-shell flex h-[76px] items-center justify-between">
         <BrandMark />
 
         <nav className="hidden items-center gap-1 md:flex">
@@ -36,7 +37,8 @@ function Navbar() {
           ))}
         </nav>
 
-        <div className="flex items-center">
+        <div className="flex items-center gap-3">
+          <span className="hidden text-[12px] font-semibold text-[var(--color-ink-faint)] lg:block">PERSONAL LEDGER</span>
           <ThemeToggle compact />
         </div>
       </div>

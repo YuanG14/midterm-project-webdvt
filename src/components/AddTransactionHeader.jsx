@@ -11,21 +11,21 @@ import { ArrowLeft } from "lucide-react";
  */
 function AddTransactionHeader() {
   return (
-    <div className="mb-8">
+    <div className="mb-10">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <p className="mb-2 text-[12px] font-semibold uppercase tracking-[0.1em] text-[var(--color-primary-dark)]">New entry</p>
-          <h1 className="font-display text-[28px] font-extrabold tracking-[-0.035em] text-[var(--color-ink)] sm:text-[34px]">
-            Add Transaction
+          <p className="mb-3 text-[12px] font-semibold uppercase tracking-[0.12em] text-[var(--color-primary-dark)]">New ledger entry</p>
+          <h1 className="font-display text-[34px] font-extrabold tracking-[-0.045em] text-[var(--color-ink)] sm:text-[42px]">
+            Add a transaction
           </h1>
-          <p className="mt-1.5 text-[13.5px] leading-relaxed text-[var(--color-ink-soft)]">
-            Record a new income or expense.
+          <p className="mt-3 text-[15px] leading-relaxed text-[var(--color-ink-soft)]">
+            Record an income or expense and keep your balance accurate.
           </p>
         </div>
 
         <Link
           to="/"
-          className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-[var(--color-border-soft)] bg-[var(--color-surface)] px-3.5 py-2 text-[12.5px] font-semibold text-[var(--color-ink-soft)] transition-colors duration-200 hover:text-[var(--color-ink)]"
+          className="btn btn-secondary shrink-0"
         >
           <ArrowLeft className="h-3.5 w-3.5" strokeWidth={2} />
           Back to Dashboard

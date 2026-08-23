@@ -20,7 +20,7 @@ function BrandMark() {
         <p className="font-display truncate text-[14px] font-bold tracking-tight text-[var(--color-ink)]">
           Ledger
         </p>
-        <p className="truncate text-[11px] font-medium text-[var(--color-ink-soft)]">
+        <p className="truncate text-[12px] font-medium text-[var(--color-ink-soft)]">
           Personal Finance
         </p>
       </div>

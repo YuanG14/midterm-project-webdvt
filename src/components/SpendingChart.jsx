@@ -19,7 +19,7 @@ function ChartTooltip({ active, payload }) {
       <p className="mt-0.5 text-[var(--color-ink-soft)]">
         {formatCurrency(value)}
         {typeof entry?.percentage === "number" && (
-          <span className="ml-1.5 font-mono-tabular text-[11.5px]">
+          <span className="ml-1.5 font-mono-tabular text-[12px]">
             ({entry.percentage.toFixed(1)}%)
           </span>
         )}
@@ -72,7 +72,7 @@ function SpendingChart({ data, total, activeCategory, onActiveCategoryChange }) 
 
       {typeof total === "number" && (
         <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
-          <p className="text-[11px] font-medium uppercase tracking-[0.08em] text-[var(--color-ink-soft)]">
+          <p className="text-[12px] font-medium uppercase tracking-[0.08em] text-[var(--color-ink-soft)]">
             Total Spent
           </p>
           <p className="mt-1 font-display font-mono-tabular text-lg font-bold text-[var(--color-ink)]">

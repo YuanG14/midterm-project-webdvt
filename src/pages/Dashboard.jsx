@@ -56,13 +56,14 @@ function Dashboard() {
       {!hasTransactions && <DashboardEmptyState />}
 
       {hasTransactions && (
-        <section className="card card-lg overflow-hidden" aria-labelledby="transactions-heading">
-          <div className="flex items-center justify-between gap-4 px-4 py-5 sm:px-6">
+        <section className="transaction-journal card card-lg overflow-hidden" aria-labelledby="transactions-heading">
+          <div className="flex items-start justify-between gap-4 px-5 py-6 sm:px-7 sm:py-7">
             <div>
-              <h2 id="transactions-heading" className="font-display text-[16px] font-bold tracking-tight text-[var(--color-ink)]">
-                All transactions
+              <p className="mb-2 text-[12px] font-bold tracking-[0.12em] text-[var(--color-primary-dark)]">LEDGER ENTRIES</p>
+              <h2 id="transactions-heading" className="font-display text-[21px] font-bold tracking-[-0.025em] text-[var(--color-ink)]">
+                Recent transactions
               </h2>
-              <p className="mt-0.5 text-[12.5px] text-[var(--color-ink-soft)]">Your latest income and spending activity</p>
+              <p className="mt-1 text-[14px] text-[var(--color-ink-soft)]">Your latest income and spending activity</p>
             </div>
             <span className="badge badge-neutral shrink-0">
               {filteredTransactions.length} {filteredTransactions.length === 1 ? "entry" : "entries"}
@@ -86,7 +87,7 @@ function Dashboard() {
               <p className="mt-1 text-[13px] text-[var(--color-ink-soft)]">Try adjusting your filters.</p>
             </div>
           ) : (
-            <div className="px-4 pb-2 pt-4 sm:px-6">
+            <div className="px-5 pb-3 pt-4 sm:px-7">
               <TransactionTableHeader />
               {filteredTransactions.map((transaction) => (
                 <TransactionCard key={transaction.id} transaction={transaction} />
