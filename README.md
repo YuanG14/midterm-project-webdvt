@@ -1,131 +1,210 @@
-# React + Vite
+# Ledger — Personal Budget Tracker
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Ledger is a completed responsive personal budget tracking web application built with React. It lets users record income and expenses, organize transactions by category, monitor their current balance, review individual entries, and understand spending patterns through a visual summary dashboard.
 
-Currently, two official plugins are available:
+The application runs entirely in the browser and stores transaction data and theme preferences in `localStorage`, so no backend or database setup is required.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Project Status
 
-## React Compiler
+**Completed**
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+The core requirements and final UI/UX polish are implemented, including routing, transaction CRUD operations, filtering, financial summaries, data visualization, responsive layouts, accessibility improvements, and light/dark theme support.
 
-## Expanding the Oxlint configuration
+## Features
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+### Dashboard
 
-## Performance Optimization
+- Displays the current balance, total income, and total expenses.
+- Lists recorded transactions from newest to oldest.
+- Filters transactions by category and type (`Income` or `Expense`).
+- Shows transaction categories, type indicators, dates, and formatted amounts.
+- Links each transaction to its own detail page.
+- Provides clear empty and no-results states.
+- Shows success/error-style toast feedback after add, edit, and delete actions.
 
-### Problem Identified
+### Add Transaction
 
-Two sources of unnecessary re-renders were found:
+- Adds a new income or expense transaction.
+- Includes fields for:
+  - Title
+  - Amount
+  - Transaction type
+  - Category
+  - Date
+  - Optional notes
+- Uses different category options for income and expenses.
+- Validates required fields and prevents invalid or non-positive amounts.
+- Returns the user to the Dashboard after a successful submission.
 
-1. **Theme context re-creation.** `ThemeProvider` built a brand-new `{ theme, toggleTheme }` object (and a brand-new `toggleTheme` function) on every render. Any component consuming `useTheme()` — including the `Summary` page and the navbar's theme toggle — re-rendered whenever the provider re-rendered, even when `theme` itself hadn't changed.
-2. **List and card re-renders.** `TransactionCard` (rendered in a list on the Dashboard), `SummaryCard`, `InsightCard`, `CategoryBreakdown`, and `SpendingChart` (a recharts `PieChart`) all re-rendered whenever their parent page re-rendered, regardless of whether the props passed to them had actually changed. On the Dashboard this happened on every filter change; on the Summary page it happened on every theme toggle.
+### Transaction Detail
 
-### Solution Applied
+- Uses a dedicated route for every transaction: `/transaction/:id`.
+- Displays the complete information for a selected transaction.
+- Supports switching between read-only and edit modes.
+- Allows users to update transaction details using the same validation rules as the Add Transaction form.
+- Allows users to delete a transaction through a confirmation modal.
+- Handles invalid or missing transaction IDs with a not-found state.
 
-- Wrapped the `ThemeProvider`'s `toggleTheme` in `useCallback` and the context value in `useMemo`, so the object identity only changes when `theme` itself changes.
-- Wrapped `TransactionCard`, `SummaryCard`, `InsightCard`, `CategoryBreakdown`, and `SpendingChart` in `React.memo`, so they skip re-rendering when their props are unchanged.
+### Summary
 
-`useTransactions` and the Dashboard/Summary calculations were reviewed and already used `useMemo`/`useCallback` correctly for derived values (`incomeTotal`, `expenseTotal`, `balance`, `filteredTransactions`, `categoryBreakdown`, `insights`, etc.), so no changes were needed there.
+- Displays a financial overview of balance, income, expenses, and total recorded activity.
+- Breaks down expenses by category.
+- Uses an interactive donut chart for spending visualization.
+- Highlights useful financial insights such as:
+  - Largest expense category
+  - Highest individual expense
+  - Largest income source
+  - Average expense
+  - Average income
+- Handles accounts with no transactions or no recorded expenses gracefully.
 
-### Techniques Used
+### Theme Support
 
-- `React.memo` — `TransactionCard`, `SummaryCard`, `InsightCard`, `CategoryBreakdown`, `SpendingChart`
-- `useMemo` — memoized theme context value
-- `useCallback` — memoized `toggleTheme`
+- Supports both light and dark themes.
+- Uses React Context API for app-wide theme state.
+- Saves the selected theme in `localStorage`.
+- Falls back to the user's system color preference when no saved theme exists.
+- Applies the selected theme across all routes.
 
-## UI Enhancement Phase 1 — Design System & Global Polish
+### Local Data Persistence
 
-Global visual polish pass across the whole app. No routing, business logic, ThemeContext logic, useTransactions logic, or page structure was touched.
+- Transactions are saved in the browser using `localStorage`.
+- Saved transactions remain available after refreshing or reopening the application in the same browser.
+- Stored data is validated before being loaded to reduce issues caused by malformed entries.
+- Transaction IDs are generated using `crypto.randomUUID()` when available, with a fallback ID generator.
 
-### Color System
+### Responsive & Accessible UI
 
-- Added a `--color-warning` (amber) semantic token, in both light and dark themes, rounding out the existing income (green)/expense (red-rose)/accent (indigo) semantic palette for future use.
-- All existing colors (canvas, surface, border, ink, primary, accent, danger) were left as-is — they already implement the emerald/indigo finance palette with light/dark variants.
+- Responsive layouts for mobile, tablet, and desktop screens.
+- Mobile bottom navigation and desktop navigation bar.
+- Large currency values are handled without overflowing narrow screens.
+- Keyboard-visible focus states are provided for interactive controls.
+- Includes a skip-to-content link.
+- Theme control uses accessible switch semantics and labels.
+- Forms provide clear validation messages and error states.
+- Page transitions and interface feedback are kept lightweight and purposeful.
 
-### Elevation / Shadows
+## Application Routes
 
-- Replaced ~11 repeated hardcoded `shadow-[...]` rgba strings across components with five shared elevation tokens: `--shadow-xs`, `--shadow-card`, `--shadow-card-hover`, `--shadow-raised`, `--shadow-float`.
-- Gave dark mode its own shadow values (deeper, more diffuse black-based shadows) instead of reusing the light-mode rgba values, since a light-derived shadow barely reads against a dark canvas — cards now have real, visible depth in both themes.
+| Route | Page | Purpose |
+| --- | --- | --- |
+| `/` | Dashboard | View balance, totals, filters, and all transactions |
+| `/add` | Add Transaction | Create a new income or expense entry |
+| `/transaction/:id` | Transaction Detail | View, edit, or delete a specific transaction |
+| `/summary` | Summary | Review spending breakdowns, charts, and financial insights |
 
-### Global Interaction Polish
+## Tech Stack
 
-- Added a consistent, accessible `:focus-visible` ring (via `box-shadow`) to every link, button, and form control app-wide, applied once globally instead of per-component.
-- Added a themed text-selection color and a slim, theme-aware scrollbar (Webkit + Firefox) so the polish holds up outside of cards.
-- Introduced a shared `--ease-premium` cubic-bezier easing curve and applied it to the existing global color/border/shadow transitions for a snappier, more intentional feel.
+- **React 19** — component-based user interface
+- **Vite 8** — development server and production build tooling
+- **React Router DOM 7** — client-side routing
+- **React Context API** — global theme management
+- **Tailwind CSS 4** — responsive styling and design system utilities
+- **Recharts** — spending visualization
+- **Framer Motion** — page and interface transitions
+- **Lucide React** — interface icons
+- **localStorage** — browser-based transaction and theme persistence
+- **Oxlint** — source-code linting
 
-### Typography / Layout / Cards / Buttons / Inputs
+## Getting Started
 
-- Reviewed against the brief: type hierarchy (Manrope display font for headings, Inter for body, IBM Plex Mono for figures), card styling (rounded-2xl, soft elevation, hover lift), button styling (pill-shaped, hover translate, disabled states), and input styling (rounded, focus rings, placeholder color) were already in place from earlier phases and consistent across light/dark — no changes were needed there beyond the shared shadow tokens and global focus states above.
+### Prerequisites
 
-### Files Modified
+Install a current Node.js LTS release and npm before running the project.
 
-- `src/index.css` — color/shadow/easing tokens, global focus/selection/scrollbar styles
-- `src/components/SummaryCard.jsx`, `TransactionCard.jsx`, `TransactionDetailCard.jsx`, `EmptyState.jsx`, `PlaceholderPanel.jsx`, `ConfirmationModal.jsx`, `SpendingChart.jsx`, `TransactionForm.jsx`, `EditTransactionForm.jsx` — swapped hardcoded shadow strings for the new elevation tokens
-- `src/pages/Summary.jsx` — same shadow-token swap on its two inline panel wrappers
+### Installation
 
-No changes to `App.jsx`, `ThemeContext.jsx`, `useTransactions.js`, transaction schema, localStorage logic, CRUD functions, validation, or filtering logic.
+1. Clone or download the project.
+2. Open a terminal inside the project folder.
+3. Install the dependencies:
 
-## UI Enhancement Phase 2 — Dashboard Redesign
+```bash
+npm install
+```
 
-Visual redesign of the Dashboard page only. Dashboard calculations, filter logic, `useTransactions`, routing, and Theme Context are unchanged.
+4. Start the development server:
 
-### New Components
+```bash
+npm run dev
+```
 
-Since `PageHeader`, `SummaryCard`, and `EmptyState` are shared with other pages (Add Transaction, Transaction Detail, Summary), new Dashboard-only components were created instead of editing those shared files, so this redesign can't change any other page's look:
+5. Open the local URL shown by Vite in your browser.
 
-- **`DashboardHeader`** — replaces `PageHeader` on this page: a welcoming "Welcome back" title, a short financial-overview description, the current day/date, and the existing "Add Transaction" button (still links to `/add`).
-- **`FinancialCard`** — replaces `SummaryCard` on this page for the three stat cards: adds a top gradient accent bar, a larger glow blob, a bigger icon container with a hover scale effect, and a bigger figure.
-- **`DashboardEmptyState`** — replaces `EmptyState` on this page: a gradient icon tile instead of a flat circle, same "No transactions yet" copy and Add Transaction CTA.
+## Available Scripts
 
-### Edited In Place (Dashboard-only components — safe to redesign directly)
+```bash
+npm run dev
+```
 
-- **`TransactionCard`** — now shows a category-specific icon (Food, Transportation, Shopping, Bills, Entertainment, Education, Healthcare, Salary, Freelance, Business, Investments, Gift — via a new `utils/categoryIcons.js` map, falling back to the original income/expense arrow for "Other"/unrecognized categories), an explicit "Income"/"Expense" badge alongside the category pill, relative dates ("Today"/"Yesterday" instead of an absolute date for recent entries), and a subtle icon hover-scale + chevron slide.
-- **`FilterBar`** — redesigned as a bordered control panel with per-field icons, and a "Clear" affordance that appears once a filter is active (built from the same `onCategoryChange`/`onTypeChange` callbacks Dashboard already passes in — no new filtering logic).
-- **`Dashboard.jsx`** — wired in the three components above, gave the "no matching filters" state an icon, and added a subtle staggered fade-in for the transaction list.
+Starts the Vite development server.
 
-### Responsiveness & Motion
+```bash
+npm run build
+```
 
-- Stat cards: 1 column on mobile, 2 on tablet, 3 on desktop (unchanged grid, richer cards).
-- Filter panel stacks vertically on mobile, inline on larger screens.
-- All new hover/entrance animations are short (150–300ms) and reuse the existing `fadeIn` keyframe and shadow/easing tokens from UI Phase 1.
+Creates an optimized production build in the `dist` folder.
 
-### Confirmation
+```bash
+npm run preview
+```
 
-No changes to `useTransactions.js`, transaction data structure, localStorage logic, Dashboard's balance/income/expense calculations, filter logic, React Router, Theme Context, or CRUD functions. Balance, income, and expense figures, filtering behavior, and transaction navigation all work exactly as before.
+Serves the production build locally for previewing.
 
-## Phase 9 — Final Polish, Consistency & Production QA
+```bash
+npm run lint
+```
 
-Audit-first final pass. No redesign, no new pages/features, no changes to routing, Context API, `useTransactions`, calculations, or transaction schema.
+Runs Oxlint against the project source.
 
-### Audit findings
+## Project Structure
 
-- `npm run build` and `oxlint` were both already clean (one pre-existing, harmless fast-refresh lint note in `ThemeContext.jsx`, left as-is since it flags a standard React pattern, not a bug).
-- The design-system primitives added in earlier phases (`.card`, `.btn`, `.field-input`, `.badge`, `.data-row`, `.accent-rule`, etc. in `index.css`) were only adopted by a handful of components. Several superseded components from earlier phases — including `GradientMesh`/`PageHeader` (the gradient-blob header treatment the design direction explicitly moved away from) — were still present in `src/` but no longer imported anywhere.
-- `EditTransactionForm` (Transaction Detail's edit form) still used its own hand-rolled Tailwind for inputs/textarea/container instead of the shared `.field-input`/`.field-textarea`/`.card` classes that `TransactionForm` (Add Transaction) already uses, so the two forms didn't quite read as the same product.
+```text
+midterm-project-webdvt-main/
+├── public/
+├── src/
+│   ├── components/      # Reusable UI and feature components
+│   ├── context/         # Theme Context API provider and hook
+│   ├── hooks/           # Transaction state, CRUD, totals, and persistence
+│   ├── pages/           # Dashboard, Add, Detail, and Summary pages
+│   ├── utils/           # Validation, formatting, categories, icons, and motion helpers
+│   ├── App.jsx          # Application route definitions
+│   ├── index.css        # Global styles and design tokens
+│   └── main.jsx         # React application entry point
+├── index.html
+├── package.json
+├── package-lock.json
+├── vite.config.js
+└── README.md
+```
 
-### Changes made
+## Data Model
 
-- **Removed 17 unused files** with zero remaining imports anywhere in the app: `AnalyticsSection`, `ChartCard`, `FinancialCard`, `FormActions`, `FormField`, `GradientMesh`, `InsightCard`, `InsightDetailRow`, `InsightStatGroup`, `InsightTransactionRow`, `PageHeader`, `PlaceholderPanel`, `Sidebar`, `SummaryCard`, `SummaryStatCard`, `TransactionDetailCard`, `TypeToggle`, and `utils/insightFormatting.js`. These were earlier-phase components/utilities superseded by their current replacements (e.g. `DashboardHeader`/`SummaryHeader`/etc. replaced `PageHeader`, `BalanceOverview` replaced `FinancialCard`, `InsightRow` replaced the `Insight*` set, `Navbar` replaced `Sidebar`). Confirmed unused via static import search before deleting, then verified with a clean production build. Net effect: no visual or behavioral change, smaller bundle (CSS 54.17 kB → 41.90 kB gzipped-relevant output shrank correspondingly), no more dead gradient/blur header code sitting unused in the tree.
-- **`EditTransactionForm.jsx`** — swapped its ad-hoc `rounded-xl border ... focus:ring-2` input/textarea classes and ad-hoc card container for the shared `.field-input` / `.field-textarea` / `.card card-padded` classes already used by `TransactionForm`, `FilterBar`, and `ConfirmationModal`, and added the same `field-error-state` class binding `TransactionForm` uses so an invalid field's border goes red instead of only showing the error text below it. Visual result and all validation/save/cancel/delete behavior are unchanged — this only makes the Edit form's markup consistent with the Add form's, so the two feel like the same designed product rather than two different implementations of the same fields.
+Each transaction contains the following fields:
 
-### Verified
+```text
+id
+ title
+ amount
+ category
+ type       -> income | expense
+ date
+ notes
+```
 
-- Production build (`npm run build`) succeeds with no errors.
-- `oxlint` reports the same single pre-existing warning as before (no new issues).
-- Dashboard, Add Transaction, Transaction Detail, and Summary all still render, filter, add, edit, delete, and theme-toggle exactly as before — no page, route, or calculation was touched.
+Transaction data is managed through the custom `useTransactions` hook, which acts as the application's single source of truth for CRUD operations, totals, and browser persistence.
 
-### Addendum — mobile overflow fix (large currency values)
+## Categories
 
-After shipping the above, a real device screenshot showed the Summary page's "Overview" panel (Balance/Income/Expenses/Total activity) rendering with overlapping digits on a phone-width screen. Root cause: with account totals in the millions, the formatted currency string (e.g. `₱5,091,300.00`) is long enough, and has no spaces to line-break on, that it doesn't fit a narrow grid column or a large hero heading at small viewport widths — it visually overflows on top of adjacent content instead of wrapping or clipping.
+**Expense:** Food, Transportation, Shopping, Bills, Entertainment, Education, Healthcare, Other
 
-Reproduced and fixed with real values, verified against the live rendered DOM (not just code inspection) with headless-browser overflow checks swept every 10–20px from 320px to 1440px, on all three affected surfaces:
+**Income:** Salary, Freelance, Business, Investments, Gift, Other
 
-- **`Summary.jsx` "Overview" grid** — was `grid-cols-2` (i.e. 4 stats squeezed 2-per-row) at every width below 640px. Changed to `grid-cols-1` below `sm`, `grid-cols-2` from `sm`, `grid-cols-4` only from `lg` (1024px+), where there's actually room. Each stat now always gets the full card width on phones.
-- **`BalanceOverview.jsx` Income/Expenses row** (Dashboard) — same fix: `grid-cols-1` below `sm`, side-by-side from `sm` up, instead of always 2-up.
-- **`BalanceOverview.jsx` hero "Current Balance" figure** — was a fixed `42px` below the `sm` breakpoint, which fits a typical balance but overflows its own card for a 7-digit balance at common phone widths (375–420px). Replaced the fixed size with `clamp(28px, 13vw - 14px, 42px)` so the hero figure scales continuously with viewport width and is provably within its container at every width in that range, rather than guessing a single breakpoint. `sm:text-[52px]` for tablet/desktop is unchanged.
+## Notes
 
-Confirmed via headless-browser `scrollWidth`/`clientWidth` checks (not just visual spot-checks) that none of the three overflow at any 10–20px step from 320px to 1440px, and that the Transaction Detail page's hero amount — structurally similar but not affected — also has no overflow across the same sweep. No calculations, data, or non-mobile layout changed.
+- This project does not require a backend server or external database.
+- Data is stored per browser/device through `localStorage`; clearing browser storage will remove saved transactions and theme preferences.
+- The application uses Philippine peso (`₱`) formatting for financial values.
+
+## License
+
+This project was created for educational purposes.
