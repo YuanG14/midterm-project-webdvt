@@ -10,6 +10,9 @@ import {
   CATEGORIES_BY_TYPE,
   TITLE_MAX_LENGTH,
   NOTES_MAX_LENGTH,
+  MAX_TRANSACTION_AMOUNT,
+  MIN_TRANSACTION_AMOUNT,
+  validateAmount,
   todayISO,
   validateTransactionForm,
 } from "../utils/transactionFormShared";
@@ -35,6 +38,23 @@ function TransactionForm() {
     setCategory((prevCategory) =>
       CATEGORIES_BY_TYPE[nextType]?.includes(prevCategory) ? prevCategory : ""
     );
+  }
+
+  function handleAmountChange(event) {
+    const nextAmount = event.target.value;
+    setAmount(nextAmount);
+
+    setErrors((currentErrors) => ({
+      ...currentErrors,
+      amount: nextAmount === "" ? "" : validateAmount(nextAmount),
+    }));
+  }
+
+  function handleAmountBlur() {
+    setErrors((currentErrors) => ({
+      ...currentErrors,
+      amount: validateAmount(amount),
+    }));
   }
 
   function handleSubmit(event) {
@@ -83,7 +103,12 @@ function TransactionForm() {
             />
           </InputField>
 
-          <InputField label="Amount" htmlFor="amount" error={errors.amount}>
+          <InputField
+            label="Amount"
+            htmlFor="amount"
+            error={errors.amount}
+            hint="Maximum ₱999,999,999.99 · Up to 2 decimal places"
+          >
             <div className="relative">
               <span className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-[14px] font-medium text-[var(--color-ink-soft)]">
                 ₱
@@ -92,11 +117,14 @@ function TransactionForm() {
                 id="amount"
                 type="number"
                 inputMode="decimal"
-                min="0"
+                min={MIN_TRANSACTION_AMOUNT}
+                max={MAX_TRANSACTION_AMOUNT}
                 step="0.01"
                 value={amount}
-                onChange={(event) => setAmount(event.target.value)}
+                onChange={handleAmountChange}
+                onBlur={handleAmountBlur}
                 placeholder="0.00"
+                aria-invalid={Boolean(errors.amount)}
                 className={`field-input pl-7 font-mono-tabular text-[15px] font-semibold ${
                   errors.amount ? "field-error-state" : ""
                 }`}

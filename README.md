@@ -12,6 +12,8 @@ The core requirements and final UI/UX polish are implemented, including routing,
 
 ## Features
 
+- **Amount validation:** Transactions accept ₱0.01–₱999,999,999.99 with up to two decimal places and show inline validation errors.
+
 ### Dashboard
 
 - Displays the current balance, total income, and total expenses.
