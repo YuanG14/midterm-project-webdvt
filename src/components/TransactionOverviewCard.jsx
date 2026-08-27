@@ -24,7 +24,7 @@ function TransactionOverviewCard({ transaction, onEdit, onDeleteRequest }) {
       <div className="card card-padded flex flex-col gap-6">
         {/* Amount — the strongest financial element on the page */}
         <div>
-          <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[var(--color-ink-soft)]">
+          <p className="text-[12px] font-semibold uppercase tracking-[0.08em] text-[var(--color-ink-soft)]">
             Amount
           </p>
           <p
@@ -36,7 +36,7 @@ function TransactionOverviewCard({ transaction, onEdit, onDeleteRequest }) {
             {formatCurrency(Math.abs(transaction.amount))}
           </p>
           <span
-            className={`mt-2 inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[11.5px] font-semibold ${
+            className={`mt-2 inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[12px] font-semibold ${
               isIncome
                 ? "bg-[var(--color-income)]/10 text-[var(--color-income-dark)]"
                 : "bg-[var(--color-danger)]/10 text-[var(--color-danger)]"

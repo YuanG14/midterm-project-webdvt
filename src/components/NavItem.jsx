@@ -15,7 +15,7 @@ function NavItem({ to, label, icon: Icon, end, onClick, variant = "pill" }) {
         end={end}
         onClick={onClick}
         className={({ isActive }) =>
-          `flex min-h-12 flex-col items-center justify-center gap-1 rounded-xl px-2 text-[10.5px] font-semibold transition-colors ${
+          `flex min-h-12 flex-col items-center justify-center gap-1 rounded-xl px-2 text-[12px] font-semibold transition-colors ${
             isActive
               ? "bg-[var(--color-ice-surface)] text-[var(--color-primary-dark)]"
               : "text-[var(--color-ink-soft)]"

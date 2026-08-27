@@ -7,7 +7,7 @@
 function TransactionInfoItem({ icon: Icon, label, value }) {
   return (
     <div className="flex items-start justify-between gap-4 py-3">
-      <span className="flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.08em] text-[var(--color-ink-soft)]">
+      <span className="flex items-center gap-1.5 text-[12px] font-semibold uppercase tracking-[0.08em] text-[var(--color-ink-soft)]">
         {Icon && <Icon className="h-3.5 w-3.5" strokeWidth={2} />}
         {label}
       </span>

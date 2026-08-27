@@ -7,10 +7,13 @@ function Layout() {
   const location = useLocation();
 
   return (
-    <div className="min-h-screen bg-[var(--color-canvas)]">
+    <div className="app-frame min-h-screen bg-[var(--color-canvas)]">
+      <a href="#main-content" className="skip-link">
+        Skip to content
+      </a>
       <Navbar />
-      <main className="pb-24 md:pb-0">
-        <div className="page-shell py-7 sm:py-10">
+      <main id="main-content" className="relative pb-24 md:pb-0">
+        <div className="page-shell py-8 sm:py-11 lg:py-14">
           <AnimatePresence mode="wait">
             <PageTransition key={location.pathname}>
               <Outlet />
