@@ -28,16 +28,6 @@ function ChartTooltip({ active, payload }) {
   );
 }
 
-/**
- * Renders the expense-by-category donut. `total` is only used to render
- * the center label — it does not affect how the chart itself is computed.
- *
- * `activeCategory` / `onActiveCategoryChange` let this chart and the
- * adjacent CategoryBreakdown list highlight the same category together:
- * hovering a slice here dims the others (handled below), and hovering a
- * row in the list dims slices here too, via the same shared state living
- * in the Summary page. Purely visual — doesn't touch chart data/calcs.
- */
 function SpendingChart({ data, total, activeCategory, onActiveCategoryChange }) {
   return (
     <div className="relative h-64 w-full sm:h-72">
@@ -84,7 +74,5 @@ function SpendingChart({ data, total, activeCategory, onActiveCategoryChange }) 
   );
 }
 
-// Memoized: the recharts PieChart is the most expensive render on the
-// Summary page. Without memo it re-renders on every Summary re-render
-// (e.g. a theme toggle) even though `data` hasn't changed.
+// Recharts is relatively expensive, so skip renders when the chart data is unchanged.
 export default memo(SpendingChart);

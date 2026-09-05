@@ -1,212 +1,122 @@
 # Ledger — Personal Budget Tracker
 
-Ledger is a completed responsive personal budget tracking web application built with React. It lets users record income and expenses, organize transactions by category, monitor their current balance, review individual entries, and understand spending patterns through a visual summary dashboard.
+Ledger is a multi-page personal budget tracker built with React. Users can record income and expenses, organize transactions by category, monitor their balance, edit or delete entries, review spending summaries, and switch between light and dark themes.
 
-The application runs entirely in the browser and stores transaction data and theme preferences in `localStorage`, so no backend or database setup is required.
+The app runs entirely in the browser. Transactions and theme preferences are stored in `localStorage`, so no backend or database is required.
 
-## Project Status
+## Assignment Requirements
 
-**Completed**
+| Requirement | Implementation |
+| --- | --- |
+| Dashboard | Lists transactions, filters by category/type, and shows current balance |
+| Add Transaction | Validated form for creating income or expense entries |
+| Transaction Detail | Dedicated `/transaction/:id` route with view, edit, and delete actions |
+| Summary | Spending breakdown by category with charts and financial insights |
+| React Router | Four real routes with distinct URLs |
+| Context API | App-wide light/dark theme managed through `ThemeContext` |
+| Custom Hook | `useTransactions` centralizes transaction CRUD, totals, and persistence |
+| Performance Optimization | Memoized transaction rows and summary/chart components reduce unnecessary re-renders |
 
-The core requirements and final UI/UX polish are implemented, including routing, transaction CRUD operations, filtering, financial summaries, data visualization, responsive layouts, accessibility improvements, and light/dark theme support.
+## Routes
+
+| Route | Page |
+| --- | --- |
+| `/` | Dashboard |
+| `/add` | Add Transaction |
+| `/transaction/:id` | Transaction Detail |
+| `/summary` | Summary |
 
 ## Features
 
-- **Amount validation:** Transactions accept ₱0.01–₱999,999,999.99 with up to two decimal places and show inline validation errors.
+- Add income and expense transactions
+- Edit and delete existing transactions
+- Filter transactions by category and type
+- View total income, total expenses, and current balance
+- View category-based spending summaries and charts
+- Form validation for required fields and valid amounts
+- Persistent browser storage with `localStorage`
+- Light and dark themes across the entire application
+- Responsive layout for desktop and mobile screens
+- Philippine peso (`₱`) currency formatting
 
-### Dashboard
+## React Concepts Used
 
-- Displays the current balance, total income, and total expenses.
-- Lists recorded transactions from newest to oldest.
-- Filters transactions by category and type (`Income` or `Expense`).
-- Shows transaction categories, type indicators, dates, and formatted amounts.
-- Links each transaction to its own detail page.
-- Provides clear empty and no-results states.
-- Shows success/error-style toast feedback after add, edit, and delete actions.
+### React Router
 
-### Add Transaction
+Routing is defined in `src/App.jsx`. Each required page has its own URL instead of being conditionally rendered on a single page.
 
-- Adds a new income or expense transaction.
-- Includes fields for:
-  - Title
-  - Amount
-  - Transaction type
-  - Category
-  - Date
-  - Optional notes
-- Uses different category options for income and expenses.
-- Validates required fields and prevents invalid or non-positive amounts.
-- Returns the user to the Dashboard after a successful submission.
+### Context API
 
-### Transaction Detail
+Theme state is managed by `src/context/ThemeContext.jsx`. The provider wraps the application so the selected theme applies across every route without prop drilling.
 
-- Uses a dedicated route for every transaction: `/transaction/:id`.
-- Displays the complete information for a selected transaction.
-- Supports switching between read-only and edit modes.
-- Allows users to update transaction details using the same validation rules as the Add Transaction form.
-- Allows users to delete a transaction through a confirmation modal.
-- Handles invalid or missing transaction IDs with a not-found state.
+### Custom Hook
 
-### Summary
+`src/hooks/useTransactions.js` provides reusable transaction logic, including:
 
-- Displays a financial overview of balance, income, expenses, and total recorded activity.
-- Breaks down expenses by category.
-- Uses an interactive donut chart for spending visualization.
-- Highlights useful financial insights such as:
-  - Largest expense category
-  - Highest individual expense
-  - Largest income source
-  - Average expense
-  - Average income
-- Handles accounts with no transactions or no recorded expenses gracefully.
+- Loading and saving transactions
+- Adding transactions
+- Updating transactions
+- Deleting transactions
+- Looking up a transaction by ID
+- Calculating income, expenses, and balance
 
-### Theme Support
+### Performance Optimization
 
-- Supports both light and dark themes.
-- Uses React Context API for app-wide theme state.
-- Saves the selected theme in `localStorage`.
-- Falls back to the user's system color preference when no saved theme exists.
-- Applies the selected theme across all routes.
-
-### Local Data Persistence
-
-- Transactions are saved in the browser using `localStorage`.
-- Saved transactions remain available after refreshing or reopening the application in the same browser.
-- Stored data is validated before being loaded to reduce issues caused by malformed entries.
-- Transaction IDs are generated using `crypto.randomUUID()` when available, with a fallback ID generator.
-
-### Responsive & Accessible UI
-
-- Responsive layouts for mobile, tablet, and desktop screens.
-- Mobile bottom navigation and desktop navigation bar.
-- Large currency values are handled without overflowing narrow screens.
-- Keyboard-visible focus states are provided for interactive controls.
-- Includes a skip-to-content link.
-- Theme control uses accessible switch semantics and labels.
-- Forms provide clear validation messages and error states.
-- Page transitions and interface feedback are kept lightweight and purposeful.
-
-## Application Routes
-
-| Route | Page | Purpose |
-| --- | --- | --- |
-| `/` | Dashboard | View balance, totals, filters, and all transactions |
-| `/add` | Add Transaction | Create a new income or expense entry |
-| `/transaction/:id` | Transaction Detail | View, edit, or delete a specific transaction |
-| `/summary` | Summary | Review spending breakdowns, charts, and financial insights |
+`TransactionCard` is wrapped with `React.memo` so unchanged transaction rows do not re-render unnecessarily when dashboard filters change. Other summary and chart components also use memoization where appropriate.
 
 ## Tech Stack
 
-- **React 19** — component-based user interface
-- **Vite 8** — development server and production build tooling
-- **React Router DOM 7** — client-side routing
-- **React Context API** — global theme management
-- **Tailwind CSS 4** — responsive styling and design system utilities
-- **Recharts** — spending visualization
-- **Framer Motion** — page and interface transitions
-- **Lucide React** — interface icons
-- **localStorage** — browser-based transaction and theme persistence
-- **Oxlint** — source-code linting
+- React 19
+- Vite 8
+- React Router DOM 7
+- React Context API
+- Tailwind CSS 4
+- Recharts
+- Framer Motion
+- Lucide React
+- Oxlint
+- Vercel
 
-## Getting Started
-
-### Prerequisites
-
-Install a current Node.js LTS release and npm before running the project.
-
-### Installation
-
-1. Clone or download the project.
-2. Open a terminal inside the project folder.
-3. Install the dependencies:
+## Local Setup
 
 ```bash
 npm install
-```
-
-4. Start the development server:
-
-```bash
 npm run dev
 ```
 
-5. Open the local URL shown by Vite in your browser.
+The terminal will display the local development URL generated by Vite.
 
 ## Available Scripts
 
 ```bash
-npm run dev
+npm run dev      # Start the development server
+npm run build    # Create a production build
+npm run preview  # Preview the production build locally
+npm run lint     # Run Oxlint
 ```
-
-Starts the Vite development server.
-
-```bash
-npm run build
-```
-
-Creates an optimized production build in the `dist` folder.
-
-```bash
-npm run preview
-```
-
-Serves the production build locally for previewing.
-
-```bash
-npm run lint
-```
-
-Runs Oxlint against the project source.
 
 ## Project Structure
 
 ```text
-midterm-project-webdvt-main/
-├── public/
-├── src/
-│   ├── components/      # Reusable UI and feature components
-│   ├── context/         # Theme Context API provider and hook
-│   ├── hooks/           # Transaction state, CRUD, totals, and persistence
-│   ├── pages/           # Dashboard, Add, Detail, and Summary pages
-│   ├── utils/           # Validation, formatting, categories, icons, and motion helpers
-│   ├── App.jsx          # Application route definitions
-│   ├── index.css        # Global styles and design tokens
-│   └── main.jsx         # React application entry point
-├── index.html
-├── package.json
-├── package-lock.json
-├── vite.config.js
-└── README.md
+src/
+├── components/   Reusable UI and feature components
+├── context/      Theme Context provider
+├── hooks/        Transaction state and persistence
+├── pages/        Dashboard, Add, Detail, and Summary pages
+├── utils/        Validation, formatting, categories, and helpers
+├── App.jsx       Application routes
+├── index.css     Global styles
+└── main.jsx      Application entry point
 ```
 
-## Data Model
+## Data Storage
 
-Each transaction contains the following fields:
+Transactions and theme preferences are saved locally in the user's browser. Clearing site storage will remove the saved data.
 
-```text
-id
- title
- amount
- category
- type       -> income | expense
- date
- notes
-```
+## Deployment
 
-Transaction data is managed through the custom `useTransactions` hook, which acts as the application's single source of truth for CRUD operations, totals, and browser persistence.
-
-## Categories
-
-**Expense:** Food, Transportation, Shopping, Bills, Entertainment, Education, Healthcare, Other
-
-**Income:** Salary, Freelance, Business, Investments, Gift, Other
-
-## Notes
-
-- This project does not require a backend server or external database.
-- Data is stored per browser/device through `localStorage`; clearing browser storage will remove saved transactions and theme preferences.
-- The application uses Philippine peso (`₱`) formatting for financial values.
+The project is deployed on Vercel and the source code is hosted in the GitHub repository named `midterm-project-webdvt`.
 
 ## License
 
-This project was created for educational purposes.
+Created for educational purposes as a Web Development midterm project.

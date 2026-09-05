@@ -1,8 +1,3 @@
-/**
- * Groups related fields under a small labeled heading (e.g. "Transaction
- * Details", "Financial Information"). Presentational only — used by the
- * Add Transaction form to break the card into scannable sections.
- */
 function FormSection({ icon: Icon, title, description, children }) {
   return (
     <div className="flex flex-col gap-4">

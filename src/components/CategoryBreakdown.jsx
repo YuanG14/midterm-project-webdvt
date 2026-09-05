@@ -54,5 +54,4 @@ function CategoryBreakdown({ data, activeCategory, onActiveCategoryChange }) {
   );
 }
 
-// Memoized: Summary re-renders on theme toggle; category data itself is stable.
 export default memo(CategoryBreakdown);

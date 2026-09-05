@@ -14,13 +14,6 @@ const TONE_CLASSES = {
 
 const AUTO_DISMISS_MS = 3200;
 
-/**
- * A small, self-dismissing confirmation toast ("Transaction added.",
- * "Transaction deleted.") shown after a CRUD action already completed.
- * Purely presentational feedback — it never performs or delays the
- * underlying action, and renders nothing when `message` is falsy.
- * Respects prefers-reduced-motion via Framer Motion's useReducedMotion.
- */
 function Toast({ message, tone = "success", onDismiss }) {
   const shouldReduceMotion = useReducedMotion();
   const Icon = ICONS[tone] ?? CheckCircle2;

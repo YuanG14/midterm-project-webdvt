@@ -7,14 +7,6 @@ const TONES = {
   accent: "bg-[var(--color-accent)]/10 text-[var(--color-accent)]",
 };
 
-/**
- * One quiet, divided row inside the Summary page's "Key insights" panel —
- * an icon chip, a label, and a right-aligned value (+ optional hint).
- * Renders as `.data-row` (see index.css) so several insights read as one
- * grouped list inside a single containing `.card`, the same convention
- * TransactionCard already uses for the Dashboard's transaction list,
- * instead of each insight getting its own identical bordered tile.
- */
 function InsightRow({ icon: Icon, label, value, hint, tone = "neutral" }) {
   const toneClass = TONES[tone] ?? TONES.neutral;
 
@@ -34,6 +26,4 @@ function InsightRow({ icon: Icon, label, value, hint, tone = "neutral" }) {
   );
 }
 
-// Memoized: multiple InsightRow instances render per Summary render; their
-// props are stable across unrelated Summary re-renders (e.g. theme toggle).
 export default memo(InsightRow);

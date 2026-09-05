@@ -1,9 +1,3 @@
-/**
- * A single labeled detail row used inside the Transaction Overview Card
- * (Description, Category, Type, Date). Flat label-over-value rows rather
- * than individually bordered/boxed cards — reads as a scannable financial
- * record instead of a grid of decorative tiles.
- */
 function TransactionInfoItem({ icon: Icon, label, value }) {
   return (
     <div className="flex items-start justify-between gap-4 py-3">

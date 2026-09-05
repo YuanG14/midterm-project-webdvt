@@ -1,12 +1,5 @@
 import { NavLink } from "react-router-dom";
 
-/**
- * Single navigation link. Two visual variants:
- * - "pill": compact rounded pill, used in the horizontal desktop/tablet bar
- * - "block": full-width row with a left accent bar, used in the mobile
- *   dropdown menu
- * Routing/active-state detection comes entirely from React Router's NavLink.
- */
 function NavItem({ to, label, icon: Icon, end, onClick, variant = "pill" }) {
   if (variant === "bottom") {
     return (

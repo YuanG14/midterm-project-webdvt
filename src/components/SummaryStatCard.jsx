@@ -23,11 +23,6 @@ const ACCENTS = {
   },
 };
 
-/**
- * Premium Summary-only stat card (balance / income / expenses / transaction
- * count). Displays exactly the value/hint it's given — no calculations
- * happen here, only presentation.
- */
 function SummaryStatCard({ icon: Icon, label, value, hint, accent = "balance", style }) {
   const styles = ACCENTS[accent] ?? ACCENTS.balance;
 
@@ -61,6 +56,4 @@ function SummaryStatCard({ icon: Icon, label, value, hint, accent = "balance", s
   );
 }
 
-// Memoized: Summary re-renders on every theme toggle even though card
-// data (label/value/hint/accent) is unaffected by the theme.
 export default memo(SummaryStatCard);

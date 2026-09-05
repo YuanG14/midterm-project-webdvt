@@ -1,9 +1,3 @@
-/**
- * Consistent section heading for the Summary analytics dashboard —
- * an icon chip, a title, and an optional trailing hint (e.g. a count).
- * Purely presentational; used to replace the repeated ad-hoc <p> labels
- * that previously sat above each Summary section.
- */
 function AnalyticsSection({ icon: Icon, title, hint, children, className = "" }) {
   return (
     <section className={className}>

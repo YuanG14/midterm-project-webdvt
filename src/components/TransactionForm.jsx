@@ -34,7 +34,6 @@ function TransactionForm() {
 
   function handleTypeChange(nextType) {
     setType(nextType);
-    // Reset category if it doesn't belong to the newly selected type's list.
     setCategory((prevCategory) =>
       CATEGORIES_BY_TYPE[nextType]?.includes(prevCategory) ? prevCategory : ""
     );

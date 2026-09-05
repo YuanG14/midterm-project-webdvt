@@ -16,6 +16,7 @@ function ConfirmationModal({
   const cancelButtonRef = useRef(null);
   const previouslyFocusedRef = useRef(null);
 
+  // Preserve keyboard focus when opening and closing the confirmation dialog.
   useEffect(() => {
     if (!open) return undefined;
 
@@ -27,9 +28,6 @@ function ConfirmationModal({
     return () => document.removeEventListener("keydown", handleKeyDown);
   }, [open, onCancel]);
 
-  // Move focus into the dialog on open (defaulting to Cancel, the
-  // non-destructive action) and return it to whatever triggered the
-  // modal once it closes, so keyboard users never lose their place.
   useEffect(() => {
     if (open) {
       previouslyFocusedRef.current = document.activeElement;

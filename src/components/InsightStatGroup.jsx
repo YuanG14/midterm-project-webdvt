@@ -6,11 +6,6 @@ const TONES = {
   danger: "bg-[var(--color-danger)]/10 text-[var(--color-danger)]",
 };
 
-/**
- * One quiet row inside an InsightStatGroup. `layout="inline"` renders a
- * single line ("2 Income") for simple counts; `layout="stacked"` renders
- * a label above a dominant amount, for averages/totals.
- */
 function StatRow({ icon: Icon, tone = "neutral", label, value, hint, layout = "inline" }) {
   const toneClass = TONES[tone] ?? TONES.neutral;
 
@@ -38,12 +33,6 @@ function StatRow({ icon: Icon, tone = "neutral", label, value, hint, layout = "i
   );
 }
 
-/**
- * Secondary insight surface for the Summary page's "Recent Insights"
- * section — groups related lower-signal stats (transaction counts,
- * averages) under one titled card with quiet, divided rows instead of
- * giving each its own identical outlined tile.
- */
 function InsightStatGroup({ icon: Icon, title, rows, style }) {
   return (
     <div

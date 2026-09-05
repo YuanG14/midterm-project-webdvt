@@ -19,8 +19,6 @@ export function validateAmount(amount) {
     return "Amount is required.";
   }
 
-  // Use standard peso formatting only: positive decimal values with at most
-  // two decimal places. Scientific notation such as 1e9 is rejected.
   if (!/^\d+(?:\.\d{0,2})?$/.test(rawAmount)) {
     return "Enter a valid amount with up to 2 decimal places.";
   }
@@ -42,10 +40,6 @@ export function validateAmount(amount) {
   return "";
 }
 
-/**
- * Shared validation rules for the Add and Edit transaction forms.
- * amount is expected as a string (raw input value).
- */
 export function validateTransactionForm({ title, amount, category, type, date }) {
   const errors = {};
 

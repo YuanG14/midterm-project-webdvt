@@ -1,9 +1,6 @@
 import { Link } from "react-router-dom";
 import { CalendarDays, Plus } from "lucide-react";
 
-/**
- * Dashboard-only header.
- */
 function DashboardHeader() {
   const today = new Intl.DateTimeFormat("en-PH", {
     weekday: "long",

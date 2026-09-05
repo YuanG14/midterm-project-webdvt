@@ -1,14 +1,6 @@
 import { Link } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 
-/**
- * Add-Transaction-only header. Deliberately more restrained than
- * PageHeader/DashboardHeader/SummaryHeader (no icon tile, one step down in
- * type size, no eyebrow) since this is a single-task form screen rather than
- * a workspace landing page — but it keeps the same accent-rule + heading +
- * supporting-copy anatomy as those headers so it still reads as part of the
- * same app rather than a foreign screen.
- */
 function AddTransactionHeader() {
   return (
     <div className="mb-10">

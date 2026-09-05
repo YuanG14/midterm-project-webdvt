@@ -1,13 +1,6 @@
 import { Link } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 
-/**
- * Transaction-Detail-only header. A subtle back-link sits above a compact
- * eyebrow + heading, then the transaction's own identity (name, category,
- * type, date) — deliberately the same restrained scale as
- * AddTransactionHeader (Phase 4) rather than the old icon-tile hero, so the
- * two screens read as the same application.
- */
 function TransactionDetailHeader({ transaction }) {
   const isIncome = transaction.type === "income";
   const formattedDate = new Date(transaction.date).toLocaleDateString("en-US", {

@@ -1,10 +1,5 @@
 import { TRANSACTION_GRID_COLS } from "../utils/transactionTableGrid";
 
-/**
- * Column labels for the desktop/tablet transaction table. Hidden below
- * `sm` — mobile rows use their own compact 2-line layout instead, so a
- * column header wouldn't line up with anything there.
- */
 function TransactionTableHeader() {
   return (
     <div

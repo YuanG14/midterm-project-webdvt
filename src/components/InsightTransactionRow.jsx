@@ -1,14 +1,5 @@
 import { formatCurrency } from "../utils/formatCurrency";
 
-/**
- * One compact row inside an expanded InsightCard panel — a transaction's
- * title (+ optional meta, e.g. a date) on the left and its amount on the
- * right. `signed` prefixes +/- and colors the amount by direction, for
- * contexts (activity breakdowns) where both income and expense rows can
- * appear together; category/average breakdowns that are already scoped to
- * one direction leave it off to match the app's existing quiet-number
- * treatment elsewhere.
- */
 function InsightTransactionRow({ title, amount, meta, signed = false, isIncome = false }) {
   const directionColor = signed
     ? isIncome

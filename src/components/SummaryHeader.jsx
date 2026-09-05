@@ -1,9 +1,3 @@
-/**
- * Summary-only header. Same restrained scale as the Add Transaction
- * (Phase 4) and Transaction Detail (Phase 5) headers — accent-rule, a
- * modest heading, one line of supporting copy — rather than the old
- * icon-tile analytics-dashboard hero.
- */
 function SummaryHeader() {
   return (
     <div className="mb-10">

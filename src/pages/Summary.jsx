@@ -64,9 +64,6 @@ function Summary() {
     };
   }, [categoryBreakdown, expenseTransactions, incomeTransactions, expenseTotal, incomeTotal]);
 
-  // Shared hover state so the donut chart and the category list highlight
-  // the same category together (see SpendingChart / CategoryBreakdown).
-  // Purely interactive — doesn't touch any of the totals computed above.
   const [activeCategory, setActiveCategory] = useState(null);
 
   const hasTransactions = transactions.length > 0;
@@ -75,8 +72,6 @@ function Summary() {
     insights.largestExpenseCategory || insights.highestExpense || insights.largestIncomeSource
   );
 
-  // Presentational only: picks a visual accent based on the already-computed
-  // balance sign. Does not change the displayed value.
   const balancePositive = balance >= 0;
 
   return (
@@ -93,7 +88,7 @@ function Summary() {
         />
       ) : (
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-5 lg:items-start">
-          {/* Primary spending overview — the page's focal surface */}
+          
           <section className="card card-lg card-padded lg:col-span-3" aria-labelledby="spending-breakdown-heading">
             <div className="mb-6 sm:mb-8">
               <h2 id="spending-breakdown-heading" className="font-display text-lg font-bold tracking-tight text-[var(--color-ink)] sm:text-xl">
@@ -133,9 +128,7 @@ function Summary() {
             )}
           </section>
 
-          {/* Financial overview — Balance leads with the strongest
-              hierarchy; Income/Expenses/Total activity are secondary,
-              smaller stats below it rather than four equal-weight tiles. */}
+          
           <section className="card card-lg card-padded lg:col-span-2" aria-labelledby="financial-overview-heading">
             <p id="financial-overview-heading" className="text-eyebrow mb-1">Financial Overview</p>
             <p className="text-[12px] font-medium text-[var(--color-ink-soft)]">Balance</p>
@@ -174,8 +167,7 @@ function Summary() {
             </div>
           </section>
 
-          {/* Key insights — a quiet, divided list rather than a grid of
-              identical stat tiles. */}
+          
           {hasInsights && (
             <section className="card card-lg card-padded lg:col-span-5" aria-labelledby="key-insights-heading">
               <p id="key-insights-heading" className="text-eyebrow mb-1">Key insights</p>

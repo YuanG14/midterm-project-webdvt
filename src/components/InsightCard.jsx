@@ -30,6 +30,4 @@ function InsightCard({ icon: Icon, label, value, hint, tone = "neutral" }) {
   );
 }
 
-// Memoized: multiple InsightCard instances render per Summary render; their
-// props are stable across unrelated Summary re-renders (e.g. theme toggle).
 export default memo(InsightCard);

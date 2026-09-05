@@ -1,10 +1,3 @@
-/**
- * Presentation-only helpers for the interactive "Recent Insights" cards on
- * the Summary page. These never read/write transaction data — they only
- * format and group the transactions the caller already has.
- */
-
-/** "Aug 6, 2026" */
 export function formatShortDate(dateString) {
   return new Date(dateString).toLocaleDateString("en-US", {
     month: "short",
@@ -13,11 +6,6 @@ export function formatShortDate(dateString) {
   });
 }
 
-/**
- * "Today" / "Yesterday" / "Aug 6, 2026" — same relative-date convention
- * already used by TransactionCard's activity feed, applied here to the
- * compact breakdown inside an expanded insight card.
- */
 export function formatRelativeDayLabel(dateString) {
   const date = new Date(dateString);
   const today = new Date();
@@ -31,12 +19,6 @@ export function formatRelativeDayLabel(dateString) {
   return formatShortDate(dateString);
 }
 
-/**
- * Buckets an already-sorted (most-recent-first) transaction list into
- * `{ label, transactions }` groups by relative day label, preserving the
- * incoming order within and across groups. Used by the Income/Expense
- * Transactions insight cards to render a compact activity breakdown.
- */
 export function groupTransactionsByDay(transactions) {
   const groups = [];
   const indexByLabel = new Map();

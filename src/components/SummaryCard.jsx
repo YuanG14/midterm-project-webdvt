@@ -53,6 +53,4 @@ function SummaryCard({ icon: Icon, label, value, hint, accent = "balance" }) {
   );
 }
 
-// Memoized: rendered 3-4x on Dashboard/Summary and re-created via SummaryCard,
-// Summary re-renders on every theme toggle even though card data is unchanged.
 export default memo(SummaryCard);

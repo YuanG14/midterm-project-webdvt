@@ -2,14 +2,6 @@ import { Calendar, Pencil, Tag, Trash2, TrendingDown, TrendingUp } from "lucide-
 import { formatCurrency } from "../utils/formatCurrency";
 import TransactionInfoItem from "./TransactionInfoItem";
 
-/**
- * Read-only summary of a transaction, styled to match the Add Transaction /
- * Edit Transaction card (Phase 4): one moderate .card, not a colored hero
- * banner. The amount gets the strongest typography since it's the single
- * most important figure on the page, then a flat, scannable info list, then
- * the Edit/Delete actions in the same footer position the form uses for
- * Save/Cancel.
- */
 function TransactionOverviewCard({ transaction, onEdit, onDeleteRequest }) {
   const isIncome = transaction.type === "income";
 
@@ -22,7 +14,7 @@ function TransactionOverviewCard({ transaction, onEdit, onDeleteRequest }) {
   return (
     <div className="mx-auto max-w-2xl animate-[fadeIn_0.4s_var(--ease-premium)]">
       <div className="card card-padded flex flex-col gap-6">
-        {/* Amount — the strongest financial element on the page */}
+        
         <div>
           <p className="text-[12px] font-semibold uppercase tracking-[0.08em] text-[var(--color-ink-soft)]">
             Amount
@@ -49,7 +41,7 @@ function TransactionOverviewCard({ transaction, onEdit, onDeleteRequest }) {
 
         <div className="border-t border-[var(--color-border-soft)]" />
 
-        {/* Transaction Information */}
+        
         <div>
           <h3 className="font-display mb-1 text-[12.5px] font-bold uppercase tracking-[0.08em] text-[var(--color-ink)]">
             Transaction Information

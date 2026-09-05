@@ -1,12 +1,6 @@
 import { Link } from "react-router-dom";
 import { ArrowLeft, SearchX } from "lucide-react";
 
-/**
- * Premium "Transaction Not Found" state, shown when the :id in the route
- * doesn't match any stored transaction. Kept separate from the shared
- * EmptyState (still used by Dashboard/Summary) so this redesign doesn't
- * change the appearance of those other pages.
- */
 function TransactionNotFound() {
   return (
     <div>

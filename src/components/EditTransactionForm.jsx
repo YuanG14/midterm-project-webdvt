@@ -14,12 +14,6 @@ import {
   validateTransactionForm,
 } from "../utils/transactionFormShared";
 
-/**
- * Same card/section/field anatomy as TransactionForm (Add Transaction, Phase
- * 4) so Add and Edit are visibly the same form. Delete lives on the
- * read-only overview instead of here, so this footer matches the Add
- * Transaction form's Cancel/Save pair exactly.
- */
 function EditTransactionForm({ transaction, onSave, onCancel }) {
   const [type, setType] = useState(transaction.type);
   const [title, setTitle] = useState(transaction.title);

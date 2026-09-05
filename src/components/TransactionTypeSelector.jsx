@@ -5,12 +5,6 @@ const OPTIONS = [
   { value: "expense", label: "Expense", caption: "Money going out", icon: TrendingDown },
 ];
 
-/**
- * Visual Income/Expense picker for the Add Transaction form. Purely a
- * richer presentation of the same two values the existing TypeToggle
- * uses — onChange still just receives "income" | "expense", so it drops
- * straight into the existing form state and validation.
- */
 function TransactionTypeSelector({ value, onChange }) {
   return (
     <div role="radiogroup" aria-label="Transaction type" className="grid grid-cols-1 gap-3 sm:grid-cols-2">

@@ -1,7 +1,3 @@
-/**
- * Shared card frame for the Summary page's analytics panels (chart,
- * category breakdown). Purely a styling container — no data handling.
- */
 function ChartCard({ children, className = "" }) {
   return (
     <div

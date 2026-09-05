@@ -2,11 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import { Check, ChevronDown, Tag } from "lucide-react";
 import { getCategoryIcon } from "../utils/categoryIcons";
 
-/**
- * Visual category picker. Fully controlled — value/onChange still carry
- * the exact same category string the plain <select> did, so it drops
- * straight into the existing form state, validation, and submitted data.
- */
 function CategorySelector({ id, value, onChange, options, placeholder = "Select a category…" }) {
   const [open, setOpen] = useState(false);
   const containerRef = useRef(null);
@@ -29,7 +24,6 @@ function CategorySelector({ id, value, onChange, options, placeholder = "Select 
     };
   }, []);
 
-  // Close whenever the option list changes (e.g. transaction type flipped).
   useEffect(() => {
     setOpen(false);
   }, [options]);

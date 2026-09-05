@@ -1,11 +1,6 @@
 import { Sun, Moon } from "lucide-react";
 import { useTheme } from "../context/ThemeContext";
 
-/**
- * Theme switch. Behavior is untouched — it still just reads/calls
- * theme + toggleTheme from ThemeContext. Only the appearance (a labeled
- * track-style switch, sized for the sidebar footer) changed.
- */
 function ThemeToggle({ compact = false }) {
   const { theme, toggleTheme } = useTheme();
   const isDark = theme === "dark";
@@ -65,7 +60,7 @@ function ThemeToggle({ compact = false }) {
         {isDark ? "Dark mode" : "Light mode"}
       </span>
 
-      {/* Track/thumb, purely visual — click target is the whole button above */}
+      
       <span
         aria-hidden="true"
         className={`relative flex h-5 w-9 shrink-0 items-center rounded-full transition-colors duration-200 ${

@@ -42,12 +42,10 @@ function Sidebar() {
   const [open, setOpen] = useState(false);
   const location = useLocation();
 
-  // Close the mobile menu automatically whenever the route changes.
   useEffect(() => {
     setOpen(false);
   }, [location.pathname]);
 
-  // Close on Escape, same as any dismissible popover.
   useEffect(() => {
     if (!open) return;
     function handleKeyDown(event) {
@@ -59,7 +57,7 @@ function Sidebar() {
 
   return (
     <>
-      {/* Desktop / tablet-landscape: persistent sidebar */}
+      
       <aside className="fixed inset-y-0 left-0 z-20 hidden w-60 shrink-0 flex-col border-r border-[var(--color-border-soft)] bg-[var(--color-surface)] px-3 py-6 lg:flex">
         <BrandMark />
 
@@ -72,7 +70,7 @@ function Sidebar() {
         </div>
       </aside>
 
-      {/* Mobile / tablet-portrait: slim top bar */}
+      
       <header className="sticky top-0 z-20 flex items-center justify-between border-b border-[var(--color-border-soft)] bg-[var(--color-surface)] px-5 py-3.5 lg:hidden">
         <BrandMark />
 
@@ -89,18 +87,14 @@ function Sidebar() {
           </button>
         </div>
 
-        {/* Transparent click-catcher to close on outside tap — no dark
-            scrim, so the dashboard behind stays fully visible (and
-            scrollable) rather than being blocked by the menu. */}
+        
         <div
           aria-hidden="true"
           className={`fixed inset-0 z-10 ${open ? "block" : "hidden"}`}
           onClick={() => setOpen(false)}
         />
 
-        {/* Compact dropdown menu, anchored under the hamburger button —
-            sized to its own content instead of covering the screen, so it
-            reads as a lightweight menu rather than a blocking modal. */}
+        
         <div
           aria-label="Navigation menu"
           className={`absolute right-4 top-full z-20 mt-2 w-56 origin-top-right rounded-2xl border border-[var(--color-border-soft)] bg-[var(--color-surface)] p-2 shadow-[var(--shadow-float)] transition-all duration-200 ease-[var(--ease-premium)] ${

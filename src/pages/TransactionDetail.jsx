@@ -12,9 +12,6 @@ function TransactionDetail() {
   const navigate = useNavigate();
   const { getTransaction, updateTransaction, deleteTransaction } = useTransactions();
   const [confirmingDelete, setConfirmingDelete] = useState(false);
-  // View/edit is purely a presentation toggle — onSave/onDelete still call the
-  // exact same hook functions they always did; this just decides whether the
-  // read-only overview or the edit form is what's on screen right now.
   const [isEditing, setIsEditing] = useState(false);
 
   const transaction = getTransaction(id);

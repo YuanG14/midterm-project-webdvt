@@ -18,11 +18,6 @@ const ACCENTS = {
   },
 };
 
-/**
- * Dashboard-only financial stat card. A richer, more "hero" take on the
- * shared SummaryCard (used on the Summary page) — kept as its own
- * component so this redesign doesn't change Summary's look.
- */
 function FinancialCard({ icon: Icon, label, value, hint, accent = "balance", style }) {
   const styles = ACCENTS[accent] ?? ACCENTS.balance;
 
@@ -52,7 +47,4 @@ function FinancialCard({ icon: Icon, label, value, hint, accent = "balance", sty
   );
 }
 
-// Memoized: Dashboard re-renders these 3 cards whenever filter state
-// changes, even though balance/income/expense values are unaffected by
-// category or type filters.
 export default memo(FinancialCard);

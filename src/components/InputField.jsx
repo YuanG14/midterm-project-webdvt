@@ -1,11 +1,5 @@
 import { AlertCircle } from "lucide-react";
 
-/**
- * Labeled field wrapper for the Add Transaction form. Mirrors the shared
- * FormField component but adds a label icon and an icon-led error message.
- * Kept as its own component (rather than editing FormField.jsx) so the
- * Edit Transaction form's appearance is untouched by this phase.
- */
 function InputField({ label, icon: Icon, htmlFor, error, hint, children }) {
   return (
     <div className="flex flex-col gap-1.5">

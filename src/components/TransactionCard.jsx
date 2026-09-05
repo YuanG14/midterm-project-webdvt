@@ -5,12 +5,6 @@ import { formatCurrency } from "../utils/formatCurrency";
 import { getCategoryIcon } from "../utils/categoryIcons";
 import { TRANSACTION_GRID_COLS } from "../utils/transactionTableGrid";
 
-/**
- * Absolute short date ("Aug 14, 2026") — every row in the table uses the
- * same format, so scanning the Date column stays consistent (no mixing
- * "Today"/"Yesterday" with absolute dates). Purely a display concern,
- * the underlying transaction.date is untouched.
- */
 function formatDate(dateString) {
   return new Date(dateString).toLocaleDateString("en-US", {
     month: "short",
@@ -19,14 +13,6 @@ function formatDate(dateString) {
   });
 }
 
-/**
- * A single transaction row. Renders as a `.data-row` (hairline divider,
- * quiet hover tint) laid out on the same grid template as
- * TransactionTableHeader so columns line up exactly from `sm` up.
- * Below `sm`, the grid collapses to 3 auto-placed columns (icon / name
- * +meta / amount) — the Category/Type/Date cells are `hidden`, which
- * removes them from grid placement entirely rather than leaving gaps.
- */
 function TransactionCard({ transaction }) {
   const isIncome = transaction.type === "income";
   const CategoryIcon = getCategoryIcon(transaction.category);
@@ -54,8 +40,7 @@ function TransactionCard({ transaction }) {
         <p className="truncate font-display text-sm font-semibold text-[var(--color-ink)]">
           {transaction.title || "Untitled transaction"}
         </p>
-        {/* Mobile-only combined meta line — the dedicated Category/Type/Date
-            cells below take over this job from `sm` up. */}
+        
         <p className="mt-0.5 truncate text-[12.5px] text-[var(--color-ink-soft)] sm:hidden">
           {transaction.category || "Uncategorized"} · {typeLabel} · {formattedDate}
         </p>
@@ -87,8 +72,5 @@ function TransactionCard({ transaction }) {
   );
 }
 
-// Memoized: Dashboard re-renders every TransactionCard whenever its filter
-// state changes, even though most individual transaction objects haven't
-// changed. Since `transaction` keeps the same object reference for entries
-// that are unaffected by the filter, memo lets those skip re-rendering.
+// Avoid re-rendering unchanged transaction rows when dashboard filters change.
 export default memo(TransactionCard);

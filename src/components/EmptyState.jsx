@@ -1,10 +1,6 @@
 import { Link } from "react-router-dom";
 import { PlusCircle, Sparkles } from "lucide-react";
 
-/**
- * Summary-only empty state. Kept separate from other pages' empty states
- * so this redesign only affects Summary.
- */
 function EmptyState({
   icon: Icon = Sparkles,
   title = "No transactions yet",

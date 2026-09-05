@@ -2,14 +2,6 @@ import { memo } from "react";
 import { ArrowDownRight, ArrowUpRight, Landmark, TrendingDown, TrendingUp } from "lucide-react";
 import { formatCurrency } from "../utils/formatCurrency";
 
-/**
- * Dashboard's primary financial figure. Replaces the previous three
- * equal-weight stat cards (balance / income / expense, all the same
- * size) with a single panel that gives balance the visual weight it
- * actually has in a personal budget — a large hero figure — while
- * income and expense sit underneath as smaller, secondary data,
- * separated by a hairline rule rather than their own card chrome.
- */
 function BalanceOverview({ balance, incomeTotal, expenseTotal }) {
   const spentPercentage = incomeTotal > 0 ? Math.min((expenseTotal / incomeTotal) * 100, 999) : 0;
 
@@ -81,7 +73,4 @@ function BalanceOverview({ balance, incomeTotal, expenseTotal }) {
   );
 }
 
-// Memoized for the same reason the old FinancialCard was: Dashboard
-// re-renders on every filter change, but balance/income/expense totals
-// are unaffected by category or type filters.
 export default memo(BalanceOverview);

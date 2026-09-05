@@ -4,10 +4,6 @@ const STORAGE_KEY = "ledger-theme";
 
 const ThemeContext = createContext(undefined);
 
-/**
- * Reads any previously saved theme from localStorage.
- * Returns null if nothing has been saved yet (or storage is unavailable).
- */
 function getStoredTheme() {
   try {
     const stored = localStorage.getItem(STORAGE_KEY);
@@ -17,10 +13,6 @@ function getStoredTheme() {
   }
 }
 
-/**
- * Detects the user's OS/browser preference via prefers-color-scheme.
- * Falls back to "dark" if the media query is unavailable.
- */
 function getSystemTheme() {
   if (typeof window !== "undefined" && window.matchMedia) {
     if (window.matchMedia("(prefers-color-scheme: light)").matches) {
@@ -38,8 +30,6 @@ function getInitialTheme() {
 export function ThemeProvider({ children }) {
   const [theme, setTheme] = useState(getInitialTheme);
 
-  // Keep the <html> element's class and color-scheme in sync with theme state,
-  // so every existing route (all of which style via CSS variables) picks it up.
   useEffect(() => {
     const root = document.documentElement;
     root.classList.toggle("dark", theme === "dark");
@@ -48,7 +38,6 @@ export function ThemeProvider({ children }) {
     try {
       localStorage.setItem(STORAGE_KEY, theme);
     } catch {
-      // localStorage unavailable (e.g. private browsing) — theme still works for this session.
     }
   }, [theme]);
 
@@ -56,8 +45,6 @@ export function ThemeProvider({ children }) {
     setTheme((prev) => (prev === "dark" ? "light" : "dark"));
   }, []);
 
-  // Memoize the provided value so consumers (useTheme) only re-render when
-  // theme actually changes, not whenever ThemeProvider itself re-renders.
   const value = useMemo(() => ({ theme, toggleTheme }), [theme, toggleTheme]);
 
   return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;

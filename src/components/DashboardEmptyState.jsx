@@ -1,11 +1,6 @@
 import { Link } from "react-router-dom";
 import { HandCoins, PlusCircle } from "lucide-react";
 
-/**
- * Dashboard-only empty state. Kept separate from the shared EmptyState
- * (used on Summary / Transaction Detail) so this redesign doesn't change
- * those other pages' look.
- */
 function DashboardEmptyState() {
   return (
     <div className="rounded-[var(--radius-card-lg)] border border-dashed border-[var(--color-border-soft)] bg-[var(--color-surface)] px-6 py-12 text-center">

@@ -1,8 +1,3 @@
-// Restrained, on-brand palette for the category donut/breakdown — a ramp of
-// icy-blue tones (deep -> pastel) rather than arbitrary rainbow colors, plus
-// one neutral for "Other" so the catch-all bucket doesn't read as its own
-// distinct hue. Fixed per known category so the same category always
-// renders the same color across the chart and the breakdown list.
 const CATEGORY_COLORS = {
   Food: "#1E4A5C",
   Transportation: "#2E6B82",
@@ -25,11 +20,6 @@ const FALLBACK_PALETTE = [
   "#8A9AA3",
 ];
 
-/**
- * Returns a stable color for a category. Known categories get a fixed color;
- * anything unrecognized falls back to a deterministic pick from the palette
- * based on the category name, so it's still consistent across renders.
- */
 export function getCategoryColor(category) {
   if (CATEGORY_COLORS[category]) return CATEGORY_COLORS[category];
 
